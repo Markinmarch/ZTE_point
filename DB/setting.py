@@ -1,4 +1,4 @@
-# import logging
+import logging
 from psycopg2 import connect, Error
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
@@ -36,28 +36,43 @@ class DataBase:
     
     def create_database(self) -> object:
         try:
-            self.connection.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-            self.cursor.execute(query = 'CREATE DATABASE %s;' % (self.database, ))
-        except (Error, Exception) as error:
-           print(f'The database has not been created. Please check the status of postgres and try again.\n{error}')
+            connection = connect(
+                user = self.user,
+                password = self.password,
+                host = self.host,
+                port = self.port
+            )
+            cursor = connection.cursor()
+            connection.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+            cursor.execute(query = 'CREATE DATABASE %s;' % (self.database, ))
+        except (Error, Exception):
+           logging.error(f'<--- The database has not been created. Please check the status of postgres and try again. --->')
         finally:
-            self.cursor.close()
-            self.connection.close()
-            print('Success! Database is created')
+            cursor.close()
+            connection.close()
+            logging.info('<--- Success! Database is created --->')
 
     def session(self) -> None:
         try:
-            dsn_params = self.connection.get_dsn_parameters()
+            connection = connect(
+                user = self.user,
+                password = self.password,
+                host = self.host,
+                port = self.port,
+                database = self.database
+            )
+            cursor = connection.cursor()
+            dsn_params = connection.get_dsn_parameters()
             print(dsn_params)
-            self.cursor.execute(query = 'SELECT version();')
+            cursor.execute(query = 'SELECT version();')
             record = self.cursor.fetchone()
             print(record)
-        except (Error, Exception) as error:
-            print(error)
+        except (Error, Exception):
+            logging.error('<--- Something went wrong with the database. --->')
         finally:
             self.cursor.close()
             self.connection.close()
-            print('Session is closed')
+            logging.info('<--- Session is closed --->')
 
         # try:
         #     # Подключение к существующей базе данных
