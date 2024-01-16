@@ -4,6 +4,8 @@ from sqlalchemy import create_engine
 from psycopg2 import connect, Error, errors
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
+# from models import create_table
+
 
 class DataBase:
     
@@ -34,7 +36,7 @@ class DataBase:
             self.cursor.execute(query = 'CREATE DATABASE %s;' % (self.database, ))
             logging.info('<--- Success! Database %s is created --->' % (self.database))
         except errors.DuplicateDatabase:
-            pass
+            logging.info(f'<--- Database "{self.database}" is ready --->')
         except Error as error:
             logging.error(f'<--- {error} --->')
         finally:

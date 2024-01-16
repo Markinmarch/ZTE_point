@@ -1,7 +1,7 @@
-from . import setting
-
 import os
 from dotenv import load_dotenv
+
+from .setting import DataBase
 
 
 load_dotenv(dotenv_path = '.env')
@@ -12,7 +12,7 @@ postgres_host = 'localhost'
 postgres_port = '5432'
 postgres_database = 'main_db'
 
-database = setting.DataBase(
+database = DataBase(
     user = postgres_user,
     password = postgres_password,
     host = postgres_host,
