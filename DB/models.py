@@ -15,9 +15,8 @@ class User(Base):
         nullable = False
     )
     phone = sql.Column(
-        sql.Integer,
+        sql.String,
         nullable = False,
-        unique = True
     )
     email = sql.Column(
         sql.String,
@@ -32,6 +31,30 @@ class User(Base):
     def __str__(self):
         return '%s, %s, %s' % (self.id, self.name)
     
+class Item(Base):
+    __tablename__ = 'item'
+
+    id = sql.Column(
+        sql.Integer,
+        primary_key = True
+    )
+    name = sql.Column(
+        sql.String(length = 100),
+        nullable = False
+    )
+    price = sql.Column(
+        sql.Float,
+        nullable = False
+    )
+    index = sql.Column(
+        sql.Integer,
+        nullable = True,
+        unique = True
+    )
+
+    def __str__(self):
+        return '%s: %s, %s, %s' % (self.id, self.name, self.price, self.index)
+
 class Order(Base):
     __tablename__ = 'order'
 
@@ -39,15 +62,14 @@ class Order(Base):
         sql.Integer,
         primary_key = True
     )
-    item = sql.Column(
-        sql.String,
-        nullable = True,
-        unique = True
+    date = sql.Column(
+        sql.Date,
+        nullable = False
     )
-    index = sql.Column(
+    id_item = sql.Column(
         sql.Integer,
-        nullable = True,
-        unique = True
+        sql.ForeignKey('item.id'),
+        nullable = False
     )
     id_user = sql.Column(
         sql.Integer,
@@ -56,6 +78,7 @@ class Order(Base):
     )
 
     user = relationship(User, backref = 'order')
+    item = relationship(Item, backref = 'order')
 
     def __str__(self):
         return '%s: %s, %s' % (self.id, self.id_user, self.item)
