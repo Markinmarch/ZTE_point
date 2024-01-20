@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 
-from .setting import DataBase
+from .db_config import DataBase
 
 
 load_dotenv(dotenv_path = '.env')
