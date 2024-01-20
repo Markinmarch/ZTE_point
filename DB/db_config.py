@@ -1,10 +1,10 @@
 import logging
 from sqlalchemy import create_engine
-# from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session
 from psycopg2 import connect, Error, errors
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
-# from models import create_table
+from models import create_table
 
 
 class DataBase:
@@ -44,5 +44,9 @@ class DataBase:
             self.connection.close()
     
     def session(self) -> object:
-        DSN = "postgresql://%s:%s@%s:%s/%s" % (self.user, self.password, self.host, self.port, self.database, )
-        return create_engine(DSN)
+        DSN = "postgresql+psycopg2://%s:%s@%s:%s/%s" % (self.user, self.password, self.host, self.port, self.database, )
+        engine = create_engine(DSN)
+        create_table(engine)
+        logging.info(f'<--- Tables is created --->')
+        return Session(engine)
+
