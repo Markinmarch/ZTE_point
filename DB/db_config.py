@@ -8,14 +8,25 @@ from models import create_table
 
 
 class DataBase:
-    
+    '''
+    Объект "DataBase" реализует создание базы данных
+    PostgreSQL на стороне сервера при условии, что
+    данной базы данных ещё не существует. В противном
+    случае объект ничего не делает.
+        Параметры:
+            user(str): имя пользователя БД;
+            password(str): пароль от БД для данного пользователя;
+            host(str): хост ресурса;
+            port(str): порт ресурса;
+            database(str): название/имя БД;
+    '''
     def __init__(
         self,
-        user,
-        password,
-        host,
-        port,
-        database
+        user: str,
+        password: str,
+        host: str,
+        port: str,
+        database: str
     ) -> None:
         self.user = user
         self.password = password
@@ -31,6 +42,10 @@ class DataBase:
         self.cursor = self.connection.cursor()
     
     def create_database(self) -> None:
+        '''
+        Метод непосредственно создаёт базу данных с проверкой
+        на ошибки.
+        '''
         try:
             self.connection.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
             self.cursor.execute(query = 'CREATE DATABASE %s;' % (self.database, ))
@@ -44,6 +59,12 @@ class DataBase:
             self.connection.close()
     
     def session(self) -> object:
+        '''
+        Метод подключается к созданной базе данных и создаёт
+        сессию для внесения изменений в неё.
+            Возвращаемое значение:
+                object(Session);
+        '''
         DSN = "postgresql+psycopg2://%s:%s@%s:%s/%s" % (self.user, self.password, self.host, self.port, self.database, )
         engine = create_engine(DSN)
         create_table(engine)
