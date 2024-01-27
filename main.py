@@ -1,6 +1,5 @@
 import logging
 import os
-from dotenv import load_dotenv
 
 
 def logger():
@@ -20,6 +19,11 @@ def logger():
     )
 
 def main():
-    from DB import session, create_database
-    create_database
-    session
+    # from DB import session, create_database
+    # create_database
+    # session
+    from app import app_settings
+    if __name__ == "__main__":
+        app_settings.engine.run(debug=True)
+
+main()
