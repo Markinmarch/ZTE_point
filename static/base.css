@@ -4,10 +4,11 @@
     overflow: hidden;
     border-radius: 15px;
     min-width: 100%;
+    font-family: "Roboto", "Arial", sans-serif;
 }
 
 /* Style the links inside the navigation bar */
-.topnav a {
+.bg a {
     float: left;
     color: #f2f2f2;
     text-align: center;
@@ -25,7 +26,7 @@
       background-position: 100px 0px;
     }
   }
-.topnav a:hover {
+.bg a:hover {
     background: repeating-linear-gradient(
         45deg,
         #606dbc,
@@ -41,20 +42,20 @@
 }
 
 /* Add a color to the active/current link */
-.topnav a.active {
-    background-color: #4CAF50;
+.bg a.active {
+    background-color: #359536;
     color: white;
     border-radius: 15px;
 }
 
-.topnav a.login {
+.bg a.login {
     background-color: black;
     color: white;
     float: right;
     border-radius: 15px;
 }
 
-.topnav a.login:hover {
+.bg a.login:hover {
     background-color: white;
     color: black;
 }
@@ -69,7 +70,7 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:200');
 
 body  {
-    background-image: url('https://i.pinimg.com/originals/2f/32/a6/2f32a6ff953e253f10cbafdda87c31cd.jpg');
+    background-image: url('https://catherineasquithgallery.com/uploads/posts/2023-01/1674374444_catherineasquithgallery-com-p-serii-krasivii-fon-foto-4.jpg');
     background-size:cover;
         -webkit-animation: slidein 50s;
         animation: slidein 50s;
@@ -201,7 +202,7 @@ a.slide__next,
     display: inline-block;
     height: 15px;
     width: 15px;
-    border-radius: 50%;
+    border-radius: 15px;
     background-color: black;
     margin: 0 10px 0 10px;
 }
@@ -262,7 +263,7 @@ a:hover { color: tomato; } */
     position: relative;
     display: flex;
     min-height: 300px;
-    border-radius: 8px 8px 0 0;
+    border-radius: 15px;
     overflow: hidden;
 }
 
@@ -277,13 +278,13 @@ a:hover { color: tomato; } */
   
     padding: 10px;
     text-align: center;
-    background: #9768D1;
+    background: #4e4e4e;
     cursor: pointer;
     transition: background 0.5s ease;
 }
 
 .tabby-tab label:hover {
-    background: #7B52AB;
+    background: #71677c;
 }
 
 .tabby-content {
@@ -293,7 +294,7 @@ a:hover { color: tomato; } */
     top: 40px; 
     padding: 20px;
     border-radius: 0 0 8px 8px;
-    background: #553285;
+    background: #bcbabf;
   
     transition: 
         opacity 0.8s ease,
@@ -315,7 +316,7 @@ a:hover { color: tomato; } */
 
 .tabby-tab [type=radio] { display: none; }
 [type=radio]:checked ~ label {
-  background: #553285;
+  background: #359536;
   z-index: 2;
 }
 
@@ -344,3 +345,40 @@ a:hover { color: tomato; } */
     margin-bottom: 20px;
   }
 }
+
+
+/* ---- */
+.bg {
+    overflow: hidden;
+    border-radius: 15px;
+    min-width: 100%;
+    font-family: "Roboto", "Arial", sans-serif;
+    background-size: 300% 300%;
+    background-image: linear-gradient(-45deg, rgb(255, 255, 255) 0%, rgb(169, 169, 169) 25%, rgb(66, 66, 66) 51%, #000000 100%);
+    -webkit-animation: AnimateBG 20s ease infinite;
+            animation: AnimateBG 20s ease infinite;
+  }
+  
+  @-webkit-keyframes AnimateBG {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  @keyframes AnimateBG {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
