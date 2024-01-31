@@ -3,6 +3,13 @@
 {% block title %}Вход{% endblock %}
 
 {% block content %}
+<div class="bg">
+  <a href = "/" type = "button">главная</a>
+  <a href = "/items" type = "button">товары</a>
+  <a href = "/contact" type = "button">контакты</a>
+  <a href = "/about" type = "button">о нас</a>
+  <a class = "login" style = "background-color: #359536;" type = "button" href = "/registration">Регистрация</a>
+</div>
   <div class="container">
     <div class="row justify-content-center mt-5">
       <div class="col-md-6">
@@ -35,6 +42,9 @@
                 <button type="submit" class="btn btn-primary">Войти</button>
               </div>
             </form>
+            <div class = "login">
+              <a type = "button" href="/registration">Регистрация</a>
+            </div>
           </div>
         </div>
       </div>

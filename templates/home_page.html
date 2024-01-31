@@ -3,31 +3,37 @@
 {% block title %}Главная страница{% endblock %}
 
 {% block content %}
-    <div class="topnav">
-        <a class = "active" href = "#home">Главная</a>
-        <a href = "#news" type = "button">Товары</a>
-        <a href = "#contact" type = "button">Контакты</a>
-        <a href = "#about" type = "button">О нас</a>
-        <a class = "login" type = "button" href = "/login">Войти</a>
-    </div>
+  <div class="bg">
+    <a class = "active" type = "button" href = "/">главная</a>
+    <a href = "/items" type = "button">товары</a>
+    <a href = "/contact" type = "button">контакты</a>
+    <a href = "/about" type = "button">о нас</a>
+    <a class = "login" type = "button" href = "/login">Войти</a>
+  </div>
     <div class="slider-container">
       <div class="slider">
-        <a href="https://alvarotrigo.com/blog/create-a-slider-with-pure-CSS/" target="_blank" class="read-article">
-          Read the article 👉
-        </a>
         <div class="slides">
           <div id="slides__1" class="slide">
-            <span class="slide__text">1</span>
+            <a href="https://alvarotrigo.com/blog/create-a-slider-with-pure-CSS/" target="_blank" class="read-article">
+              ходовая 👉
+            </a>
+            <img src = "https://wallpaper.caricos.com/2017-Mercedes-AMG-C63-S-Coupe---AMG-Speed-Sensitive-Sports-Steering-107365-2560x1440.jpg" width="1800" height="800">
             <a class="slide__prev" href="#slides__4" title="Next"></a>
             <a class="slide__next" href="#slides__2" title="Next"></a>
           </div>
           <div id="slides__2" class="slide">
-            <span class="slide__text">2</span>
+            <a href="https://alvarotrigo.com/blog/create-a-slider-with-pure-CSS/" target="_blank" class="read-article">
+              детали двигателя 👉
+            </a>
+            <img src = "https://amt-zap.ru/wp-content/uploads/2022/12/7e9f218fe681765eec99fbb5a0d3057e-scaled.jpg" width="1800" height="900">
             <a class="slide__prev" href="#slides__1" title="Prev"></a>
             <a class="slide__next" href="#slides__3" title="Next"></a>
           </div>
           <div id="slides__3" class="slide">
-            <span class="slide__text">3</span>
+            <a href="https://alvarotrigo.com/blog/create-a-slider-with-pure-CSS/" target="_blank" class="read-article">
+              детали кузова 👉
+            </a>
+            <img src = "http://www.avtoindent.ru/_bl/24/73063210.jpg" width="1800" height="800">
             <a class="slide__prev" href="#slides__2" title="Prev"></a>
             <a class="slide__next" href="#slides__4" title="Next"></a>
           </div>
@@ -50,37 +56,38 @@
     <div class="tabs">
       <div class="tabby-tab">
         <input type="radio" id="tab-1" name="tabby-tabs" checked>
-        <label for="tab-1">Tabby Tab 1</label>
+        <label for="tab-1">Детали бывшие в употреблении</label>
         <div class="tabby-content">
-          <img src="http://i64.tinypic.com/20qrlc.png"/>
-          <p>Purr while eating meowing non stop for food or chase laser sleep on dog bed, force dog to sleep on floor, so play riveting piece on synthesizer keyboard hiss at vacuum cleaner. Stares at human while pushing stuff off a table spot something, big eyes, big eyes, crouch, shake butt, prepare to pounce so refuse to leave cardboard box.</p>
+          <img src="https://icons.iconarchive.com/icons/rob-sanders/gear/48/spur-gear-icon.png" width="48" height="48">
+
+          <p>Наша команда специализируктся на всякой хуйне</p>
         </div>
       </div>
     
       <div class="tabby-tab">
         <input type="radio" id="tab-2" name="tabby-tabs">
-        <label for="tab-2">Tabby Tab 2</label>
+        <label for="tab-2">Расходные материалы</label>
         <div class="tabby-content">
-          <img src="http://i63.tinypic.com/wtykg4.png"/>
-          <p>Cats go for world domination if it fits, i sits, meowwww but claw drapes, or sleep in the bathroom sink. Missing until dinner time under the bed, or eat from dog's food hide from vacuum cleaner kick up litter but lie on your belly and purr when you are asleep.</p>
+          <img src="https://icons.iconarchive.com/icons/mugenB16/the-attic/48/Oil-icon.png" width="48" height="48">
+          <p>Наша команда впаривает хуету</p>
         </div>
       </div>
     
       <div class="tabby-tab">
         <input type="radio" id="tab-3" name="tabby-tabs">
-        <label for="tab-3">Tabby Tab 3</label>
+        <label for="tab-3">Сервисное обслуживание и ремонт</label>
         <div class="tabby-content">
-            <img src="http://i66.tinypic.com/wuhy7b.png"/>
-            <p>Throwup on your pillow wake up human for food at 4am and hide when guests come over, yet inspect anything brought into the house.</p>
+          <img src="https://icons.iconarchive.com/icons/brisbanetanks/tools/48/Wrench-icon.png" width="48" height="48">
+          <p>Наша команда вероятнее всего Вас не наебёт</p>
         </div>
       </div>
     
       <div class="tabby-tab">
         <input type="radio" id="tab-4" name="tabby-tabs">
-        <label for="tab-4">Tabby Tab 4</label>
+        <label for="tab-4">Проведение комплексных мероприятий</label>
         <div class="tabby-content">
-          <img src="http://i63.tinypic.com/kakc9i.png"/>
-          <p>Use lap as chair love to play with owner's hair tie pooping rainbow while flying in a toasted bread costume in space. Run in circles loves cheeseburgers, nap all day kick up litter. Stick butt in face hide when guests come over.</p>
+          <img src="https://icons.iconarchive.com/icons/paomedia/small-n-flat/48/sign-check-icon.png" width="48" height="48">
+          <p>Ну а в целом рот его ебать</p>
             
         </div>
       </div>
