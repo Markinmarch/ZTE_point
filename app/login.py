@@ -1,8 +1,8 @@
 from flask import request, render_template
-from .app_settings import engine
+from .app_settings import dp
 
 
-@engine.route('/login', methods = ['GET', 'POST'])
+@dp.route('/login', methods = ['GET', 'POST'])
 def login():
     if request.method == 'POST':
         username = request.form['username']

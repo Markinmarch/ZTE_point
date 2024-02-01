@@ -1,7 +1,7 @@
 from flask import request, render_template
-from .app_settings import engine
+from .app_settings import dp
 
 
-@engine.route('/items', methods = ['GET', 'POST'])
+@dp.route('/items', methods = ['GET', 'POST'])
 def items():
     pass
