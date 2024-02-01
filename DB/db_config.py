@@ -1,10 +1,9 @@
 import logging
 from sqlalchemy import create_engine
-from sqlalchemy.orm import Session
 from psycopg2 import connect, Error, errors
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
-from models import create_table
+from db_models import create_table
 
 
 class DataBase:
@@ -58,16 +57,17 @@ class DataBase:
             self.cursor.close()
             self.connection.close()
     
-    def session(self) -> object:
+    def sql_engine(self) -> object:
         '''
         Метод подключается к созданной базе данных и создаёт
         сессию для внесения изменений в неё.
             Возвращаемое значение:
-                object(Session);
+                object(engine);
         '''
         DSN = "postgresql+psycopg2://%s:%s@%s:%s/%s" % (self.user, self.password, self.host, self.port, self.database, )
         engine = create_engine(DSN)
-        create_table(engine)
+        return engine
+    
+    def add_tables(self) -> object:
         logging.info(f'<--- Tables is created --->')
-        return Session(engine)
-
+        return create_table(self.sql_engine)

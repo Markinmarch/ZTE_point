@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv
+from sqlalchemy.orm import sessionmaker
 
 from .db_config import DataBase
 
@@ -21,5 +22,8 @@ database = DataBase(
 )
 
 create_database = database.create_database()
+engine = database.sql_engine()
+create_tables = database.add_tables()
 
-session = database.session()
+Session = sessionmaker(bind = engine)
+session = Session()
