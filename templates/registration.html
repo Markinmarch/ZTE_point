@@ -1,7 +1,22 @@
 {% extends "base.html" %}
-{% block title %}Регитсрация{% endblock %}
+{% block title %}Региcтрация{% endblock %}
 {% block content %}
-<form action="{{ url_for('registration') }}" method="post">
-    <ul>awdawdawd</ul>
+<form action = "{{ url_for('registration') }}" method = "post">
+    <div>
+        <label for = "userName">Имя</label>
+        <input type = "text" name = "userName" required>
+    </div>
+    <div>
+        <label for = "userPhone">Номер телефона</label>
+        <input type = "text" name = "userPhone" required>
+    </div>
+    <div>
+        <label for = "userEmail">Электронная почта</label>
+        <input type = "text" name = "userEmail" required>
+    </div>
+    <div>
+        <label for = "userPassword">Пароль</label>
+        <input type = "password" name = "userPassword" required>
+    </div>
 </form>
 {% endblock %}
