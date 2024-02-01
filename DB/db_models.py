@@ -4,6 +4,7 @@ from sqlalchemy.orm import declarative_base, relationship
 
 
 Base = declarative_base()
+metadata = MetaData
 
 class User(Base):
     '''
@@ -16,7 +17,6 @@ class User(Base):
             password(str): пароль от личного кабинета;
         Возвращаемое значение:
             str(id, name, email)
-
     '''
     __tablename__ = 'user'
 
