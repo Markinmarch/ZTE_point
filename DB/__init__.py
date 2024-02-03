@@ -20,10 +20,3 @@ database = DataBase(
     port = postgres_port,
     database = postgres_database
 )
-
-create_database = database.create_database()
-engine = database.sql_engine()
-create_tables = database.add_tables()
-
-Session = sessionmaker(bind = engine)
-session = Session()

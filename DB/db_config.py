@@ -56,18 +56,3 @@ class DataBase:
         finally:
             self.cursor.close()
             self.connection.close()
-    
-    def sql_engine(self) -> object:
-        '''
-        Метод подключается к созданной базе данных и создаёт
-        сессию для внесения изменений в неё.
-            Возвращаемое значение:
-                object(engine);
-        '''
-        DSN = "postgresql+psycopg2://%s:%s@%s:%s/%s" % (self.user, self.password, self.host, self.port, self.database, )
-        engine = create_engine(DSN)
-        return engine
-    
-    def add_tables(self) -> object:
-        logging.info(f'<--- Tables is created --->')
-        return create_table(self.sql_engine)
