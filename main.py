@@ -2,6 +2,7 @@ import logging
 import os
 
 
+
 def logger():
     if 'ZTE_point.log' not in os.listdir('.'):
         with open('ZTE_point.log', mode = 'x', encoding = 'utf-8') as log_file:
@@ -19,11 +20,10 @@ def logger():
     )
 
 def main():
-    # from DB import session, create_database
-    # create_database
-    # session
+    # from DB import db_main
+    # db_main.tables
     from app import app_settings
     if __name__ == "__main__":
-        app_settings.engine.run(debug=True)
-
+        app_settings.dp.run(debug=True)
+logger()
 main()
