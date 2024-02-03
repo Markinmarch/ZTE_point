@@ -1,10 +1,8 @@
 import sqlalchemy as sql
-from sqlalchemy import MetaData
 from sqlalchemy.orm import declarative_base, relationship
 
 
 Base = declarative_base()
-metadata = MetaData
 
 class User(Base):
     '''
@@ -23,7 +21,7 @@ class User(Base):
     id = sql.Column(sql.Integer, primary_key = True)
     name = sql.Column(sql.String(length = 40), nullable = False)
     phone = sql.Column(sql.String, nullable = False)
-    email = sql.Column(sql.String, mullable = False, unique = True)
+    email = sql.Column(sql.String, nullable = False)
     password = sql.Column(sql.String, nullable = False)
 
     def __str__(self):
@@ -73,6 +71,6 @@ class Order(Base):
 
     def __str__(self):
         return '%s: %s, %s' % (self.id, self.id_user, self.item)
-    
-def create_table(engine):
+
+def create_table(engine): 
     Base.metadata.create_all(engine)
