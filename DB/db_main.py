@@ -1,5 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from werkzeug.security import generate_password_hash, check_password_hash
 
 from DB.db_models import User, Item, Order, create_table
 from . import (
@@ -29,7 +30,7 @@ def insert_user(
             name = user_name,
             phone = user_phone,
             email = user_email,
-            password = user_password
+            password = generate_password_hash(user_password)
     ))
     session.commit()
     session.close()

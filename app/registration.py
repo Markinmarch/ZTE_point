@@ -13,6 +13,6 @@ def registration():
             user_email = request.form['userEmail'],
             user_password = request.form['userPassword']
         )
-        return render_template('registration.html')
+        return render_template('home_page.html')
     else:
         return render_template('registration.html')

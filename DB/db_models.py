@@ -21,7 +21,7 @@ class User(Base):
     id = sql.Column(sql.Integer, primary_key = True)
     name = sql.Column(sql.String(length = 40), nullable = False)
     phone = sql.Column(sql.String, nullable = False)
-    email = sql.Column(sql.String, nullable = False)
+    email = sql.Column(sql.String, nullable = False, unique = True)
     password = sql.Column(sql.String, nullable = False)
 
     def __str__(self):
