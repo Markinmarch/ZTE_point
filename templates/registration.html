@@ -3,16 +3,33 @@
 {% block title %}Региcтрация{% endblock %}
 
 {% block scripts %}
-<script src = "../static/success_registration.js"></script>
+    <script src = "../static/success_registration.js"></script>
 {% endblock %}
 
 {% block content %}
-<form style = "text-align:center; padding-top: 100px">
-    <ul><input type = "text" name = "userName" size = "40" placeholder = "Имя"></ul>
-    <ul><input type = "text" name = "userPhone" size = "40" placeholder = "Номер телефона"></ul>
-    <ul><input type = "text" name = "userEmail" size = "40" placeholder = "Электронная почта"></ul>
-    <ul><input type = "password" name = "userPassword" size = "40" placeholder = "Введите пароль"></ul>
-    <ul><input type = "password" name = "repaetPassword" size = "40" placeholder = "Повторите пароль"></ul>
-    <ul><input type = "submit" id = "addUser" value = "Зарегестрироваться"></ul>
-</form>
+    <form action = "{{ url_for('registration') }}" method = "post" style = "text-align:center; padding-top: 100px">
+        <ul>
+            <label for = "userName"></label>
+            <input type = "text" name = "userName" id = "userName" size = "40" placeholder = "Имя">
+        </ul>
+        <ul>
+            <label for = "userPhone"></label>
+            <input type = "text" name = "userPhone" id = "userPhone" size = "40" placeholder = "Введите номер телефона">
+        </ul>
+        <ul>
+            <label for = "userEmail"></label>
+            <input type = "text" name = "userEmail" id = "userEmail" size = "40" placeholder = "Введите адрес электронной почты">
+        </ul>
+        <ul>
+            <label for = "userPassword"></label>
+            <input type = "password" name = "userPassword" id = "userPassword" size = "40" placeholder = "Придумайте пароль">
+        </ul>
+        <ul>
+            <label for = "repeatPassword"></label>
+            <input type = "password" name = "repeatPassword" id = "repeatPassword" size = "40" placeholder = "Повторите пароль">
+        </ul>        
+        <ul>
+            <input type = "submit" id = "addUser" value = "регистрация">
+        </ul>
+    </form>
 {% endblock %}
