@@ -18,11 +18,11 @@ class User(Base):
     '''
     __tablename__ = 'user'
 
-    id = sql.Column(sql.Integer, primary_key = True)
-    name = sql.Column(sql.String(length = 40), nullable = False)
-    phone = sql.Column(sql.String, nullable = False)
-    email = sql.Column(sql.String, nullable = False, unique = True)
-    password = sql.Column(sql.String, nullable = False)
+    id = sql.Column(sql.Integer, nullable = False, primary_key = True)
+    name = sql.Column(sql.String(length = 40), default = None, nullable = False)
+    phone = sql.Column(sql.String, default = None, nullable = False)
+    email = sql.Column(sql.String, default = None, nullable = False, unique = True)
+    password = sql.Column(sql.String, default = None, nullable = False)
 
     def __str__(self):
         return '%s, %s, %s' % (self.id, self.name, self.email)

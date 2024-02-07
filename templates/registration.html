@@ -10,23 +10,23 @@
     <form action = "{{ url_for('registration') }}" method = "post" style = "text-align:center; padding-top: 100px">
         <ul>
             <label for = "userName"></label>
-            <input type = "text" name = "userName" id = "userName" size = "40" placeholder = "Имя">
+            <input type = "text" name = "userName" id = "userName" size = "40" placeholder = "Имя" required>
         </ul>
         <ul>
             <label for = "userPhone"></label>
-            <input type = "text" name = "userPhone" id = "userPhone" size = "40" placeholder = "Введите номер телефона">
+            <input type = "text" name = "userPhone" id = "userPhone" size = "40" placeholder = "Введите номер телефона" required>
         </ul>
         <ul>
             <label for = "userEmail"></label>
-            <input type = "text" name = "userEmail" id = "userEmail" size = "40" placeholder = "Введите адрес электронной почты">
+            <input type = "text" name = "userEmail" id = "userEmail" size = "40" placeholder = "Введите адрес электронной почты" required>
         </ul>
         <ul>
             <label for = "userPassword"></label>
-            <input type = "password" name = "userPassword" id = "userPassword" size = "40" placeholder = "Придумайте пароль">
+            <input type = "password" name = "userPassword" id = "userPassword" size = "40" placeholder = "Придумайте пароль" required>
         </ul>
         <ul>
             <label for = "repeatPassword"></label>
-            <input type = "password" name = "repeatPassword" id = "repeatPassword" size = "40" placeholder = "Повторите пароль">
+            <input type = "password" name = "repeatPassword" id = "repeatPassword" size = "40" placeholder = "Повторите пароль" required>
         </ul>        
         <ul>
             <input type = "submit" id = "addUser" value = "регистрация">

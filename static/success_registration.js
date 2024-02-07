@@ -3,7 +3,6 @@ window.onload = addUser;
 function addUser() {
     var buttonName = document.getElementById("addUser");
     buttonName.onclick = handleButtonClick;
-    // buttonName.onclick = checkCorrectUserPhone;
 }
 
 function handleButtonClick() {
@@ -20,15 +19,6 @@ function handleButtonClick() {
         alert("Пароли не совпадают! Повторите попытку!");
     }
     else {
-        alert("Ваше имя: " + userName + " Ваш возраст: " + userPhone);
+        alert(userName + ", регистрация прошла успешно!");
     }
 }
-
-// function checkCorrectUserPhone() {
-//     var userPhone = document.getElementById("userPhone").value;
-//     var checkPhone = userPhone.match(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im);
-
-//     if (checkPhone === false) {
-//         alert("Номер телефона введён некорректно. Повторите попытку.");
-//     }
-// }
