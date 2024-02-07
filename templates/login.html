@@ -4,50 +4,27 @@
 
 {% block content %}
 <div class="bg">
-  <a href = "/" type = "button">главная</a>
-  <a href = "/items" type = "button">товары</a>
-  <a href = "/contact" type = "button">контакты</a>
-  <a href = "/about" type = "button">о нас</a>
-  <a class = "login" style = "background-color: #359536;" type = "button" href = "/registration">Регистрация</a>
+    <a href = "/" type = "button">главная</a>
+    <a href = "/items" type = "button">товары</a>
+    <a href = "/contact" type = "button">контакты</a>
+    <a href = "/about" type = "button">о нас</a>
+    <a class = "login" style = "background-color: #359536;" type = "button" href = "/registration">Регистрация</a>
 </div>
-  <div class="container">
-    <div class="row justify-content-center mt-5">
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header">
-            <h1 class="text-center">Вход на сайт</h1>
-          </div>
-          <div class="card-body">
-            {% with messages = get_flashed_messages() %}
-              {% if messages %}
-                <div class="alert alert-danger">
-                  <ul>
-                    {% for message in messages %}
-                      <li>{{ message }}</li>
-                    {% endfor %}
-                  </ul>
-                </div>
-              {% endif %}
-            {% endwith %}
-            <form method="post">
-              <div class="mb-3">
-                <label for="username" class="form-label">Логин:</label>
-                <input type="text" class="form-control" id="username" name="username" required>
-              </div>
-              <div class="mb-3">
-                <label for="password" class="form-label">Пароль:</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-              </div>
-              <div class="text-center">
-                <button type="submit" class="btn btn-primary">Войти</button>
-              </div>
-            </form>
-            <div class = "login">
-              <a type = "button" href="/registration">Регистрация</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div>
+<h2>Вход на сайт</h2>
+</form>
+    <ul>
+        <label for="username" class="form-label">Логин:</label>
+        <input type="text" class="form-control" id="username" name="username" required>
+    </ul>
+    <ul>
+        <label for="password" class="form-label">Пароль:</label>
+        <input type="password" class="form-control" id="password" name="password" required>
+    </ul>
+    <ul>
+        <button type="submit" class="btn btn-primary">Войти</button>
+        <a type = "button" href="/registration">Регистрация</a>
+    </ul>
+</form>
+</div>
 {% endblock %}

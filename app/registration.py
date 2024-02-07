@@ -1,8 +1,7 @@
-from flask import request, render_template, Response, app
+from flask import request, render_template, Response, redirect
 
 from .app_settings import dp
 from DB.db_main import insert_user
-from . import home_page
 
 
 @dp.route('/registration', methods = ['GET', 'POST'])
@@ -18,6 +17,6 @@ def registration():
             user_email = email,
             user_password = password
         )
-        return dp.add_url_rule('/', 'home_page', home_page.home())
+        return redirect('/')
     else:
         return render_template('registration.html')
