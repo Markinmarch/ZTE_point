@@ -1,15 +1,17 @@
-from flask import request, render_template
+from flask import request, render_template, redirect
 from .app_settings import dp
+
+from DB.db_main import check_user
 
 
 @dp.route('/login', methods = ['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        if username and password in 'aswdwdawdawdawdawdawd':
-            return render_template('home_page.html')
-        else:
-            return render_template('login.html')
+        x = check_user(
+            user_email = request.form['userEmail'],
+            user_password = request.form['userPassword']            
+        )
+        print(x)
+        return redirect('/')
     else:
         return render_template('login.html')

@@ -35,8 +35,11 @@ def insert_user(
     session.commit()
     session.close()
 
-# def select_user(user_id: int) -> str:
-#     return session.query(User).filter(User.id == user_id)
+def check_user(
+    user_email: int,
+    user_password: str
+) -> bool:
+    return session.query(User).filter(User.email == user_email), check_password_hash(hash, user_password)
             
 
 # def delete_user():
