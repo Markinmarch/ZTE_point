@@ -14,9 +14,13 @@ function handleButtonClick() {
 
     if (userName == "" || userPhone == "" || userEmail == "" || userPassword == "") {
         alert("Введите параметры, пожалуйста!");
+        return false;
     }
     else if (repeatPassword !== userPassword) {
         alert("Пароли не совпадают! Повторите попытку!");
+        var clearRepeatPassword = document.getElementById("repeatPassword");
+        clearRepeatPassword.value = "";
+        return false;
     }
     else {
         alert(userName + ", регистрация прошла успешно!");
