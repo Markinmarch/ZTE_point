@@ -1,5 +1,8 @@
 import sqlalchemy as sql
 from sqlalchemy.orm import declarative_base, relationship
+from werkzeug.security import generate_password_hash, check_password_hash
+
+from . import engine, session
 
 
 Base = declarative_base()
@@ -26,6 +29,30 @@ class User(Base):
 
     def __str__(self):
         return '%s, %s, %s' % (self.id, self.name, self.email)
+    
+    def insert_user(
+        self,
+        user_name: str,
+        user_phone: str,
+        user_email: str,
+        user_password: str
+    ) -> None:
+        session.add(
+            User(
+                name = user_name,
+                phone = user_phone,
+                email = user_email,
+                password = generate_password_hash(user_password)
+        ))
+        session.commit()
+        session.close()
+        
+    def check_user(
+        self,
+        user_email: int,
+        user_password: str
+    ) -> bool:
+        return session.query(User).filter(User.email == user_email), check_password_hash(hash, user_password)
     
 class Item(Base):
     '''
@@ -72,5 +99,6 @@ class Order(Base):
     def __str__(self):
         return '%s: %s, %s' % (self.id, self.id_user, self.item)
 
-def create_table(engine): 
+def create_table(): 
     Base.metadata.create_all(engine)
+#избавились от переменной (ссылки) tables за ненадобностью

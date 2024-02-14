@@ -20,8 +20,10 @@ def logger():
     )
 
 def main():
-    # from DB import db_main
-    # db_main.tables
+    from DB import database
+    database
+    from DB import models
+    models.create_table()
     from app import app_settings
     if __name__ == "__main__":
         app_settings.dp.run(debug=True)
