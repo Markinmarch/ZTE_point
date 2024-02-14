@@ -5,13 +5,12 @@ from DB.db_main import check_user
 
 
 @dp.route('/login', methods = ['GET', 'POST'])
-def login():
+def login_auth():
     if request.method == 'POST':
         x = check_user(
             user_email = request.form['userEmail'],
             user_password = request.form['userPassword']            
         )
-        print(x)
-        return redirect('/')
+        return x
     else:
         return render_template('login.html')

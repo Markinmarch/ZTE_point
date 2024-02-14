@@ -38,7 +38,7 @@ def insert_user(
 def check_user(
     user_email: int,
     user_password: str
-) -> bool:
+):
     return session.query(User).filter(User.email == user_email), check_password_hash(hash, user_password)
             
 
