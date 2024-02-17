@@ -1,9 +1,63 @@
-import sqlalchemy as sql
-from sqlalchemy.orm import declarative_base, relationship
+import logging
+from psycopg2 import connect, Error, errors
+from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
+from sqlalchemy import create_engine, Column, ForeignKey, Integer, String, Float, Date
+from sqlalchemy.orm import declarative_base, relationship, sessionmaker
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from . import engine, session
+from config import (
+    postgres_database,
+    postgres_host,
+    postgres_password,
+    postgres_port,
+    postgres_user
+)
 
+
+def create_database(
+    user: str,
+    password: str,
+    host: str,
+    port: str,
+    database: str
+):
+    '''
+    Метод "create_database" реализует создание базы данных
+    PostgreSQL на стороне сервера при условии, что
+    данной базы данных ещё не существует. В противном
+    случае метод ничего не делает.
+        Параметры:
+            user(str): имя пользователя БД;
+            password(str): пароль от БД для данного пользователя;
+            host(str): хост ресурса;
+            port(str): порт ресурса;
+            database(str): название/имя БД;
+    '''
+    connection = connect(
+        user = user,
+        password = password,
+        host = host,
+        port = port
+        )
+    cursor = connection.cursor()
+    try:
+        connection.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+        cursor.execute(query = 'CREATE DATABASE %s;' % (database, ))
+        logging.info('<--- Success! Database %s is created --->' % (database))
+    except errors.DuplicateDatabase:
+        logging.info(f'<--- Database "{database}" is ready --->')
+    except Error as error:
+        logging.error(f'<--- {error} --->')
+    finally:
+        cursor.close()
+        connection.close()
+
+
+DSN = "postgresql+psycopg2://%s:%s@%s:%s/%s" % (postgres_user, postgres_password, postgres_host, postgres_port, postgres_database)
+
+engine = create_engine(DSN)
+Session = sessionmaker(engine)
+session = Session()
 
 Base = declarative_base()
 
@@ -21,11 +75,11 @@ class User(Base):
     '''
     __tablename__ = 'user'
 
-    id = sql.Column(sql.Integer, nullable = False, primary_key = True)
-    name = sql.Column(sql.String(length = 40), default = None, nullable = False)
-    phone = sql.Column(sql.String, default = None, nullable = False)
-    email = sql.Column(sql.String, default = None, nullable = False, unique = True)
-    password = sql.Column(sql.String, default = None, nullable = False)
+    id = Column(Integer, nullable = False, primary_key = True)
+    name = Column(String(length = 40), default = None, nullable = False)
+    phone = Column(String, default = None, nullable = False)
+    email = Column(String, default = None, nullable = False, unique = True)
+    password = Column(String, default = None, nullable = False)
 
     def __str__(self):
         return '%s, %s, %s' % (self.id, self.name, self.email)
@@ -67,10 +121,10 @@ class Item(Base):
     '''
     __tablename__ = 'item'
 
-    id = sql.Column(sql.Integer, primary_key = True)
-    name = sql.Column(sql.String(length = 100), nullable = False)
-    price = sql.Column(sql.Float, nullable = False)
-    index = sql.Column(sql.Integer, nullable = True, unique = True)
+    id = Column(Integer, primary_key = True)
+    name = Column(String(length = 100), nullable = False)
+    price = Column(Float, nullable = False)
+    index = Column(Integer, nullable = True, unique = True)
 
     def __str__(self):
         return '%s: %s, %s, %s' % (self.id, self.name, self.price, self.index)
@@ -88,10 +142,10 @@ class Order(Base):
     '''
     __tablename__ = 'order'
 
-    id = sql.Column(sql.Integer, primary_key = True)
-    date = sql.Column(sql.Date, nullable = False)
-    id_item = sql.Column(sql.Integer, sql.ForeignKey('item.id'), nullable = False)
-    id_user = sql.Column(sql.Integer, sql.ForeignKey('user.id'), nullable = False)
+    id = Column(Integer, primary_key = True)
+    date = Column(Date, nullable = False)
+    id_item = Column(Integer, ForeignKey('item.id'), nullable = False)
+    id_user = Column(Integer, ForeignKey('user.id'), nullable = False)
 
     user = relationship(User, backref = 'order')
     item = relationship(Item, backref = 'order')
