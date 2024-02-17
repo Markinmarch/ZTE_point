@@ -1,7 +1,7 @@
 from flask import request, render_template, Response, redirect
 
 from .app_settings import dp
-from DB.db_main import insert_user
+from DB.models import User
 
 
 @dp.route('/registration', methods = ['GET', 'POST'])
@@ -11,7 +11,7 @@ def registration():
         phone = request.form['userPhone']
         email = request.form['userEmail']
         password = request.form['userPassword']
-        insert_user(
+        User.insert_user(
             user_name = name,
             user_phone = phone,
             user_email = email,

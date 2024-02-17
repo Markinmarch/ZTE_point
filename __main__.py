@@ -1,4 +1,4 @@
 if __name__ == '__main__':
-    from main import main, logger
-    logger()
-    main()
+    import main
+    main.logger()
+    main.main()
