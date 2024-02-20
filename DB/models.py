@@ -4,6 +4,7 @@ from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from sqlalchemy import create_engine, Column, ForeignKey, Integer, String, Float, Date
 from sqlalchemy.orm import declarative_base, relationship, sessionmaker
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin
 
 from config import (
     postgres_database,
@@ -14,6 +15,7 @@ from config import (
 )
 
 
+#-------------------Создание базы данных PostgreSQL-------------------
 def create_database(
     user: str,
     password: str,
@@ -53,6 +55,7 @@ def create_database(
         connection.close()
 
 
+# ---------------подключение к базе данных PostgreSQL----------------
 DSN = "postgresql+psycopg2://%s:%s@%s:%s/%s" % (postgres_user, postgres_password, postgres_host, postgres_port, postgres_database)
 
 engine = create_engine(DSN)
@@ -61,7 +64,7 @@ session = Session()
 
 Base = declarative_base()
 
-class User(Base):
+class User(Base, UserMixin):
     '''
     Объект "User" - структура таблицы БД для пользователей.
         Параметры:
@@ -85,7 +88,7 @@ class User(Base):
         return '%s, %s, %s' % (self.id, self.name, self.email)
     
     def insert_user(
-        self,
+        # self,
         user_name: str,
         user_phone: str,
         user_email: str,
@@ -102,11 +105,11 @@ class User(Base):
         session.close()
         
     def check_user(
-        self,
-        user_email: int,
+        # self,
+        user_email: str,
         user_password: str
-    ) -> bool:
-        return session.query(User).filter(User.email == user_email), check_password_hash(hash, user_password)
+    ):
+        return session.query(User).filter(User.email == user_email)
     
 class Item(Base):
     '''
