@@ -11,6 +11,8 @@ function handleButtonClick() {
     var userEmail = document.getElementById("userEmail").value;
     var userPassword = document.getElementById("userPassword").value;
     var repeatPassword = document.getElementById("repeatPassword").value;
+    // var accountStatus = "{{ data.status }}"
+    // alert(accountStatus.status)
 
     if (userName == "" || userPhone == "" || userEmail == "" || userPassword == "") {
         alert("Введите параметры, пожалуйста!");
@@ -22,7 +24,14 @@ function handleButtonClick() {
         clearRepeatPassword.value = "";
         return false;
     }
+    // else if (accountStatus.status == "email_is_busy") {
+    //     alert("Указанная электронная почта уже зарегестрирована, укажите другой адрес.")
+    //     var clearUserEmail = document.getElementById("userEmail");
+    //     clearUserEmail.value = "";
+    //     return false;
+    // }
     else {
+        // alert(accountStatus)
         alert(userName + ", регистрация прошла успешно!");
     }
 }

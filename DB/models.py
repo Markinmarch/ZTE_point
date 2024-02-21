@@ -104,12 +104,12 @@ class User(Base, UserMixin):
         session.commit()
         session.close()
         
-    def check_user(
+    def check_email(
         # self,
-        user_email: str,
-        user_password: str
-    ):
-        return session.query(User).filter(User.email == user_email)
+        user_email: str
+    ) -> bool:
+        if session.query(User).filter(User.email == user_email) != None:
+            return True
     
 class Item(Base):
     '''
