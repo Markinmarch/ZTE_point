@@ -108,7 +108,9 @@ class User(Base, UserMixin):
         # self,
         user_email: str
     ) -> bool:
-        if session.query(User).filter(User.email == user_email) != None:
+        request_by_email = session.query(User).filter(User.email == user_email).count()
+        print(bool(request_by_email))
+        if request_by_email == True:
             return True
     
 class Item(Base):

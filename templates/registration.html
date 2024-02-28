@@ -3,7 +3,10 @@
 {% block title %}Региcтрация{% endblock %}
 
 {% block scripts %}
-    <script src = "../static/success_registration.js"></script>
+    <script type = "text/javascript">
+        var accountStatus = {{context|tojson}}
+    </script>
+    <script type="text/javascript" src = "../static/success_registration.js"></script>
 {% endblock %}
 
 {% block content %}
