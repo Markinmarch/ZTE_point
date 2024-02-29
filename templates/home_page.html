@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block title %}Главная страница{% endblock %}
-
+{% block scripts %}
+    <script type="text/javascript" src = "../static/greeting.js"></script>
+{% endblock %}
 {% block content %}
   <div class="bg">
     <a class = "active" type = "button" href = "/">главная</a>

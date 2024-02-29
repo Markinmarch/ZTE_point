@@ -109,7 +109,6 @@ class User(Base, UserMixin):
         user_email: str
     ) -> bool:
         request_by_email = session.query(User).filter(User.email == user_email).count()
-        print(bool(request_by_email))
         if request_by_email == True:
             return True
     

@@ -1,14 +1,16 @@
 window.onload = addUser;
 
 function addUser() {
-    if (accountStatus.status == "email_is_busy") {
+    var checkStatus = new URLSearchParams(window.location.search);
+    var status = checkStatus.get("status");
+    var buttonName = document.getElementById("addUser");
+    if (status == "email_is_busy") {
         alert("Указанная электронная почта уже зарегестрирована, укажите другой адрес.");
+        window.location.replace("http://localhost:5000/registration");
     }
     else {
-        var buttonName = document.getElementById("addUser");
         buttonName.onclick = handleButtonClick;
     }
-
 }
 
 function handleButtonClick() {
@@ -28,17 +30,5 @@ function handleButtonClick() {
         var clearRepeatPassword = document.getElementById("repeatPassword");
         clearRepeatPassword.value = "";
         return false;
-        
-    }
-    // else if (accountStatus.status == "email_is_busy") {
-    //     alert("Указанная электронная почта уже зарегестрирована, укажите другой адрес.");
-    //     // var clearUserEmail = document.getElementById("userEmail");
-    //     // clearUserEmail.value = "";
-    //     // return false;
-    //     // $.get("/registration", function() {alert(accountStatus.status);})
-    // }
-    else {
-        alert(userName + ", регистрация прошла успешно!");
-        return true;
     }
 }
