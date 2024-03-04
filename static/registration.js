@@ -1,16 +1,8 @@
 window.onload = addUser;
 
 function addUser() {
-    var checkStatus = new URLSearchParams(window.location.search);
-    var status = checkStatus.get("status");
     var buttonName = document.getElementById("addUser");
-    if (status == "email_is_busy") {
-        alert("Указанная электронная почта уже зарегестрирована, укажите другой адрес.");
-        window.location.replace("http://localhost:5000/registration");
-    }
-    else {
-        buttonName.onclick = handleButtonClick;
-    }
+    buttonName.onclick = handleButtonClick;
 }
 
 function handleButtonClick() {
@@ -25,10 +17,13 @@ function handleButtonClick() {
         alert("Введите параметры, пожалуйста!");
         return false;
     }
-    else if (repeatPassword !== userPassword) {
+    else if (repeatPassword !== userPassword || repeatPassword == "") {
         alert("Пароли не совпадают! Повторите попытку!");
         var clearRepeatPassword = document.getElementById("repeatPassword");
         clearRepeatPassword.value = "";
         return false;
+    }
+    else {
+        alert("Поздравляем, " + userName + ", регистрация завершена!")
     }
 }

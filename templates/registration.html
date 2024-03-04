@@ -3,6 +3,26 @@
 {% block title %}Региcтрация{% endblock %}
 
 {% block scripts %}
+    <script type = "text/javascript">
+        function checkStatus() {
+            var xhr = new XMLHttpRequest();
+            var email = document.getElementById("userEmail");
+            xhr.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    addUser();
+                }
+                else if (this.responseText == "email_is_busy") {
+                    alert("Адрес " + email + " уже занят, используйте другой.")
+                }
+                else {
+                    alert("Что-то пошло не так...")
+                }
+            }
+            xhr.open("POST", "/registration", true);
+            xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+            xhr.send("email=" + email.value);
+        }
+    </script>
     <script type="text/javascript" src = "../static/registration.js"></script>
 {% endblock %}
 
@@ -35,7 +55,7 @@
         <input type = "password" name = "repeatPassword" id = "repeatPassword" size = "40" placeholder = "Повторите пароль">
     </ul>        
     <ul>
-        <input type = "submit" id = "addUser" value = "регистрация">
+        <input type = "submit" onclick = "checkStatus()" value = "регистрация">
     </ul>
 </form>
 {% endblock %}
