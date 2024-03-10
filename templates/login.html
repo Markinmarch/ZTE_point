@@ -2,6 +2,10 @@
 
 {% block title %}Вход{% endblock %}
 
+{% block scripts %}
+<script type="text/javascript" src = "../static/login.js"></script>
+{% endblock %}
+
 {% block content %}
 <div class="bg">
     <a href = "/" type = "button">главная</a>
@@ -10,21 +14,23 @@
     <a href = "/about" type = "button">о нас</a>
     <a class = "login" style = "background-color: #359536;" type = "button" href = "/registration">Регистрация</a>
 </div>
-<div>
-<h2>Вход на сайт</h2>
-</form action = "{{url_for('login_auth')}}" method = "post">
+<div style = "text-align:center; padding-top: 100px">
+    <h2>Вход на сайт</h2>
+    </form action = "{{url_for('login_auth')}}" method = "post">
+        <ul>
+            <label for="userEmail"></label>
+            <input type="text" id="userEmail" placeholder="Адрес электронной почты" name="userEmail">
+        </ul>
+        <ul>
+            <label for="userPassword"></label>
+            <input type="password" id="userPassword" placeholder="Пароль" name="userPassword">
+        </ul>
+        <ul>
+            <input type = "submit" id = "joinUser" value = "войти">
+        </ul>
+    </form>
     <ul>
-        <label for="userEmail">Ваш email:</label>
-        <input type="text" id="userEmail" name="userEmail" required>
-    </ul>
-    <ul>
-        <label for="userPassword">Пароль:</label>
-        <input type="password" id="userPassword" name="userPassword" required>
-    </ul>
-    <ul>
-        <input type = "submit" id = "addUser" value = "войти">
-    </ul>
-</form>
-<a type = "button" href="/registration">Регистрация</a>
+        <a type = "button" href="/registration">регистрация</a>
+    </ul> 
 </div>
 {% endblock %}
