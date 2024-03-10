@@ -6,7 +6,6 @@ function addUser() {
 }
 
 function getUserRegistration() {
-
     var userName = document.getElementById("userName").value;
     var userPhone = document.getElementById("userPhone").value;
     var userEmail = document.getElementById("userEmail").value;
