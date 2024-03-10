@@ -64,6 +64,7 @@ session = Session()
 
 Base = declarative_base()
 
+# ----------------модели БД-------------------------
 class User(Base, UserMixin):
     '''
     Объект "User" - структура таблицы БД для пользователей.
@@ -88,7 +89,6 @@ class User(Base, UserMixin):
         return '%s, %s, %s' % (self.id, self.name, self.email)
     
     def insert_user(
-        # self,
         user_name: str,
         user_phone: str,
         user_email: str,
@@ -105,12 +105,27 @@ class User(Base, UserMixin):
         session.close()
         
     def check_email(
-        # self,
         user_email: str
     ) -> bool:
-        request_by_email = session.query(User).filter(User.email == user_email).count()
-        if request_by_email == True:
+        # так как наши адреса почты уникальные (unique = True) и не может быть больше одного в БД,
+        # мы можем по количеству != 0, определить, что запись имеется. Не использовал конструкцию
+        # == 1, так как это не универсальное решение
+        check_email = session.query(User).filter(User.email == user_email).count()
+        if check_email != False:
             return True
+        
+    def check_user(
+        user_email: str,
+        user_password: str
+    ) -> bool:
+        get_user_email = session.query(User).filter(User.email == user_email)
+        check_email = get_user_email.count()
+        if check_email != False:
+            get_hash_pswd = session.query(User).filter(User.password).where(User.email == user_email)
+            print(get_hash_pswd)
+            check_password = check_password_hash(get_hash_pswd, user_password)
+            if check_password == True:
+                return True
     
 class Item(Base):
     '''
