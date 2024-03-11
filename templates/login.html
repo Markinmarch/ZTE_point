@@ -3,7 +3,7 @@
 {% block title %}Вход{% endblock %}
 
 {% block scripts %}
-<script type="text/javascript" src = "../static/login.js"></script>
+    <script type="text/javascript" src = "../static/login.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -16,14 +16,14 @@
 </div>
 <div style = "text-align:center; padding-top: 100px">
     <h2>Вход на сайт</h2>
-    </form action = "{{url_for('login_auth')}}" method = "post">
+    <form action = "{{url_for('login')}}" method = "post">
         <ul>
             <label for="userEmail"></label>
-            <input type="text" id="userEmail" placeholder="Адрес электронной почты" name="userEmail">
+            <input type="text" name="userEmail" id="userEmail" placeholder="Адрес электронной почты">
         </ul>
         <ul>
             <label for="userPassword"></label>
-            <input type="password" id="userPassword" placeholder="Пароль" name="userPassword">
+            <input type="password" name="userPassword" id="userPassword" placeholder="Пароль">
         </ul>
         <ul>
             <input type = "submit" id = "joinUser" value = "войти">

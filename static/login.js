@@ -7,7 +7,7 @@ function joinUser() {
 
 function getUserJoin() {
     var userEmail = document.getElementById("userEmail").value;
-    var userPassword = document.getElementById("userPassword").value;\
+    var userPassword = document.getElementById("userPassword").value;
     
     var userData = JSON.stringify({
         email: userEmail,
@@ -19,6 +19,6 @@ function getUserJoin() {
         return false;
     }
 
-    var xhr = new XMLHttpRequest();
+    // var xhr = new XMLHttpRequest();
     // ...
 }

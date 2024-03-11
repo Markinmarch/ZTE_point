@@ -84,9 +84,12 @@ class User(Base, UserMixin):
     phone = Column(String, default = None, nullable = False)
     email = Column(String, default = None, nullable = False, unique = True)
     password = Column(String, default = None, nullable = False)
-
+    
     def __str__(self):
         return '%s, %s, %s' % (self.id, self.name, self.email)
+    
+    def is_active(self):
+        return True
     
     def insert_user(
         user_name: str,
@@ -108,24 +111,20 @@ class User(Base, UserMixin):
         user_email: str
     ) -> bool:
         # так как наши адреса почты уникальные (unique = True) и не может быть больше одного в БД,
-        # мы можем по количеству != 0, определить, что запись имеется. Не использовал конструкцию
-        # == 1, так как это не универсальное решение
-        check_email = session.query(User).filter(User.email == user_email).count()
-        if check_email != False:
+        # мы можем по количеству == 1, определить, что запись имеется.
+        check_email = session.query(User).filter_by(email = user_email).count()
+        if check_email == True:
             return True
-        
+         
     def check_user(
         user_email: str,
         user_password: str
-    ) -> bool:
-        get_user_email = session.query(User).filter(User.email == user_email)
-        check_email = get_user_email.count()
-        if check_email != False:
-            get_hash_pswd = session.query(User).filter(User.password).where(User.email == user_email)
-            print(get_hash_pswd)
-            check_password = check_password_hash(get_hash_pswd, user_password)
-            if check_password == True:
-                return True
+    ):
+        get_user_by_email = session.query(User).filter(User.email == user_email)
+        user = get_user_by_email.first()
+        if user and check_password_hash(user.password, user_password) == True:
+            return user
+        # return False
     
 class Item(Base):
     '''
