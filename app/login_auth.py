@@ -13,7 +13,7 @@ def login():
             user_email = request.form['userEmail'],
             user_password = request.form['userPassword']            
         )
-        if join_user != False:
+        if join_user != None:
             login_user(join_user)
             return redirect('/')
         return 'false'

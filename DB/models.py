@@ -120,7 +120,7 @@ class User(Base, UserMixin):
         user_email: str,
         user_password: str
     ):
-        get_user_by_email = session.query(User).filter(User.email == user_email)
+        get_user_by_email = session.query(User).filter_by(email = user_email)
         user = get_user_by_email.first()
         if user and check_password_hash(user.password, user_password) == True:
             return user
