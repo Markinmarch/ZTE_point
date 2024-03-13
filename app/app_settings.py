@@ -1,5 +1,7 @@
 from flask import Flask
-from flask_login import LoginManager, login_user, logout_user, login_required
+from flask_login import LoginManager
+
+from config import SECRET_WORD
 
 
 # общие настройки Фласка
@@ -8,3 +10,7 @@ login_manager = LoginManager(dp)
 login_manager.init_app(dp)
 login_manager.login_view = 'login'
 login_manager.session_protection = 'strong'
+dp.config.update(
+    TESTTING = True,
+    SECRET_KEY = SECRET_WORD
+)
