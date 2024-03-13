@@ -1,11 +1,18 @@
-from .models import create_database
-from config import postgres_user, postgres_database, postgres_host, postgres_password, postgres_port
+from . import models
+
+from . models import create_database
+from config import (
+    POSTGRES_USER,
+    POSTGRES_DATABASE,
+    POSTGRES_HOST,
+    POSTGRES_PASSWORD,
+    POSTGRES_PORT)
 
 
 database = create_database(
-    user = postgres_user,
-    password = postgres_password,
-    host = postgres_host,
-    port = postgres_port,
-    database = postgres_database
+    user = POSTGRES_USER,
+    password = POSTGRES_PASSWORD,
+    host = POSTGRES_HOST,
+    port = POSTGRES_PORT,
+    database = POSTGRES_DATABASE
 )

@@ -7,11 +7,11 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
 from config import (
-    postgres_database,
-    postgres_host,
-    postgres_password,
-    postgres_port,
-    postgres_user
+    POSTGRES_USER,
+    POSTGRES_PASSWORD,
+    POSTGRES_HOST,
+    POSTGRES_PORT,
+    POSTGRES_DATABASE
 )
 
 
@@ -56,8 +56,7 @@ def create_database(
 
 
 # ---------------подключение к базе данных PostgreSQL----------------
-DSN = "postgresql+psycopg2://%s:%s@%s:%s/%s" % (postgres_user, postgres_password, postgres_host, postgres_port, postgres_database)
-
+DSN = "postgresql+psycopg2://%s:%s@%s:%s/%s" % (POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_HOST, POSTGRES_PORT, POSTGRES_DATABASE)
 engine = create_engine(DSN)
 Session = sessionmaker(engine)
 session = Session()
@@ -90,6 +89,12 @@ class User(Base, UserMixin):
     
     def is_active(self):
         return True
+    
+    def is_authenticated(self):
+        return True
+    
+    def is_anonymous(self):
+        return False
     
     def insert_user(
         user_name: str,

@@ -2,7 +2,6 @@ import logging
 import os
 
 
-
 def logger():
     if 'ZTE_point.log' not in os.listdir('.'):
         with open('ZTE_point.log', mode = 'x', encoding = 'utf-8') as log_file:
