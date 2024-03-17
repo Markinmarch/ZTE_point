@@ -1,7 +1,10 @@
 from flask import request, render_template
-from .app_settings import dp
+from flask_login import login_required
+
+from settings import dp
 
 
 @dp.route('/items', methods = ['GET', 'POST'])
+@login_required
 def items():
-    pass
+    return 'qwerty'

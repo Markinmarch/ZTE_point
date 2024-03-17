@@ -13,7 +13,7 @@ from config import (
     POSTGRES_PORT,
     POSTGRES_DATABASE
 )
-
+from settings import login_manager
 
 #-------------------Создание базы данных PostgreSQL-------------------
 def create_database(
@@ -64,7 +64,7 @@ session = Session()
 Base = declarative_base()
 
 # ----------------модели БД-------------------------
-class User(Base, UserMixin):
+class User(UserMixin, Base):
     '''
     Объект "User" - структура таблицы БД для пользователей.
         Параметры:
@@ -96,6 +96,9 @@ class User(Base, UserMixin):
     def is_anonymous(self):
         return False
     
+    def get_id(self):
+        return self.id
+    
     def insert_user(
         user_name: str,
         user_phone: str,
@@ -120,16 +123,16 @@ class User(Base, UserMixin):
         check_email = session.query(User).filter_by(email = user_email).count()
         if check_email == True:
             return True
-         
+
+    @login_manager.user_loader
     def check_user(
         user_email: str,
         user_password: str
     ):
         get_user_by_email = session.query(User).filter_by(email = user_email)
         user = get_user_by_email.first()
-        if user and check_password_hash(user.password, user_password) == True:
+        if check_password_hash(user.password, user_password) == True:
             return user
-        # return False
     
 class Item(Base):
     '''

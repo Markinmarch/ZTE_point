@@ -23,8 +23,8 @@ def main():
     database
     from DB import models
     models.create_table()
-    from app import app_settings
+    import settings
     if __name__ == "__main__":
-        app_settings.dp.run(debug=True)
+        settings.dp.run(debug=True)
 logger()
 main()
