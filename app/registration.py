@@ -1,6 +1,6 @@
 from flask import request, render_template, redirect
 
-from settings import dp
+from .app_settings import dp
 from DB.models import User
 
 

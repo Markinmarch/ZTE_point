@@ -1,7 +1,7 @@
 from flask import request, render_template, redirect
 from flask_login import login_user, current_user
 
-from settings import dp, login_manager
+from .app_settings import dp, login_manager
 from DB.models import User
 
 
