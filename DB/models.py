@@ -64,7 +64,7 @@ session = Session()
 Base = declarative_base()
 
 # ----------------модели БД-------------------------
-class User(UserMixin, Base):
+class User(Base, UserMixin):
     '''
     Объект "User" - структура таблицы БД для пользователей.
         Параметры:
@@ -115,6 +115,12 @@ class User(UserMixin, Base):
         session.commit()
         session.close()
         
+    def get_user(
+        user_id: int
+    ):  
+        return session.query(User).filter_by(id = user_id).first()
+        
+  
     def check_email(
         user_email: str
     ) -> bool:
@@ -124,7 +130,6 @@ class User(UserMixin, Base):
         if check_email == True:
             return True
 
-    @login_manager.user_loader
     def check_user(
         user_email: str,
         user_password: str

@@ -2,11 +2,14 @@ from flask import request, render_template, redirect
 from flask_login import login_user, current_user
 
 from .app_settings import dp, login_manager
-from DB.models import User
+from DB.models import User, session
 
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.get_user(user_id)
 
 @dp.route('/login', methods = ['GET', 'POST'])
-@login_manager.user_loader
 def login():
     if request.method == 'POST':
         user_email = request.form['userEmail'],
