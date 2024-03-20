@@ -60,6 +60,13 @@
     color: black;
 }
 
+.bg a.bascket {
+    /* background-color: aquamarine; */
+    border-radius: 15px;
+    float: right;
+    padding: 0px 20px;
+}
+
 /* body { */
     /* background: url('https://i.pinimg.com/originals/74/8c/7d/748c7d0dd14909493f922bc2caa22f17.gif');
     background-size: cover; */

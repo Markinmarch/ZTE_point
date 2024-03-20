@@ -2,7 +2,6 @@
 
 {% block title %}Главная страница{% endblock %}
 {% block scripts %}
-    <script type="text/javascript" src = "../static/greeting.js"></script>
 {% endblock %}
 {% block content %}
   <div class="bg">
@@ -10,7 +9,9 @@
     <a href = "/items" type = "button">товары</a>
     <a href = "/contact" type = "button">контакты</a>
     <a href = "/about" type = "button">о нас</a>
-    <a class = "login" type = "button" href = "/login">Войти</a>
+    {% for button in data %}
+        {{button.context|safe}}
+    {% endfor %}
   </div>
     <div class="slider-container">
       <div class="slider">
