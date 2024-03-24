@@ -12,15 +12,18 @@ def load_user(user_id):
 @dp.route('/login', methods = ['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        user_email = request.form['userEmail'],
-        user_password = request.form['userPassword'] 
-        validate_user = User.check_user(
-            user_email,
-            user_password            
-        )
-        print(validate_user)
-        if bool(validate_user) == True:
-            login_user(validate_user)
-            return redirect('/')
-        return 'false'
+        login_data = request.json
+        email = login_data['email'],
+        password = login_data['password']
+        try:
+            if User.check_email(email) == True:
+                validate_user = User.check_user(
+                    email,
+                    password            
+                )
+                if validate_user == True:
+                    login_user(validate_user)
+                    return redirect('/')
+        except TypeError:
+            return 'false'
     return render_template('login.html')
