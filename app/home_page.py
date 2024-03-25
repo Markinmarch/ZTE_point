@@ -13,7 +13,7 @@ from DB.models import User
 def home():
     if current_user.is_authenticated:
         data = [{
-            'context': '<a class = "login" type = "button" href = "/login">Выйти</a><a class = "bascket" type = "button" href = "/bascket"><img src="https://t700.ru/icon/cart.png" width="42" height="42"></a>'
+            'context': '<a class = "login" type = "button" href = "/logout">Выйти</a><a class = "bascket" type = "button" href = "/bascket"><img src="https://t700.ru/icon/cart.png" width="42" height="42"></a>'
         }]
     else:
         data = [{

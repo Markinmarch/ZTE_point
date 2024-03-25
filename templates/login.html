@@ -19,16 +19,16 @@
     <form action = "{{url_for('login')}}" method = "post">
         <ul>
             <label for="userEmail"></label>
-            <input type="text" name="userEmail" id="userEmail" placeholder="Адрес электронной почты" required>
+            <input type="text" name="userEmail" id="userEmail" placeholder="Адрес электронной почты">
         </ul>
         <ul>
             <label for="userPassword"></label>
-            <input type="password" name="userPassword" id="userPassword" placeholder="Пароль" required>
-        </ul>
-        <ul>
-            <input type = "submit" id = "joinUser" value = "войти">
+            <input type="password" name="userPassword" id="userPassword" placeholder="Пароль">
         </ul>
     </form>
+    <ul>
+        <input type = "submit" id = "joinUser" value = "войти">
+    </ul>
     <ul>
         <a type = "button" href="/registration">регистрация</a>
     </ul> 

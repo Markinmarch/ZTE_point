@@ -14,10 +14,10 @@ function getUserJoin() {
         password: userPassword.value
     });
 
-    // if (userEmail == "" || userPassword == "") {
-    //     alert("Введите параметры, пожалуйста!");
-    //     return false;
-    // }
+    if (userEmail == "" || userPassword == "") {
+        alert("Введите параметры, пожалуйста!");
+        return false;
+    }
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/login", true);
@@ -26,14 +26,12 @@ function getUserJoin() {
     xhr.onload = function() {
         if (xhr.response == "false") {
             alert("Адрес почты или пароль не верны, повторите попытку.");
-            // var clearUserEmail = document.getElementById("userEmail");
-            // var clearUserPassword = document.getElementById("userPassword")
             userEmail.value = "";
             userPassword.value = "";
+            return false;
         }
-        // else {
-            // alert("Поздравляем, " + userName + ", регистрация завершена!");
-            // window.location.replace("http://localhost:5000");
-        // }
+        else {
+            window.location.replace("http://localhost:5000");
+        }
     }
 }
