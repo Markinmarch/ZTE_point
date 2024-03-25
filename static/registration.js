@@ -23,7 +23,7 @@ function getUserRegistration() {
         alert("Введите параметры, пожалуйста!");
         return false;
     }
-    if (repeatPassword.value !== userPassword.value || repeatPassword.value == "") {
+    else if (repeatPassword.value !== userPassword.value || repeatPassword.value == "") {
         alert("Пароли не совпадают! Повторите попытку!");
         repeatPassword.value = "";
         return false;
