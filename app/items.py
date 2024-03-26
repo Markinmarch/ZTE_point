@@ -9,4 +9,4 @@ from DB.models import User, session
 @dp.route('/items', methods = ['GET', 'POST'])
 @login_required
 def items():
-    return 'qwerty'
+    return render_template('shop.html')

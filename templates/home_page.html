@@ -4,7 +4,8 @@
 {% block scripts %}
 {% endblock %}
 {% block content %}
-  <div class="bg">
+<link rel = "stylesheet" type = "text/css" href = "../static/base.css">
+<div class="bg">
     <a class = "active" type = "button" href = "/">главная</a>
     <a href = "/items" type = "button">товары</a>
     <a href = "/contact" type = "button">контакты</a>
@@ -12,90 +13,81 @@
     {% for button in data %}
         {{button.context|safe}}
     {% endfor %}
-  </div>
-    <div class="slider-container">
-      <div class="slider">
+</div>
+<div class="slider-container">
+    <div class="slider">
         <div class="slides">
-          <div id="slides__1" class="slide">
-            <a href="https://alvarotrigo.com/blog/create-a-slider-with-pure-CSS/" target="_blank" class="read-article">
-              ходовая 👉
-            </a>
-            <img src = "https://wallpaper.caricos.com/2017-Mercedes-AMG-C63-S-Coupe---AMG-Speed-Sensitive-Sports-Steering-107365-2560x1440.jpg" width="1800" height="800">
-            <a class="slide__prev" href="#slides__4" title="Next"></a>
-            <a class="slide__next" href="#slides__2" title="Next"></a>
-          </div>
-          <div id="slides__2" class="slide">
-            <a href="https://alvarotrigo.com/blog/create-a-slider-with-pure-CSS/" target="_blank" class="read-article">
-              детали двигателя 👉
-            </a>
-            <img src = "https://amt-zap.ru/wp-content/uploads/2022/12/7e9f218fe681765eec99fbb5a0d3057e-scaled.jpg" width="1800" height="900">
-            <a class="slide__prev" href="#slides__1" title="Prev"></a>
-            <a class="slide__next" href="#slides__3" title="Next"></a>
-          </div>
-          <div id="slides__3" class="slide">
-            <a href="https://alvarotrigo.com/blog/create-a-slider-with-pure-CSS/" target="_blank" class="read-article">
-              детали кузова 👉
-            </a>
-            <img src = "http://www.avtoindent.ru/_bl/24/73063210.jpg" width="1800" height="800">
-            <a class="slide__prev" href="#slides__2" title="Prev"></a>
-            <a class="slide__next" href="#slides__4" title="Next"></a>
-          </div>
-          <div id="slides__4" class="slide">
-            <span class="slide__text">4</span>
-            <a class="slide__prev" href="#slides__3" title="Prev"></a>
-            <a class="slide__next" href="#slides__1" title="Prev"></a>
-          </div>
+            <div id="slides__1" class="slide">
+                <a href="https://alvarotrigo.com/blog/create-a-slider-with-pure-CSS/" target="_blank" class="read-article">
+                    ходовая 👉
+                </a>
+                <img src = "https://wallpaper.caricos.com/2017-Mercedes-AMG-C63-S-Coupe---AMG-Speed-Sensitive-Sports-Steering-107365-2560x1440.jpg" width="1800" height="800">
+                <a class="slide__prev" href="#slides__4" title="Next"></a>
+                <a class="slide__next" href="#slides__2" title="Next"></a>
+            </div>
+            <div id="slides__2" class="slide">
+                <a href="https://alvarotrigo.com/blog/create-a-slider-with-pure-CSS/" target="_blank" class="read-article">
+                    детали двигателя 👉
+                </a>
+                <img src = "https://amt-zap.ru/wp-content/uploads/2022/12/7e9f218fe681765eec99fbb5a0d3057e-scaled.jpg" width="1800" height="900">
+                <a class="slide__prev" href="#slides__1" title="Prev"></a>
+                <a class="slide__next" href="#slides__3" title="Next"></a>
+            </div>
+            <div id="slides__3" class="slide">
+                <a href="https://alvarotrigo.com/blog/create-a-slider-with-pure-CSS/" target="_blank" class="read-article">
+                    детали кузова 👉
+                </a>
+                <img src = "http://www.avtoindent.ru/_bl/24/73063210.jpg" width="1800" height="800">
+                <a class="slide__prev" href="#slides__2" title="Prev"></a>
+                <a class="slide__next" href="#slides__4" title="Next"></a>
+            </div>
+            <div id="slides__4" class="slide">
+                <span class="slide__text">4</span>
+                <a class="slide__prev" href="#slides__3" title="Prev"></a>
+                <a class="slide__next" href="#slides__1" title="Prev"></a>
+            </div>
         </div>
         <div class="slider__nav">
-          <a class="slider__navlink" href="#slides__1"></a>
-          <a class="slider__navlink" href="#slides__2"></a>
-          <a class="slider__navlink" href="#slides__3"></a>
-          <a class="slider__navlink" href="#slides__4"></a>
+            <a class="slider__navlink" href="#slides__1"></a>
+            <a class="slider__navlink" href="#slides__2"></a>
+            <a class="slider__navlink" href="#slides__3"></a>
+            <a class="slider__navlink" href="#slides__4"></a>
         </div>
-      </div>
     </div>
-    <div class="container">
-         
+</div>
+<div class="container">
     <div class="tabs">
-      <div class="tabby-tab">
-        <input type="radio" id="tab-1" name="tabby-tabs" checked>
-        <label for="tab-1">Детали бывшие в употреблении</label>
-        <div class="tabby-content">
-          <img src="https://icons.iconarchive.com/icons/rob-sanders/gear/48/spur-gear-icon.png" width="48" height="48">
-
-          <p>Наша команда специализируктся на всякой хуйне</p>
+        <div class="tabby-tab">
+            <input type="radio" id="tab-1" name="tabby-tabs" checked>
+            <label for="tab-1">Детали бывшие в употреблении</label>
+            <div class="tabby-content">
+                <img src="https://icons.iconarchive.com/icons/rob-sanders/gear/48/spur-gear-icon.png" width="48" height="48">
+                <p>Наша команда специализируктся на всякой хуйне</p>
+            </div>
         </div>
-      </div>
-    
-      <div class="tabby-tab">
+        <div class="tabby-tab">
         <input type="radio" id="tab-2" name="tabby-tabs">
         <label for="tab-2">Расходные материалы</label>
         <div class="tabby-content">
-          <img src="https://icons.iconarchive.com/icons/mugenB16/the-attic/48/Oil-icon.png" width="48" height="48">
-          <p>Наша команда впаривает хуету</p>
+            <img src="https://icons.iconarchive.com/icons/mugenB16/the-attic/48/Oil-icon.png" width="48" height="48">
+            <p>Наша команда впаривает хуету</p>
         </div>
-      </div>
-    
-      <div class="tabby-tab">
+    </div>
+    <div class="tabby-tab">
         <input type="radio" id="tab-3" name="tabby-tabs">
         <label for="tab-3">Сервисное обслуживание и ремонт</label>
         <div class="tabby-content">
-          <img src="https://icons.iconarchive.com/icons/brisbanetanks/tools/48/Wrench-icon.png" width="48" height="48">
-          <p>Наша команда вероятнее всего Вас не наебёт</p>
+            <img src="https://icons.iconarchive.com/icons/brisbanetanks/tools/48/Wrench-icon.png" width="48" height="48">
+            <p>Наша команда вероятнее всего Вас не наебёт</p>
         </div>
-      </div>
-    
-      <div class="tabby-tab">
+    </div>
+    <div class="tabby-tab">
         <input type="radio" id="tab-4" name="tabby-tabs">
         <label for="tab-4">Проведение комплексных мероприятий</label>
         <div class="tabby-content">
-          <img src="https://icons.iconarchive.com/icons/paomedia/small-n-flat/48/sign-check-icon.png" width="48" height="48">
-          <p>Ну а в целом рот его ебать</p>
-            
+            <img src="https://icons.iconarchive.com/icons/paomedia/small-n-flat/48/sign-check-icon.png" width="48" height="48">
+            <p>Ну а в целом рот его ебать</p>
         </div>
-      </div>
-        
-    </div>
-    
-
+    </div>   
+</div>
 {% endblock %}
