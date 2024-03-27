@@ -37,6 +37,13 @@ function getUserRegistration() {
         if (xhr.response == "false") {
             alert("Адрес почты "+ userEmail.value + " уже зарегестрирован. Используйте другой.");
             userEmail.value = "";
+            return false;
+        }
+        else if (xhr.response == "few characters") {
+            alert("Пароль должен состоять минимум из 6 знаков");
+            userPassword.value = "";
+            repeatPassword.value = "";
+            return false;
         }
         else {
             alert("Поздравляем, " + userName.value + ", регистрация завершена!");
