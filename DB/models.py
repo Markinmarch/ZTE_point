@@ -83,6 +83,7 @@ class User(Base, UserMixin):
     phone = Column(String, default = None, nullable = False)
     email = Column(String, default = None, nullable = False, unique = True)
     password = Column(String, default = None, nullable = False)
+    role = Column(String, default = "user", nullable = False)
     
     def __str__(self):
         return '%s, %s, %s' % (self.id, self.name, self.email)
