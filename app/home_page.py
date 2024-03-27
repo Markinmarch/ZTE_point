@@ -1,13 +1,9 @@
 from flask import render_template
 from flask_login import current_user
 
-from .app_settings import dp, login_manager
+from .app_settings import dp
 from DB.models import User
 
-
-# @login_manager.user_loader
-# def load_user(user_id):
-#     return User.get_user(user_id)
 
 @dp.route('/')
 def home():
@@ -20,4 +16,3 @@ def home():
             'context': '<a class = "login" type = "button" href = "/login">Войти</a>'
         }]
     return render_template('home_page.html', data = data)
-    # return render_template('home_page.html')
