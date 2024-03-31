@@ -13,7 +13,6 @@ from config import (
     POSTGRES_PORT,
     POSTGRES_DATABASE
 )
-from settings import login_manager
 
 #-------------------Создание базы данных PostgreSQL-------------------
 def create_database(
@@ -104,14 +103,16 @@ class User(Base, UserMixin):
         user_name: str,
         user_phone: str,
         user_email: str,
-        user_password: str
+        user_password: str,
+        user_role: str
     ) -> None:
         session.add(
             User(
                 name = user_name,
                 phone = user_phone,
                 email = user_email,
-                password = generate_password_hash(user_password)
+                password = generate_password_hash(user_password),
+                role = user_role
         ))
         session.commit()
         session.close()
