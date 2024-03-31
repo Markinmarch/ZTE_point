@@ -1,7 +1,7 @@
 from flask import render_template
 from flask_login import current_user
 
-from settings import dp
+from app.app_settings import dp
 
 
 @dp.route('/')
