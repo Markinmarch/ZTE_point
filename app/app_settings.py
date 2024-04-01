@@ -18,4 +18,5 @@ dp.config.update(
     SECRET_KEY = SECRET_WORD,
 )
 
-admin = Admin(dp, name = 'car_parst_shop')
+admin = Admin(dp, name = 'main_manager')
+# staff
