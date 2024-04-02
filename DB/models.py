@@ -1,9 +1,14 @@
 import logging
+
 from psycopg2 import connect, Error, errors
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
+
 from sqlalchemy import create_engine, Column, ForeignKey, Integer, String, Float, Date
 from sqlalchemy.orm import declarative_base, relationship, sessionmaker
+from sqlalchemy_imageattach.entity import Image, image_attachment
+
 from werkzeug.security import generate_password_hash, check_password_hash
+
 from flask_login import UserMixin
 
 from config import (
@@ -158,9 +163,20 @@ class Item(Base):
     name = Column(String(length = 100), nullable = False)
     price = Column(Float, nullable = False)
     index = Column(Integer, nullable = True, unique = True)
+    image = image_attachment('ItemImage')
 
     def __str__(self):
         return '%s: %s, %s, %s' % (self.id, self.name, self.price, self.index)
+
+class ItemImage(Base, Image):
+    '''
+    ?
+    '''
+    __tablename__ = 'item_image'
+    
+    item_id = Column(Integer, ForeignKey('item.id'), primary_key = True)
+    
+    item = relationship(Item, backref = 'item_image')
 
 class Order(Base):
     '''
