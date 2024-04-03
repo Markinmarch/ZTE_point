@@ -22,5 +22,24 @@ class TaskModelViewItems(ModelView):
     column_display_all_relations = True
 
 
-admin.add_view(TaskModelViewUsers(User, session, name = 'Клиент'))
-admin.add_view(TaskModelViewItems(Item, session, name = 'Товары'))
+# client_table = admin.add_view(TaskModelViewUsers(User, session, name = 'Клиент'))
+# items_table = admin.add_view(TaskModelViewItems(Item, session, name = 'Товары'))
+
+class AdminView(ModelView):
+    @expose('/')
+    def index(self):
+        if User.get_user(current_user.get_id).role =='admin':
+            admin.add_view(TaskModelViewUsers(User, session, name = 'Клиент'))
+            admin.add_view(TaskModelViewItems(Item, session, name = 'Товары'))
+        
+        # if User.get_user(current_user.get_id).role == 'user':
+        #     return redirect(f'/?user={current_user.get_id}')
+        # if User.get_user(current_user.get_id).role =='staff':
+        #     items_table
+        # if User.get_user(current_user.get_id).role =='admin':
+        #     items_table
+        #     client_table
+        # if current_user.is_anonymous:
+        #     return redirect('/hui')
+            
+# admin.add_view(AdminView(name='My View', menu_icon_type='glyph', menu_icon_value='glyphicon-home'))
