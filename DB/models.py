@@ -1,71 +1,13 @@
-import logging
-
-from psycopg2 import connect, Error, errors
-from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
-
-from sqlalchemy import create_engine, Column, ForeignKey, Integer, String, Float, Date
-from sqlalchemy.orm import declarative_base, relationship, sessionmaker
+from sqlalchemy import Column, ForeignKey, Integer, String, Float, Date
+from sqlalchemy.orm import relationship
 from sqlalchemy_imageattach.entity import Image, image_attachment
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from flask_login import UserMixin
 
-from config import (
-    POSTGRES_USER,
-    POSTGRES_PASSWORD,
-    POSTGRES_HOST,
-    POSTGRES_PORT,
-    POSTGRES_DATABASE
-)
+from DB.main_db import Base, session
 
-#-------------------Создание базы данных PostgreSQL-------------------
-def create_database(
-    user: str,
-    password: str,
-    host: str,
-    port: str,
-    database: str
-):
-    '''
-    Метод "create_database" реализует создание базы данных
-    PostgreSQL на стороне сервера при условии, что
-    данной базы данных ещё не существует. В противном
-    случае метод ничего не делает.
-        Параметры:
-            user(str): имя пользователя БД;
-            password(str): пароль от БД для данного пользователя;
-            host(str): хост ресурса;
-            port(str): порт ресурса;
-            database(str): название/имя БД;
-    '''
-    connection = connect(
-        user = user,
-        password = password,
-        host = host,
-        port = port
-        )
-    cursor = connection.cursor()
-    try:
-        connection.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-        cursor.execute(query = 'CREATE DATABASE %s;' % (database, ))
-        logging.info('<--- Success! Database %s is created --->' % (database))
-    except errors.DuplicateDatabase:
-        logging.info(f'<--- Database "{database}" is ready --->')
-    except Error as error:
-        logging.error(f'<--- {error} --->')
-    finally:
-        cursor.close()
-        connection.close()
-
-
-# ---------------подключение к базе данных PostgreSQL----------------
-DSN = "postgresql+psycopg2://%s:%s@%s:%s/%s" % (POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_HOST, POSTGRES_PORT, POSTGRES_DATABASE)
-engine = create_engine(DSN)
-Session = sessionmaker(engine)
-session = Session()
-
-Base = declarative_base()
 
 # ----------------модели БД-------------------------
 class User(Base, UserMixin):
@@ -201,7 +143,4 @@ class Order(Base):
 
     def __str__(self):
         return '%s: %s, %s' % (self.id, self.id_user, self.item)
-
-def create_table(): 
-    Base.metadata.create_all(engine)
 #избавились от переменной (ссылки) tables за ненадобностью
