@@ -34,23 +34,18 @@ class User(Base, UserMixin):
     def __str__(self):
         return '%s, %s, %s' % (self.id, self.name, self.email)
     
-    @property
     def is_active(self):
         return True
     
-    @property
     def is_authenticated(self):
         return True
     
-    @property
     def is_anonymous(self):
         return True
     
-    @property
     def get_id(self):
         return self.id
     
-    @property
     def is_admin(self):
         if self.role == 'admin':
             return True

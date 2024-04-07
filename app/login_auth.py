@@ -1,4 +1,4 @@
-from flask import request, render_template, redirect
+from flask import request, render_template
 from flask_login import login_user
 
 from app.app_settings import dp, login_manager
@@ -6,7 +6,7 @@ from DB.models import User
 
 
 @login_manager.user_loader
-def get_login_user(user_id):
+def load_user(user_id):
     return User.get_user(user_id)
 
 @dp.route('/login', methods = ['GET', 'POST'])

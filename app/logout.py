@@ -6,7 +6,7 @@ from DB.models import User
 
 
 @login_manager.user_loader
-def get_logout_user(user_id):
+def load_user(user_id):
     return User.get_user(user_id)
 
 @dp.route('/logout')

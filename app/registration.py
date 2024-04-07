@@ -7,7 +7,7 @@ from config import ADMIN_KEY
 
 
 @login_manager.user_loader
-def get_login_user(user_id):
+def load_user(user_id):
     return User.get_user(user_id)
 
 @dp.route('/registration', methods = ['GET', 'POST'])
