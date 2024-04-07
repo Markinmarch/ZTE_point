@@ -17,6 +17,3 @@ dp.config.update(
     TESTTING = True,
     SECRET_KEY = SECRET_WORD,
 )
-
-admin = Admin(dp, name = 'ZTE point', template_mode = 'bootstrap3')
-# staff
