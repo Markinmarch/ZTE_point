@@ -1,5 +1,5 @@
-from flask import Flask
-from flask_login import LoginManager
+from flask import Flask, g
+from flask_login import LoginManager, current_user
 from flask_admin import Admin
 
 from config import SECRET_WORD

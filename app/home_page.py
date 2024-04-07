@@ -2,6 +2,7 @@ from flask import render_template
 from flask_login import current_user
 
 from app.app_settings import dp
+from DB.models import User
 
 
 @dp.route('/')

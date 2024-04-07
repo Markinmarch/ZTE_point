@@ -5,7 +5,7 @@ from app.app_settings import dp, login_manager
 from DB.models import User, session
 
 
-@dp.route('/items', methods = ['GET', 'POST'])
+@dp.route('/items/<int:uid>', methods = ['GET', 'POST'])
 @login_required
 def items():
     return render_template('shop.html')
