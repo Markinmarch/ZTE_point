@@ -11,6 +11,10 @@ def home():
         data = [{
             'context': '<a class = "login" type = "button" href = "/logout">Выйти</a><a class = "bascket" type = "button" href = "/bascket"><img src="https://t700.ru/icon/cart.png" width="42" height="42"></a>'
         }]
+        if current_user.is_admin:
+            data = [{
+                'context': '<a class = "login" type = "button" href = "/logout">Выйти</a><a class = "bascket" type = "button" href = "/bascket"><img src="https://t700.ru/icon/cart.png" width="42" height="42"></a><a class = "login" type = "button" href = "/admin">Админка</a>'
+            }]
     else:
         data = [{
             'context': '<a class = "login" type = "button" href = "/login">Войти</a>'

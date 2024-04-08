@@ -49,8 +49,7 @@ class User(Base, UserMixin):
     def is_admin(self):
         if self.role == 'admin':
             return True
-        return False
-    
+       
     def insert_user(
         user_name: str,
         user_phone: str,
