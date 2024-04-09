@@ -23,9 +23,13 @@ class TaskModelViewUsers(ModelView):
     can_delete = False
     
 class TaskModelViewItems(ModelView):
+    column_list = ['id', 'name', 'price', 'index']
     can_set_page_size = True
     page_size = 20
     column_display_all_relations = True
+    column_display_all_relations = True
+    column_hide_backrefs = False
+    column_display_pk = True
     
 class TaskModelViewOrders(ModelView):
     column_list = ['id', 'user', 'item']

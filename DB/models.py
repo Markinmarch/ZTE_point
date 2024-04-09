@@ -113,6 +113,9 @@ class Item(Base):
 
     def __str__(self):
         return '%s: %s, %s, %s' % (self.id, self.name, self.price, self.index)
+    
+    def get_items():
+        return session.query(Item).all()
 
 class ItemImage(Base, Image):
     '''
@@ -123,6 +126,9 @@ class ItemImage(Base, Image):
     item_id = Column(Integer, ForeignKey('item.id'), primary_key = True)
     
     item = relationship(Item, backref = 'item_image')
+    
+    # def add_image(self):
+    #     self.open_file()
 
 class Order(Base):
     '''
