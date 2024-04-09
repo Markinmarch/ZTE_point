@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Товары и услуги{% endblock %}
+
+{% block content %}
+<link rel = "stylesheet" type = "text/css" href = "../static/base.css">
+<link rel = "stylesheet" type = "text/css" href = "../static/items.css">
+<div class="bg">
+    <a type = "button" href = "/">главная</a>
+    <a class = "active" href = "/items" type = "button">товары</a>
+    <a href = "/contact" type = "button">контакты</a>
+    <a href = "/about" type = "button">о нас</a>
+    <a class = "bascket" type = "button" href = "/bascket"><img src="https://t700.ru/icon/cart.png" width="42" height="42"></a>
+</div>
+<div>
+    {% for item in data %}
+        <p>{{item.name}}</p>
+        <p>{{item.price}}</p>
+    {% endfor %}
+</div>   
+{% endblock %}
