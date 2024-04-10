@@ -6,7 +6,6 @@ from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 
-
 from config import (
     POSTGRES_USER,
     POSTGRES_PASSWORD,
