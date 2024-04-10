@@ -41,19 +41,15 @@ def create_database(
         host = host,
         port = port
         )
-    cursor = connection.cursor()
-    try:
-        connection.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-        cursor.execute(query = 'CREATE DATABASE %s;' % (database, ))
-        logging.info('<--- Success! Database %s is created --->' % (database))
-    except errors.DuplicateDatabase:
-        logging.info(f'<--- Database "{database}" is ready --->')
-    except Error as error:
-        logging.error(f'<--- {error} --->')
-    finally:
-        cursor.close()
-        connection.close()
-
+    with connection.cursor() as cursor:
+        try:
+            connection.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+            cursor.execute(query = 'CREATE DATABASE %s;' % (database, ))
+            logging.info('<--- Success! Database %s is created --->' % (database))
+        except errors.DuplicateDatabase:
+            logging.info(f'<--- Database "{database}" is ready --->')
+        except Error as error:
+            logging.error(f'<--- {error} --->')
 
 # ---------------подключение к базе данных PostgreSQL----------------
 DSN = "postgresql+psycopg2://%s:%s@%s:%s/%s" % (POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_HOST, POSTGRES_PORT, POSTGRES_DATABASE)
