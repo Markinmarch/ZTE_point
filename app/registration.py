@@ -23,20 +23,16 @@ def registration():
         if User.check_email(email) == True:
             return 'false'
         if email == ADMIN_KEY:
-            User.insert_user(
-                user_name = name,
-                user_phone = phone,
-                user_email = email,
-                user_password = password,
-                user_role = 'admin'
-            )
+            role = 'admin'
         else:
-            User.insert_user(
-                user_name = name,
-                user_phone = phone,
-                user_email = email,
-                user_password = password
-            )
+            role = None
+        User.insert_user(
+            user_name = name,
+            user_phone = phone,
+            user_email = email,
+            user_password = password,
+            user_role = role
+        )
         validate_user = User.check_user(
             email,
             password            

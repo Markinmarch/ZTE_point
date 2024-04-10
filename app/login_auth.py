@@ -15,7 +15,7 @@ def login():
         login_data = request.json
         email = login_data['email'],
         password = login_data['password']
-        if User.check_email(email) != True:
+        if User.check_email(email) == False:
             return 'false'
         else:
             validate_user = User.check_user(
