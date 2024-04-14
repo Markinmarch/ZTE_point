@@ -34,7 +34,7 @@ class User(Base, UserMixin):
     role = Column(String, default = "user", nullable = False)
     
     def __str__(self):
-        return '%s, %s, %s' % (self.id, self.name, self.email)
+        return '%s, %s, %s' % (self.id, self.name, self.email, self.role)
     
     def is_active(self):
         return True
@@ -43,7 +43,7 @@ class User(Base, UserMixin):
         return True
     
     def is_anonymous(self):
-        return True
+        return False
     
     def get_id(self):
         return self.id
@@ -51,6 +51,7 @@ class User(Base, UserMixin):
     def is_admin(self):
         if self.role == 'admin':
             return True
+        return False
        
     def insert_user(
         user_name: str,
