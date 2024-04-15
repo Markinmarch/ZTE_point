@@ -4,3 +4,4 @@
 *.log
 static/code.jquery.com_jquery-3.7.1.js
 *.ini
+alembic
