@@ -1,5 +1,6 @@
 from sqlalchemy import Column, ForeignKey, Integer, String, Float, Date
 from sqlalchemy.orm import relationship
+from sqlalchemy_imageattach.entity import Image, image_attachment
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -34,7 +35,7 @@ class User(Base, UserMixin):
     role = Column(String, default = "user", nullable = False)
     
     def __str__(self):
-        return '%s, %s, %s' % (self.id, self.name, self.email, self.role)
+        return '%s, %s, %s' % (self.id, self.name, self.email)
     
     def is_active(self):
         return True
@@ -111,7 +112,7 @@ class Item(Base):
     name = Column(String(length = 100), nullable = False)
     price = Column(Float, nullable = False)
     index = Column(Integer, nullable = True, unique = True)
-    image = Column(String, nullable = True)
+    item_image = image_attachment('ItemImage')
 
     def __str__(self):
         return '%s: %s, %s, %s' % (self.id, self.name, self.price, self.index)
@@ -120,6 +121,13 @@ class Item(Base):
         with session as get_item:
             return get_item.query(Item).all()
 
+class ItemImage(Base, Image):
+    
+    __tablename__ = 'item_image'
+    
+    item_id = Column(Integer, ForeignKey('user.id'), primary_key = True)
+    item = relationship('Item', backref = 'item_image', primaryjoin="Item.id == ItemImage.item_id", lazy='dynamic')
+    
 class Order(Base):
     '''
     Объект "Order" - структура таблицы БД для заказов польвателей.

@@ -51,7 +51,7 @@ def create_database(
             logging.error(f'<--- {error} --->')
 
 # ---------------подключение к базе данных PostgreSQL----------------
-DSN = "postgresql+psycopg2://%s:%s@%s:%s/%s" % (POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_HOST, POSTGRES_PORT, POSTGRES_DATABASE)
+DSN = 'postgresql+psycopg2://%s:%s@%s:%s/%s' % (POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_HOST, POSTGRES_PORT, POSTGRES_DATABASE)
 engine = create_engine(DSN)
 Session = sessionmaker(engine)
 session = Session()
