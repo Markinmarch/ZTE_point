@@ -23,9 +23,6 @@ class User(Base, UserMixin):
     '''
     __tablename__ = 'user'
     
-    def __init__(self):
-        pass
-
     id = Column(Integer, nullable = False, primary_key = True)
     name = Column(String(length = 40), default = None, nullable = False)
     phone = Column(String, default = None, nullable = False)
@@ -51,6 +48,7 @@ class User(Base, UserMixin):
     def is_admin(self):
         if self.role == 'admin':
             return True
+        return False
        
     def insert_user(
         user_name: str,
