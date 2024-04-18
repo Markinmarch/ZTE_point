@@ -2,9 +2,11 @@
 
 {% block title %}Главная страница{% endblock %}
 {% block scripts %}
+    <script type="text/javascript" src = "../static/slider_HP.js"></script>
 {% endblock %}
 {% block content %}
 <link rel = "stylesheet" type = "text/css" href = "../static/base.css">
+<link rel = "stylesheet" type = "text/css" href = "../static/slider_HP.css">
 <div class="bg">
     <a class = "active" type = "button" href = "/">главная</a>
     <a href = "/items" type = "button">товары</a>
@@ -16,44 +18,14 @@
 </div>
 <div class="slider-container">
     <div class="slider">
-        <div class="slides">
-            <div id="slides__1" class="slide">
-                <a href="https://alvarotrigo.com/blog/create-a-slider-with-pure-CSS/" target="_blank" class="read-article">
-                    ходовая 👉
-                </a>
-                <img src = "https://wallpaper.caricos.com/2017-Mercedes-AMG-C63-S-Coupe---AMG-Speed-Sensitive-Sports-Steering-107365-2560x1440.jpg" width="1800" height="800">
-                <a class="slide__prev" href="#slides__4" title="Next"></a>
-                <a class="slide__next" href="#slides__2" title="Next"></a>
-            </div>
-            <div id="slides__2" class="slide">
-                <a href="https://alvarotrigo.com/blog/create-a-slider-with-pure-CSS/" target="_blank" class="read-article">
-                    детали двигателя 👉
-                </a>
-                <img src = "https://amt-zap.ru/wp-content/uploads/2022/12/7e9f218fe681765eec99fbb5a0d3057e-scaled.jpg" width="1800" height="900">
-                <a class="slide__prev" href="#slides__1" title="Prev"></a>
-                <a class="slide__next" href="#slides__3" title="Next"></a>
-            </div>
-            <div id="slides__3" class="slide">
-                <a href="https://alvarotrigo.com/blog/create-a-slider-with-pure-CSS/" target="_blank" class="read-article">
-                    детали кузова 👉
-                </a>
-                <img src = "http://www.avtoindent.ru/_bl/24/73063210.jpg" width="1800" height="800">
-                <a class="slide__prev" href="#slides__2" title="Prev"></a>
-                <a class="slide__next" href="#slides__4" title="Next"></a>
-            </div>
-            <div id="slides__4" class="slide">
-                <span class="slide__text">4</span>
-                <a class="slide__prev" href="#slides__3" title="Prev"></a>
-                <a class="slide__next" href="#slides__1" title="Prev"></a>
-            </div>
-        </div>
-        <div class="slider__nav">
-            <a class="slider__navlink" href="#slides__1"></a>
-            <a class="slider__navlink" href="#slides__2"></a>
-            <a class="slider__navlink" href="#slides__3"></a>
-            <a class="slider__navlink" href="#slides__4"></a>
-        </div>
+      <img src="https://i.postimg.cc/nhsTGkLQ/1.png" alt="Белый пушистый кот">
+      <img src="https://i.postimg.cc/cLVh9nKk/2.png" alt="Рыжий пушистый кот в джинсах">
+      <img src="https://i.postimg.cc/4NxWmZkP/3.png" alt="Бело-рыжий пушистый кот">
+      <img src="https://i.postimg.cc/FFZPrzq1/8.png" alt="Золотистый пушистый кот">
+      <img src="https://i.postimg.cc/jd3Zf9Rb/7.png" alt="Золотистый пушистый кот">
     </div>
+    <button class="prev-button" aria-label="Посмотреть предыдущий слайд">&lt;</button>
+    <button class="next-button" aria-label="Посмотреть следующий слайд">&gt;</button>
 </div>
 <div class="container">
     <div class="tabs">
