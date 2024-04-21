@@ -2,7 +2,6 @@
 
 {% block title %}Главная страница{% endblock %}
 {% block scripts %}
-    <script type="text/javascript" src = "../static/slider_HP.js"></script>
 {% endblock %}
 {% block content %}
 <link rel = "stylesheet" type = "text/css" href = "../static/base.css">
@@ -16,14 +15,43 @@
         {{button.context|safe}}
     {% endfor %}
 </div>
-<div class="slider">
-    <img src="https://yt3.googleusercontent.com/ytc/APkrFKaN1sYEK2wkYuDCzc9izFd5Gqys6Hqd3arX9Jcv=s900-c-k-c0x00ffffff-no-rj">
-    <img src="https://kartinkof.club/uploads/posts/2022-09/1662444333_2-kartinkof-club-p-novie-i-krasivie-kartinki-randomnie-2.jpg">
-    <img src="https://avatarko.ru/img/kartinka/21/igra_Minecraft_creeper_20172.jpg">
-    <button class="prev">Назад</button>
-    <button class="next">Вперед</button>
+<div class="slider-container">
+    <div class="slider">
+        <div class="slides">
+            <div id="slides__1" class="slide">
+                <div class = "read-article">Read the article 👉
+                    <a href="https://alvarotrigo.com/blog/create-a-slider-with-pure-CSS/"></a>     
+                </div>
+                <span class="slide__text">1</span>
+                <a class="slide__prev" href="#slides__4" title="Next"></a>
+                <a class="slide__next" href="#slides__2" title="Next"></a>
+            </div>
+            <div id="slides__2" class="slide">
+                <span class="slide__text">2</span>
+                <a class="slide__prev" href="#slides__1" title="Prev"></a>
+                <a class="slide__next" href="#slides__3" title="Next"></a>
+            </div>
+            <div id="slides__3" class="slide">
+                <span class="slide__text">3</span>
+                <a class="slide__prev" href="#slides__2" title="Prev"></a>
+                <a class="slide__next" href="#slides__4" title="Next"></a>
+            </div>
+            <div id="slides__4" class="slide">
+                <span class="slide__text">4</span>
+                <a class="slide__prev" href="#slides__3" title="Prev"></a>
+                <a class="slide__next" href="#slides__1" title="Prev"></a>
+            </div>
+        </div>
+        <div class="slider__nav">
+            <a class="slider__navlink" href="#slides__1"></a>
+            <a class="slider__navlink" href="#slides__2"></a>
+            <a class="slider__navlink" href="#slides__3"></a>
+            <a class="slider__navlink" href="#slides__4"></a>
+        </div>
+    </div>
 </div>
-<div class="container">
+
+<!-- <div class="container">
     <div class="tabs">
         <div class="tabby-tab">
             <input type="radio" id="tab-1" name="tabby-tabs" checked>
@@ -57,5 +85,5 @@
             <p>Ну а в целом рот его ебать</p>
         </div>
     </div>   
-</div>
-{% endblock %}
+</div>-->
+{% endblock %} 
