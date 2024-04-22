@@ -2,6 +2,7 @@
 
 {% block title %}Главная страница{% endblock %}
 {% block scripts %}
+<script type="text/javascript" src = "../static/slider_HP.js"></script>
 {% endblock %}
 {% block content %}
 <link rel = "stylesheet" type = "text/css" href = "../static/base.css">
@@ -15,42 +16,29 @@
         {{button.context|safe}}
     {% endfor %}
 </div>
-<div class="slider-container">
-    <div class="slider">
-        <div class="slides">
-            <div id="slides__1" class="slide">
-                <a href="https://alvarotrigo.com/blog/create-a-slider-with-pure-CSS/" class = "read-article">Read the article 👉</a>     
-                <span class="slide__text">1</span>
-                <a class="nav slide__prev" href="#slides__4" title="Next"></a>
-                <a class="nav slide__next" href="#slides__2" title="Next"></a>
-            </div>
-            <div id="slides__2" class="slide">
-                <a href="https://alvarotrigo.com/blog/create-a-slider-with-pure-CSS/" class = "read-article">Read the article 👉</a> 
-                <span class="slide__text">2</span>
-                <a class="nav slide__prev" href="#slides__1" title="Prev"></a>
-                <a class="nav slide__next" href="#slides__3" title="Next"></a>
-            </div>
-            <div id="slides__3" class="slide">
-                <a href="https://alvarotrigo.com/blog/create-a-slider-with-pure-CSS/" class = "read-article">Read the article 👉</a> 
-                <span class="slide__text">3</span>
-                <a class="nav slide__prev" href="#slides__2" title="Prev"></a>
-                <a class="nav slide__next" href="#slides__4" title="Next"></a>
-            </div>
-            <div id="slides__4" class="slide">
-                <a href="https://alvarotrigo.com/blog/create-a-slider-with-pure-CSS/" class = "read-article">Read the article 👉</a> 
-                <span class="slide__text">4</span>
-                <a class="nav slide__prev" href="#slides__3" title="Prev"></a>
-                <a class="nav slide__next" href="#slides__1" title="Prev"></a>
-            </div>
-        </div>
-        <div class="slider__nav">
-            <a class="slider__navlink" href="#slides__1"></a>
-            <a class="slider__navlink" href="#slides__2"></a>
-            <a class="slider__navlink" href="#slides__3"></a>
-            <a class="slider__navlink" href="#slides__4"></a>
-        </div>
+
+<!-- Основной блок слайдера -->
+<div class="slider">
+
+    <!-- Первый слайд -->
+    <div class="item">
+      <img src="https://media.tproger.ru/uploads/2020/07/field.jpg">
     </div>
-</div>
+  
+    <!-- Второй слайд -->
+    <div class="item">
+      <img src="https://media.tproger.ru/uploads/2020/07/rose.jpg">
+    </div>
+  
+    <!-- Третий слайд -->
+    <div class="item">
+      <img src="https://media.tproger.ru/uploads/2020/07/leaf.jpg">
+    </div>
+  
+    <!-- Кнопки-стрелочки -->
+    <a class="previous" onclick="previousSlide()">&#10094;</a>
+    <a class="next" onclick="nextSlide()">&#10095;</a>
+  </div>
 
 <div class="container">
     <div class="tabs">

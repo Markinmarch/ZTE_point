@@ -1,4 +1,4 @@
-.slider-container {
+/* .slider-container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -7,8 +7,8 @@
 
 .slider {
     width: 100%;
-    max-width: 600px;
-    height: 400px;
+    max-width: 1280px;
+    height: 800px;
     margin: 20px;
     text-align: center;
     border-radius: 20px;
@@ -32,7 +32,7 @@
     align-items: center;
     flex-shrink: 0;
     width: 100%;
-    height: 400px;
+    height: 800px;
     margin-right: 0px;
     box-sizing: border-box;
     background: white;
@@ -93,4 +93,69 @@ a.slide__next{
 }
 iframe[sandbox] .read-article a{
     display: none;
+} */
+
+/* Слайдер: */
+.slider{
+    overflow: hidden;
+    max-width: 100%;
+    /* Положение элемента устанавливается относительно его исходной позиции: */
+    position: relative;
+    /* Центрируем по горизонтали: */
+    margin: 50px 50px;
+    height: 600px;
+}
+
+/* Картинка масштабируется по отношению к родительскому элементу: */
+.slider .item img {
+    border-radius: 15px;
+    /* Элемент меняет размер так, чтобы заполнить блок и сохранить пропорции: */
+    object-fit: cover;
+    width: 100%;
+    height: 600px;
+}
+
+/* Кнопки назад и вперёд: */
+.slider .previous, .slider .next {
+    /* Добавляет курсору иконку, когда тот оказывается над кнопкой: */
+    cursor: pointer;
+    /* Положение элемента задаётся относительно границ браузера: */
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: -22px;
+    padding: 16px;
+    /* Оформление самих кнопок: */
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    /* Плавное появление фона при наведении курсора: */
+    transition: 0.6s ease;
+    /* Скругление границ: */
+    border-radius: 0 3px 3px 0;
+}
+.slider .next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+/* При наведении курсора на кнопки добавляем фон кнопок: */
+.slider .previous:hover,
+.slider .next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Анимация слайдов: */
+.slider .item {
+    animation-name: fade;
+    animation-duration: 2s;
+}
+@keyframes fade {
+    /* Устанавливаем и изменяем степень прозрачности: */
+    from {
+        opacity: 0.4
+    }
+    to {
+        opacity: 1
+    }
 }
