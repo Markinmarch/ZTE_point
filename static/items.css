@@ -21,7 +21,7 @@ input {
     line-height: inherit;
     flex-grow:2;
     border:none;
-    border-radius: 20px;
+    border-radius: 15px 0 0 15px;
     text-align: center;
 }
 
@@ -30,19 +30,18 @@ input[type="text"] {
     border: solid black 1px;
 }
 
-input[type="submit"] {
+/* input[type="submit"] {
     margin-left: -50px;
     border: solid black 1px;
-}
+} */
 
 input:focus::placeholder {
     color: transparent;
 }
 
-form.search-bar button {
-    float: left;
-    width: 20%;
-    padding: 10px;
+.search-bar button {
+    /* float: left;
+    width: 20%; */
     background: #2196F3;
     color: white;
     font-size: 17px;
@@ -51,11 +50,11 @@ form.search-bar button {
     cursor: pointer;
 }
 
-form.search-bar button:hover {
+.search-bar button:hover {
     background: #0b7dda;
 }
 
-form.search-bar button::after {
+.search-bar button::after {
     content: "";
     clear: both;
     display: table;
