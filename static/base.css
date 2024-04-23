@@ -104,29 +104,6 @@ body  {
     from {background-position: top;background-size:3000px; }
     to {background-position: -100px 0px;background-size:2750px;}
     }
-  
-.read-article{
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    z-index: 999;
-    color: #000;
-    background: white;
-    padding: 10px 20px;
-    border-radius: 10px;
-    font-family: arial;
-    text-decoration: none;
-    box-shadow: rgb(50 50 93 / 25%) 0 0 100px -20px, rgb(0 0 0 / 30%) 0 0 60px -15px;
-}
-.read-article:hover{
-      background: #d5d5d5;
-      box-shadow: rgb(50 50 93 / 25%) 0 0 100px -20px, rgb(0 0 0 / 30%) 0 0 60px 0px;
-}
-iframe[sandbox] .read-article{
-    display: none;
-}
-
-
 
 .tabs {
     margin: 50px;
