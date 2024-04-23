@@ -1,8 +1,72 @@
-.items {
-  background-color: aquamarine;
-  width: 25%;
-  height: 25%;
-  float: left;
-  color: white;
-  margin: 2%
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+/* Поисковая строка */
+.search-bar {
+    margin: auto;
+    position: relative;
+    text-align: center;
+}
+
+form {
+    margin: 50px;
+    display:flex;
+    flex-direction:row;
+    text-align: center;
+}
+  
+input {
+    font-family: inherit;
+    font-size: 30px;
+    line-height: inherit;
+    flex-grow:2;
+    border:none;
+    border-radius: 20px;
+    text-align: center;
+}
+
+input[type="text"] {
+    padding-right: 50px;
+    border: solid black 1px;
+}
+
+input[type="submit"] {
+    margin-left: -50px;
+    border: solid black 1px;
+}
+
+input:focus::placeholder {
+    color: transparent;
+}
+
+form.search-bar button {
+    float: left;
+    width: 20%;
+    padding: 10px;
+    background: #2196F3;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: none; /* Prevent double borders */
+    cursor: pointer;
+}
+
+form.search-bar button:hover {
+    background: #0b7dda;
+}
+
+form.search-bar button::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+/* Блок с товарами */
+.items-block {
+    background-color: 0;
+    margin: 50px;
+    width: 20%;
+    height: 300px;
+    border: solid gray 5px;
+    border-radius: 15px;
 }

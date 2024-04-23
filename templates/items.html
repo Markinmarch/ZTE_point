@@ -5,6 +5,7 @@
 {% block content %}
 <link rel = "stylesheet" type = "text/css" href = "../static/base.css">
 <link rel = "stylesheet" type = "text/css" href = "../static/items.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div class="bg">
     <a type = "button" href = "/">главная</a>
     <a class = "active" href = "/items" type = "button">товары</a>
@@ -12,7 +13,14 @@
     <a href = "/about" type = "button">о нас</a>
     <a class = "bascket" type = "button" href = "/bascket"><img src="https://t700.ru/icon/cart.png" width="42" height="42"></a>
 </div>
-<div>
+<form action = "{{url_for('search_items')}}" method = "post">
+    <div class = "search-bar">
+        <label for = "itemSearch"></label>
+        <input type = "text" name = "itemSearch" id = "itemSearch" size = "40" placeholder = "Поиск товара">
+        <button type = "submit" id = "itemSearchButton"><i class="fa fa-search"></i></button>
+    </div>
+</form>
+<div class = "items-block">
     {% for item in data %}
         <p>{{item.name}}</p>
         <p>{{item.price}}</p>

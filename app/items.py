@@ -10,3 +10,7 @@ from DB.models import Item, User, session
 def items():
     items = Item.get_items()
     return render_template('items.html', data = items)
+
+@dp.route('/items', methods = ['POST'])
+def search_items():
+    pass
