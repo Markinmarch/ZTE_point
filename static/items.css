@@ -40,18 +40,16 @@ input:focus::placeholder {
 }
 
 .search-bar button {
-    /* float: left;
-    width: 20%; */
     background: #2196F3;
     color: white;
-    font-size: 17px;
-    border: 1px solid grey;
-    border-left: none; /* Prevent double borders */
-    cursor: pointer;
+    font-size: 30px;
+    border: none;
+    width: 100px;
+    border-radius: 0 15px 15px 0;
 }
 
 .search-bar button:hover {
-    background: #0b7dda;
+    background: black;
 }
 
 .search-bar button::after {
@@ -62,10 +60,17 @@ input:focus::placeholder {
 
 /* Блок с товарами */
 .items-block {
+    position: relative;
     background-color: 0;
-    margin: 50px;
-    width: 20%;
-    height: 300px;
     border: solid gray 5px;
     border-radius: 15px;
+    margin: 50px;
+    height: 100%;
+}
+
+.items-block p {
+    margin: 10px;
+    background-color: #2196F3;
+    width: 100px;
+    height: 100px;
 }

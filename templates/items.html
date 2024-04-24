@@ -22,8 +22,7 @@
 </form>
 <div class = "items-block">
     {% for item in data %}
-        <p>{{item.name}}</p>
-        <p>{{item.price}}</p>
+        <p>Наименование: {{item.name}} Цена за единицу:{{item.price}}</p><br>
     {% endfor %}
 </div>   
 {% endblock %}
