@@ -68,7 +68,7 @@ input:focus::placeholder {
     height: 100%;
 }
 
-.items-block p {
+.items-block tr {
     margin: 10px;
     background-color: #2196F3;
     width: 100px;

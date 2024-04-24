@@ -21,8 +21,10 @@
     </div>
 </form>
 <div class = "items-block">
+    <table>
     {% for item in data %}
-        <p>Наименование: {{item.name}} Цена за единицу:{{item.price}}</p><br>
+        <tr><td>Наименование: {{item.name}} Цена за единицу:{{item.price}}</td></tr>
     {% endfor %}
+    </table>
 </div>   
 {% endblock %}
