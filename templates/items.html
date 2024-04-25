@@ -25,7 +25,11 @@
     <table><tr>
         <td><img src = "../static/images/item_images/{{item.name}}_{{item.index}}/{{item.name}}_thumb.jpg"/></td>
         <td><p>Наименование: {{item.name}}<br>Цена за единицу: {{item.price}}</p></td>
-    </tr></table>
+    </tr>
+    <tr>
+        <td><button>{{item.price}} руб.</button></td>
+    </tr>
+    </table>
     {% endfor %}
 </div>   
 {% endblock %}
