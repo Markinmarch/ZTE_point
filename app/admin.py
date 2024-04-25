@@ -6,12 +6,8 @@ from flask_login import current_user
 from flask_admin.form import ImageUploadField
 from flask_admin import AdminIndexView, Admin
 from flask_admin.contrib.sqla import ModelView
-# from flask_admin._compat import string_types
-# from urllib.parse import urljoin
-from markupsafe import Markup
-# from flask_admin.helpers import get_url
 
-# from wtforms.widgets import html_params
+from markupsafe import Markup
 
 from app.app_settings import dp
 from DB.models import User, Item, Order, session
@@ -20,7 +16,7 @@ from DB.models import User, Item, Order, session
 file_path = os.path.abspath(os.path.dirname(__name__))
 
 def name_gen_image(model, file_data):
-    hash_name = f'{model}/{model.name}'
+    hash_name = f'{model.name}_{model.index}/{model.name}'
     return hash_name
 
 class CustomAdminIndexView(AdminIndexView):

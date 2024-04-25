@@ -30,11 +30,6 @@ input[type="text"] {
     border: solid black 1px;
 }
 
-/* input[type="submit"] {
-    margin-left: -50px;
-    border: solid black 1px;
-} */
-
 input:focus::placeholder {
     color: transparent;
 }
@@ -63,14 +58,13 @@ input:focus::placeholder {
     position: relative;
     background-color: 0;
     border: solid gray 5px;
-    border-radius: 15px;
     margin: 50px;
     height: 100%;
 }
 
-.items-block tr {
+.items-block p {
     margin: 10px;
     background-color: #2196F3;
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
 }
