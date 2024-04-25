@@ -22,8 +22,10 @@
 </form>
 <div class = "items-block">
     {% for item in data %}
-        <img src = "../static/images/item_images/{{item.name}}_{{item.index}}/{{item.name}}_thumb.jpg"/>
-        <p>Наименование: {{item.name}}<br> Цена за единицу:{{item.price}}</p>
+    <table><tr>
+        <td><img src = "../static/images/item_images/{{item.name}}_{{item.index}}/{{item.name}}_thumb.jpg"/></td>
+        <td><p>Наименование: {{item.name}}<br>Цена за единицу: {{item.price}}</p></td>
+    </tr></table>
     {% endfor %}
 </div>   
 {% endblock %}
