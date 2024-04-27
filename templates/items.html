@@ -19,7 +19,7 @@
         <input type = "text" name = "itemSearch" id = "itemSearch" size = "40" placeholder = "Поиск товара">
         <button type = "submit" id = "itemSearchButton"><i class="fa fa-search"></i></button>
         <div class = "search-items">
-            {% for item in data %}
+            {% for item in search_items_data %}
             <table><tr>
                 <td><img src = "../static/images/item_images/{{item.name}}_{{item.index}}/{{item.name}}_thumb.jpg"/></td>
                 <td><p>Наименование: {{item.name}}<br>Цена за единицу: {{item.price}}</p></td>
