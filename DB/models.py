@@ -116,6 +116,11 @@ class Item(Base):
     def get_items():
         with session as get_item:
             return get_item.query(Item).all()
+        
+    def search_items(keyword) -> set:
+        with session as search:
+            for words in keyword:
+                return search.query(Item).filter(Item.name.ilike(f'%{words}%')).all()
 
 class Order(Base):
     '''
