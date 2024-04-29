@@ -44,9 +44,11 @@ class TaskModelViewItems(ModelView):
         'name': 'Наименование',
         'price': 'Цена',
         'index': 'Индекс',
-        'image': 'Изображение'
+        'parametrs': 'Основные параметры',
+        'description': 'Краткое описание',
+        'image': 'Изображение',
     }
-    column_list = ['id', 'name', 'price', 'index', 'image']
+    column_list = ['id', 'name', 'price', 'index', 'parametrs', 'description', 'image']
     can_set_page_size = True
     page_size = 20
     column_display_all_relations = True
