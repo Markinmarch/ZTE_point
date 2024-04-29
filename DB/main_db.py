@@ -44,7 +44,7 @@ def create_database(
         try:
             connection.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
             cursor.execute(query = 'CREATE DATABASE %s;' % (database, ))
-            logging.info('<--- Success! Database %s is created --->' % (database))
+            logging.info('<--- Success! Database %s is created --->' % (database, ))
         except errors.DuplicateDatabase:
             logging.info(f'<--- Database "{database}" is ready --->')
         except Error as error:
@@ -66,5 +66,5 @@ database = create_database(
     database = POSTGRES_DATABASE
 )
 
-def create_table(): 
+def create_table():
     Base.metadata.create_all(engine)
