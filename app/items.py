@@ -1,4 +1,4 @@
-from flask import request, render_template
+from flask import request, render_template, flash
 from flask_login import login_required
 
 from app.app_settings import dp
@@ -9,12 +9,11 @@ from DB.models import Item
 @login_required
 def items():
     items = Item.get_items()
-    return render_template('items.html', data = items)
-
-@dp.route('/items', methods = ['GET', 'POST'])
-def search_items():
-    words = request.form['itemSearch']
-    words_list = [word.lower() for word in words.split()]
-    keywords = set(words_list)
-    items = Item.search_items(keyword = keywords)
-    return render_template('items.html', search_items_data = items)
+    if request.method == 'POST':
+        words = request.form['itemSearch']
+        words_list = [word.lower() for word in words.split()]
+        keywords = set(words_list)
+        search_items = Item.search_items(keywords = keywords)
+        # if search_items == []:
+        return render_template('items.html', items_data = items, search_items_data = search_items)
+    return render_template('items.html', items_data = items)
