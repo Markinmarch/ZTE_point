@@ -104,22 +104,24 @@ class Item(Base):
     '''
     __tablename__ = 'item'
 
-    id = Column(Integer, primary_key = True)
+    id = Column(Integer, primary_key = True, autoincrement = True)
     name = Column(String(length = 100), nullable = False)
     price = Column(Float, nullable = False)
-    index = Column(Integer, nullable = True, unique = True)
+    index = Column(Integer, nullable = False, unique = True)
+    parametrs = Column(String(length = 240), nullable = True)
+    description = Column(String(length = 240), nullable = True)
     image = Column(String, nullable = True)
 
     def __str__(self):
-        return '%s: %s, %s, %s' % (self.id, self.name, self.price, self.index)
+        return '%s: %s, %s, %s' % (self.id, self.name, self.price, self.index, self.parametrs, self.description)
     
     def get_items():
         with session as get_item:
             return get_item.query(Item).all()
         
-    def search_items(keyword) -> set:
+    def search_items(keywords) -> set:
         with session as search:
-            for words in keyword:
+            for words in keywords:
                 return search.query(Item).filter(Item.name.ilike(f'%{words}%')).all()
 
 class Order(Base):
