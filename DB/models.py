@@ -24,10 +24,10 @@ class User(Base, UserMixin):
     __tablename__ = 'user'
     
     id = Column(Integer, nullable = False, primary_key = True)
-    name = Column(String(length = 40), default = None, nullable = False)
-    phone = Column(String, default = None, nullable = False)
-    email = Column(String, default = None, nullable = False, unique = True)
-    password = Column(String, default = None, nullable = False)
+    name = Column(String(length = 40), nullable = False)
+    phone = Column(String, nullable = False)
+    email = Column(String, nullable = False, unique = True)
+    password = Column(String, nullable = False)
     role = Column(String, default = "user", nullable = False)
     
     def __str__(self):
@@ -107,13 +107,14 @@ class Item(Base):
     id = Column(Integer, primary_key = True, autoincrement = True)
     name = Column(String(length = 100), nullable = False)
     price = Column(Float, nullable = False)
+    unit = Column(String, default = 'ед.', nullable = False)
     index = Column(Integer, nullable = False, unique = True)
     parametrs = Column(String(length = 240), nullable = True)
     description = Column(String(length = 240), nullable = True)
     image = Column(String, nullable = True)
 
     def __str__(self):
-        return '%s: %s, %s, %s' % (self.id, self.name, self.price, self.index, self.parametrs, self.description)
+        return '%s: %s, %s, %s' % (self.id, self.name, self.price, self.unit, self.index, self.parametrs, self.description)
     
     def get_items():
         with session as get_item:
