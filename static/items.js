@@ -6,10 +6,17 @@ function searchButton() {
 }
 
 function searchItem() {
-    var itemKwargs = document.getElementById("itemSearch");
+    var itemKeywords = document.getElementById("itemSearch");
 
-    if (itemKwargs.value == "") {
+    if (itemKeywords.value == "") {
         alert("Перед началом поиска введите хотя бы несколько букв.")
         return false;
     }
+
+    var searchItemData = JSON.stringify({searchWords: itemKeywords.value});
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/registration", true);
+    xhr.setRequestHeader('content-type', 'application/json; charset=UTF-8');
+    xhr.send(searchItemData);
 }
