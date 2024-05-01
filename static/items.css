@@ -62,7 +62,7 @@ input:focus::placeholder {
 .items-block {
     position: relative;
     background-color: 0;
-    border: solid gray 5px;
+    /* border: solid gray 5px; */
     margin: 50px;
     height: 100%;
 }
@@ -122,7 +122,7 @@ input:focus::placeholder {
     margin-top: -20px;
     text-transform: uppercase;
     color: #fff;
-    box-shadow: 0 3px 3px #42c3d4;
+    box-shadow: 0 3px 3px #040707;
     cursor: pointer;
     text-decoration: none;
     /* Важные стили для анимации */
