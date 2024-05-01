@@ -15,7 +15,7 @@ def items():
 @login_required
 def search_item():
     items = Item.get_items()
-    words = request.form['itemSearch']
+    words = request.json['searchKeywords']
     if words == '':
         return redirect('/items')
     words_list = [word.lower() for word in words.split()]

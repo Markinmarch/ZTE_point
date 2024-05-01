@@ -13,10 +13,27 @@ function searchItem() {
         return false;
     }
 
-    var searchItemData = JSON.stringify({searchWords: itemKeywords.value});
+    var searchItemData = JSON.stringify({searchKeywords: itemKeywords.value});
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/registration", true);
     xhr.setRequestHeader('content-type', 'application/json; charset=UTF-8');
     xhr.send(searchItemData);
+    xhr.onload = function() {
+        // if (xhr.response == "false") {
+        //     alert("Адрес почты "+ userEmail.value + " уже зарегестрирован. Используйте другой.");
+        //     userEmail.value = "";
+        //     return false;
+        // }
+        // else if (xhr.response == "few characters") {
+        //     alert("Пароль должен состоять минимум из 6 знаков");
+        //     userPassword.value = "";
+        //     repeatPassword.value = "";
+        //     return false;
+        // }
+        // else {
+        //     alert("Поздравляем, " + userName.value + ", регистрация завершена!");
+        //     window.location.replace("http://localhost:5000");
+        // }
+    }
 }
