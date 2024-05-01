@@ -5,3 +5,4 @@ from . import registration
 from . import logout
 from . import app_settings
 from . import admin
+from . import bascket
