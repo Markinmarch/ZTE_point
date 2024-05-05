@@ -1,6 +1,8 @@
 from sqlalchemy import Column, ForeignKey, Integer, String, Float, Date
 from sqlalchemy.orm import relationship
 
+from datetime import datetime
+
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from flask_login import UserMixin
@@ -114,7 +116,7 @@ class Item(Base):
     image = Column(String, nullable = True)
 
     def __str__(self):
-        return '%s: %s, %s, %s' % (self.id, self.name, self.price, self.unit, self.index, self.parametrs, self.description)
+        return '%s: %s, %s, %s, %s, %s, %s' % (self.id, self.name, self.price, self.unit, self.index, self.parametrs, self.description)
     
     def get_items():
         with session as get_item:
@@ -139,13 +141,27 @@ class Order(Base):
     __tablename__ = 'order'
 
     id = Column(Integer, primary_key = True)
-    date = Column(Date, nullable = False)
-    id_item = Column(Integer, ForeignKey('item.id'), nullable = False)
+    date = Column(String, default = datetime.now().strftime("%d.%m.%Y --> %H:%M"))
     id_user = Column(Integer, ForeignKey('user.id'), nullable = False)
+    id_item = Column(Integer, ForeignKey('item.id'), nullable = False)
+    count = Column(Integer, default = 1, nullable = True)
+    
 
     user = relationship(User, backref = 'order')
     item = relationship(Item, backref = 'order')
+    
+    def add_items(id_user_arg, id_item_arg, count_arg):
+        with session as add_item:
+            add_item.add(
+                Order(
+                    id_user = id_user_arg,
+                    id_item = id_item_arg,
+                    count = count_arg
+                )
+            )
+            add_item.commit()
+            
 
     def __str__(self):
-        return '%s: %s, %s' % (self.id, self.id_user, self.item)
+        return '%s: %s, %s' % (self.id, self.id_user, self.id_item)
 #избавились от переменной (ссылки) tables за ненадобностью
