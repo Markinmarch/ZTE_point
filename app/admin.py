@@ -83,7 +83,7 @@ class TaskModelViewItems(ModelView):
         }
     
 class TaskModelViewOrders(ModelView):
-    column_list = ['id', 'user', 'item']
+    column_list = ['id', 'date', 'id_user', 'id_item', 'count']
     can_set_page_size = True
     page_size = 20
     column_display_all_relations = True
