@@ -11,23 +11,21 @@ from DB.models import Item, Order
 def items():
     items = Item.get_items()
     if request.method == 'POST':
-        words = request.form['itemSearch']
-        item_id = request.form['itemId']
-        item_count = request.form['itemCount']
         try:
-            if words == '' and item_id == None or words == None and item_id == None:
+            words = request.form['itemSearch']
+            if words == '':
                 return redirect('/items')
-            elif words == None:
-                Order.add_items(
-                    id_user_arg = current_user.get_id(),
-                    id_item_arg = item_id,
-                    count_arg = item_count
-                )
-            elif item_id == None:
-                words_list = [word.lower() for word in words.split()]
-                keywords = set(words_list)
-                search_items = Item.search_items(keywords = keywords)
-                return render_template('items.html', items_data = items, search_items_data = search_items)
+            words_list = [word.lower() for word in words.split()]
+            keywords = set(words_list)
+            search_items = Item.search_items(keywords = keywords)
+            return render_template('items.html', items_data = items, search_items_data = search_items)
         except BadRequestKeyError:
+            item_id = request.form['itemId']
+            item_count = request.form['itemCount']
+            Order.add_items(
+                id_user_arg = current_user.get_id(),
+                id_item_arg = item_id,
+                count_arg = item_count
+            )
             return render_template('items.html', items_data = items)
     return render_template('items.html', items_data = items)
