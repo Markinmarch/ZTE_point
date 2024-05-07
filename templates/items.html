@@ -20,17 +20,29 @@
             <button type = "submit" id = "itemSearchButton"><i class="fa fa-search"></i></button>
     </div>
 </form>
-<div class = "search-items">
+<div class = "items-block">
     {% for item in search_items_data %}
-        <table>
+    <table>
         <tr>
             <td><img src = "../static/images/item_images/{{item.name}}_{{item.index}}/{{item.name}}_thumb.jpg"/></td>
-            <td><p>{{item.name}}<br>Цена за единицу: {{item.price}}</p></td>
+            <td><p>
+                {{item.name}}
+                <br>Единица измерения: {{item.unit}}
+                <br>Описание: {{item.description}}
+                <br>Параметры: {{item.parametrs}}
+            </p></td>
         </tr>
-        <tr>
-            <td><button>{{item.price}} руб.</button></td>
+        <tr class = 'item-price'>
+            <td><p>{{item.price}} руб.</p></td>
+            <form action = "{{url_for('items')}}" method = "post">
+                <td>
+                    <input type = "number" min="1" max="100" name = "itemCount" id = "itemBuy" value = "1" size = "40">
+                    <input type = "hidden" name = "itemId" value = "{{item.id}}">
+                    <button type = "submit" name = "itemBuyButton" id = "itemBuyButton" value = "1" size = "40">В корзину</button>
+                </td>
+            </form>    
         </tr>
-        </table>
+    </table> 
     {% endfor %}
 </div>
 <div class = "items-block">
