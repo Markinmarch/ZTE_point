@@ -1,20 +1,40 @@
-// $(document).on('submit', '#itemBuyButton', function(elem){
-//     elem.preventDefault();
-//     $.ajax({
-//         type: "POST",
-//         url: "/items",
-//         data: {
-//             id: $("#itemId").val(),
-//             count: $("#itemCount").val()
-//         },
-//         success: function() {
-//             window.location.reload();
-//         }
-//     })
-// });
+$(document).on("submit", "#itemBuy", function(event){
+    event.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: "/items",
+        data: {
+            id: $("#itemId").val(),
+            count: $("#itemCount").val()
+        },
+        // success: function() {
+        //     alert(id)
+            // window.location.reload();
+        // }
+    })
+});
+
+$("#itemSearch").keypress(function(event) {
+    if (event.keyCode == 13) {
+        event.preventDefault();
+        $("#itemSearchButton").click();
+    }
+});
+
+window.onload = resetSearch;
+
+function resetSearch() {
+    var buttonName = document.getElementById("resetSearch");
+    if (buttonName.onclick) {
+        window.location.replace("http://localhost:5000/items/");
+    }
+}
 
 // $(document).on('submit', '#itemSearch', function(elem) {
-//     elem.preventDefault();
+//     // elem.preventDefault();
+//     if (elem.keyCode === 13) {
+//         $("#itemSearchButton").click();
+//     }
 //     $.ajax({
 //         type: "POST",
 //         url: "/items",
