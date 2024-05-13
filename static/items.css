@@ -7,24 +7,17 @@ body {
 }
 
 /* Поисковая строка */
-.search-bar {
-    margin: auto;
+.search-bar table {
+    margin-top: 50px;
+    left: 25%;
     position: relative;
-    text-align: center;
+    justify-content: center; 
 }
 
-form {
-    margin: 50px;
-    display:flex;
-    flex-direction:row;
-    text-align: center;
-}
-  
 .search-bar input {
     font-family: inherit;
     font-size: 30px;
     line-height: inherit;
-    flex-grow:2;
     border:none;
     border-radius: 15px 0 0 15px;
     text-align: center;
@@ -55,7 +48,6 @@ input:focus::placeholder {
 .search-bar button::after {
     content: "";
     clear: both;
-    display: table;
 }
 
 /* Блок с товарами */

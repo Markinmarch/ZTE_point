@@ -18,17 +18,20 @@
     <a href = "/about" type = "button">о нас</a>
     <a class = "bascket" type = "button" href = "/bascket"><img src="https://t700.ru/icon/cart.png" width="42" height="42"></a>
 </div>
-
-    <div class = "search-bar">
-        <form action = "{{url_for('items')}}" method = "post" id = "itemSearch">
-            <label for = "itemSearch"></label>
-            <input type = "text" name = "itemSearchInput" id = "itemSearchInput" size = "40" placeholder = "Поиск товара">
-        </form> 
-        <button type = "submit" id = "itemSearchButton"><i class="fa fa-search"></i></button>
-    </div>
-
+<div class = "search-bar">
+    <table>
+        <tr>
+            <td><form action = "{{url_for('items')}}" method = "post" id = "itemSearch">
+                <input type = "text" name = "itemSearchInput" id = "itemSearchInput" size = "40" placeholder = "Поиск товара">
+            </form>
+        </td><td>
+            <button type = "submit" id = "itemSearchButton"><i class="fa fa-search"></i></button>
+        </td></tr>
+    </table>
+</div>    
 <div class = "items-block">
     {% for item in search_items_data %}
+    <button id = "resetSearch" type = "submit">Сбросить</button>
     <table>
         <tr>
             <td><img src = "../static/images/item_images/{{item.name}}_{{item.index}}/{{item.name}}_thumb.jpg"/></td>
@@ -41,10 +44,10 @@
         </tr>
         <tr class = 'item-price'>
             <td><p>{{item.price}} руб.</p></td>
-            <form action = "{{url_for('items')}}" method = "post" id = "itemBuy">
+            <form action = "{{url_for('search_item')}}" method = "post" id = "itemBuy">
                 <td>
-                    <input type = "number" min="1" max="100" name = "itemCount" id = "itemBuy" value = "1" size = "40">
-                    <input type = "hidden" name = "itemId" name = "itemId" value = "{{item.id}}">
+                    <input type = "number" min="1" max="100" name = "itemCount" id = "itemCount" value = "1" size = "40">
+                    <input type = "hidden" name = "itemId" id = "itemId" value = "{{item.id}}">
                     <button type = "submit" name = "itemBuyButton" id = "itemBuyButton" value = "1" size = "40">В корзину</button>
                 </td>
             </form> 
@@ -52,7 +55,7 @@
     </table> 
     {% endfor %}
 </div>
-<!-- <div class = "items-block">
+<div class = "items-block">
     {% for item in items_data %}
     <table>
         <tr>
@@ -69,12 +72,13 @@
             <form action = "{{url_for('items')}}" method = "post" id = "itemBuy">
                 <td>
                     <input type = "number" min="1" max="100" name = "itemCount" id = "itemCount" value = "1" size = "40">
-                    <input type = "hidden" name = "itemId" name = "itemId" value = "{{item.id}}">
+                    <input type = "hidden" name = "itemId" id = "itemId" value = "{{item.id}}">
                     <button type = "submit" name = "itemBuyButton" id = "itemBuyButton" value = "1" size = "40">В корзину</button>
                 </td>
-            </form>    
+            </form>
+            
         </tr>
     </table>    
     {% endfor %}
-</div> -->
+</div>
 {% endblock %}
