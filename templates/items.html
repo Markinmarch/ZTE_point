@@ -28,10 +28,13 @@
             <button type = "submit" id = "itemSearchButton"><i class="fa fa-search"></i></button>
         </td></tr>
     </table>
-</div>    
-<div class = "items-block">
+</div>
+{% if reset_search == True %}
+<div class = "items-block" style = "border: solid grey 3px; border-radius: 10px">
+    <div class = "reset-search item-price">
+        <a href = "/items"><button id = "resetSearch" type = "submit">Сбросить</button></a>
+    </div>
     {% for item in search_items_data %}
-    <button id = "resetSearch" type = "submit">Сбросить</button>
     <table>
         <tr>
             <td><img src = "../static/images/item_images/{{item.name}}_{{item.index}}/{{item.name}}_thumb.jpg"/></td>
@@ -55,6 +58,7 @@
     </table> 
     {% endfor %}
 </div>
+{% endif %}
 <div class = "items-block">
     {% for item in items_data %}
     <table>
