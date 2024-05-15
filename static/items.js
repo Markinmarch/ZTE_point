@@ -36,3 +36,7 @@ function getSearchItems() {
     }
     window.location.replace("http://localhost:5000/items/search?keywords=" + keywords.value);    
 }
+
+$("#itemBuyButton").click(function(){
+    $(".bascket").addClass("before-click-buy-button");
+});

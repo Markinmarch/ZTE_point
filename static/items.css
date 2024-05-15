@@ -183,36 +183,3 @@ button:active,input[type=submit]:active
     text-align: left;
     margin: 30px;
 }
-
-/* .reset-search button {
-    text-align: center;
-    background:  #4169E1;
-    width: 200px;
-    height: 35px;;
-    border: none;
-    border-radius: 15px;
-    font-size: 20px;
-    margin-top: -20px;
-    text-transform: uppercase;
-    color: #fff;
-    box-shadow: 0 3px 3px #040707;
-    cursor: pointer;
-    text-decoration: none;
-    position: relative;
-    overflow: hidden;
-}
-
-.reset-search button:hover {
-    background: repeating-linear-gradient(
-        45deg,
-        #606dbc,
-        #606dbc 5%,
-        #465298 5%,
-        #465298 10%
-      );
-    color: black;
-    background-size: 100px 100px;
-    animation: move-it 3s linear infinite;
-    border-radius: 15px;
-    font-weight: bold;
-} */

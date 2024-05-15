@@ -64,7 +64,22 @@
     /* background-color: aquamarine; */
     border-radius: 15px;
     float: right;
-    padding: 0px 20px;
+    width: 90px;
+    padding: inherit;
+    padding-bottom: 1px;
+}
+
+.before-click-buy-button {
+  background: gold;
+  box-shadow: 0 -200px 100px -120px crimson inset;
+  animation: background 3s infinite alternate;
+}
+
+@keyframes background {
+  50% {
+    background: skyblue;
+    box-shadow: 0 -200px 100px -100px yellowgreen inset;
+  }
 }
 
 @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:200');
