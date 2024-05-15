@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, Float, Date
+from sqlalchemy import Column, ForeignKey, Integer, String, Float, Date, or_
 from sqlalchemy.orm import relationship
 
 from datetime import datetime
@@ -125,7 +125,11 @@ class Item(Base):
     def search_items(keywords) -> set:
         with session as search:
             for words in keywords:
-                return search.query(Item).filter(Item.name.ilike(f'%{words}%')).all()
+                return search.query(Item).filter(or_(
+                    Item.name.ilike(f'%{words}%'),
+                    Item.parametrs.ilike(f'%{words}%'),
+                    Item.description.ilike(f'%{words}%')
+                    ))
 
 class Order(Base):
     '''
