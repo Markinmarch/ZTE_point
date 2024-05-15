@@ -8,7 +8,8 @@ $(document).on("submit", "#itemBuy", function(event){
             id: $("#itemId").val(),
             count: $("#itemCount").val()
         }
-    })
+    });
+    $(".bascket").addClass("before-click-buy-button");
 });
 
 // AJAX, который устанавилвает поиск при нажатии на Enter
@@ -36,7 +37,3 @@ function getSearchItems() {
     }
     window.location.replace("http://localhost:5000/items/search?keywords=" + keywords.value);    
 }
-
-$("#itemBuyButton").click(function(){
-    $(".bascket").addClass("before-click-buy-button");
-});
