@@ -9,6 +9,7 @@ $(document).on("submit", "#itemBuy", function(event){
             count: $("#itemCount").val()
         }
     });
+    // Добавляем стиль кнопке, при добавлении в корзину
     $(".bascket").addClass("before-click-buy-button");
 });
 
