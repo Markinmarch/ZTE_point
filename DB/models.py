@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, Float, Date, or_
+from sqlalchemy import Column, ForeignKey, Integer, String, Float, or_, and_, join
 from sqlalchemy.orm import relationship
 
 from datetime import datetime
@@ -59,8 +59,8 @@ class User(Base, UserMixin):
         user_password: str,
         user_role: str
     ) -> None:
-        with session as add_user:
-            add_user.add(
+        with session as sess:
+            sess.add(
                 User(
                     name = user_name,
                     phone = user_phone,
@@ -69,7 +69,7 @@ class User(Base, UserMixin):
                     role = user_role
                 )
             )
-            add_user.commit()
+            sess.commit()
         
     def get_user(user_id: int) -> object:
         # связано со входом пользователя на сайт, исключительно служебный метод
@@ -88,8 +88,8 @@ class User(Base, UserMixin):
         user_email: str,
         user_password: str
     ):
-        with session as auth_user:
-            user = auth_user.query(User).filter_by(email = user_email).first()
+        with session as sess:
+            user = sess.query(User).filter_by(email = user_email).first()
             if check_password_hash(user.password, user_password) == True:
                 return user
     
@@ -119,53 +119,69 @@ class Item(Base):
         return '%s: %s, %s, %s, %s, %s, %s' % (self.id, self.name, self.price, self.unit, self.index, self.parametrs, self.description)
     
     def get_items():
-        with session as get_item:
-            return get_item.query(Item).all()
+        with session as sess:
+            return sess.query(Item).all()
         
-    def search_items(keywords) -> set:
-        with session as search:
+    def search_items(keywords: set) -> list:
+        with session as sess:
             for words in keywords:
-                return search.query(Item).filter(or_(
+                return sess.query(Item).filter(or_(
                     Item.name.ilike(f'%{words}%'),
                     Item.parametrs.ilike(f'%{words}%'),
                     Item.description.ilike(f'%{words}%')
                     ))
 
-class Order(Base):
+class Bascket(Base):
     '''
-    Объект "Order" - структура таблицы БД для заказов польвателей.
+    Объект "Bascket" - структура таблицы БД для корзины польвателей.
         Параметры:
-            id(int): идентификатор заказа;
-            date(str): дата заказа;
+            # id(int): идентификатор заказа;
+            # date(str): дата заказа;
             id_item(int): идентификатор товара;
             id_user(int): идентификатор пользователя;
         Возвращаемое значение:
             str(id: id_user, id_item)
     '''
-    __tablename__ = 'order'
+    __tablename__ = 'bascket'
 
-    id = Column(Integer, primary_key = True)
-    date = Column(String, default = datetime.now().strftime("%d.%m.%Y --> %H:%M"))
+    # id = Column(Integer, primary_key = True)
+    # date = Column(String, default = datetime.now().strftime("%d.%m.%Y --> %H:%M"))
     id_user = Column(Integer, ForeignKey('user.id'), nullable = False)
     id_item = Column(Integer, ForeignKey('item.id'), nullable = False)
     count = Column(Integer, default = 1, nullable = True)
+    status = Column(String, default = "not paid", nullable = True)
     
-
-    user = relationship(User, backref = 'order')
-    item = relationship(Item, backref = 'order')
+    user = relationship(User, backref = 'bascket')
+    item = relationship(Item, backref = 'bascket')
     
-    def add_items(id_user_arg, id_item_arg, count_arg):
-        with session as add_item:
-            add_item.add(
-                Order(
-                    id_user = id_user_arg,
-                    id_item = id_item_arg,
-                    count = count_arg
+    def add_items(
+        id_user: int,
+        id_item: int,
+        count: int
+    ) -> None:
+        with session as sess:
+            sess.add(
+                Bascket(
+                    id_user,
+                    id_item,
+                    count
                 )
             )
-            add_item.commit()
+            sess.commit()
             
+    def item_list(
+        id_user: int,
+        # id_item: int,
+        # count: int,
+        # item_price: float,
+        # status: str
+    ):
+        pass
+        # with session as sess:
+        #     inner_bascket_item = sess.query(Bascket, Item).join(Item, Bascket.id_item == Item.id).all()
+        #     for bascket, item in inner_bascket_item:
+        #         return bascket.id_item, bascket.count, bascket.status, item.price
 
     def __str__(self):
-        return '%s: %s, %s' % (self.id, self.id_user, self.id_item)
+        return '%s: %s, %s' % (self.id_user, self.id_item, self.count, self.status)
 #избавились от переменной (ссылки) tables за ненадобностью
