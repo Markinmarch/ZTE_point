@@ -178,3 +178,10 @@ class Bascket(Base):
     def __str__(self):
         return '%s: %s, %s' % (self.id_user, self.id_item, self.count, self.status)
 #избавились от переменной (ссылки) tables за ненадобностью
+
+class Order(Base):
+    __tablename__ = 'order'
+    
+    id = Column(Integer, primary_key = True)
+    date = Column(String, default = datetime.now().strftime("%d.%m.%Y --> %H:%M"))
+    status = Column(String, default = "not paid", nullable = True)
