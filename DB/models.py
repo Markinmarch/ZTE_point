@@ -155,32 +155,25 @@ class Bascket(Base):
     item = relationship(Item, backref = 'bascket')
     
     def add_items(
-        id_user: int,
-        id_item: int,
+        user_id: int,
+        item_id: int,
         count: int
     ) -> None:
         with session as sess:
             sess.add(
                 Bascket(
-                    id_user,
-                    id_item,
+                    user_id,
+                    item_id,
                     count
                 )
             )
             sess.commit()
             
-    def item_list(
-        id_user: int,
-        # id_item: int,
-        # count: int,
-        # item_price: float,
-        # status: str
-    ):
-        pass
-        # with session as sess:
-        #     inner_bascket_item = sess.query(Bascket, Item).join(Item, Bascket.id_item == Item.id).all()
-        #     for bascket, item in inner_bascket_item:
-        #         return bascket.id_item, bascket.count, bascket.status, item.price
+    def item_list(user_id: int) -> list:
+        with session as sess:
+            inner_join_query = sess.query(Bascket, Item).join(Bascket, Item.id == Bascket.id_item).filter(Bascket.id_user == user_id).all()
+            for bascket, item in inner_join_query:
+                return [item.id, item.price, bascket.count, bascket.status]
 
     def __str__(self):
         return '%s: %s, %s' % (self.id_user, self.id_item, self.count, self.status)
