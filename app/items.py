@@ -2,7 +2,7 @@ from flask import request, render_template
 from flask_login import login_required, current_user
 
 from app.app_settings import dp
-from DB.models import Item, Order
+from DB.models import Item, Order, Bascket
 
 
 @dp.route('/items', methods = ['GET', 'POST'])
@@ -12,10 +12,10 @@ def items():
     if request.method == 'POST':
         item_id = request.form['id']
         item_count = request.form['count']
-        Order.add_items(
-            id_user_arg = current_user.get_id(),
-            id_item_arg = item_id,
-            count_arg = item_count
+        Bascket.add_items(
+            user_id = current_user.get_id(),
+            item_id = item_id,
+            count = item_count
         )
     return render_template('items.html', items_data = items)
 
@@ -24,10 +24,10 @@ def search_item():
     if request.method == 'POST':
         item_id = request.form['id']
         item_count = request.form['count']
-        Order.add_items(
-            id_user_arg = current_user.get_id(),
-            id_item_arg = item_id,
-            count_arg = item_count
+        Bascket.add_items(
+            user_id = current_user.get_id(),
+            item_id = item_id,
+            count = item_count
         )
     keywords = request.args.get('keywords')
     keywords_list = [keyword.lower() for keyword in keywords.split()]

@@ -144,12 +144,10 @@ class Bascket(Base):
     '''
     __tablename__ = 'bascket'
 
-    # id = Column(Integer, primary_key = True)
-    # date = Column(String, default = datetime.now().strftime("%d.%m.%Y --> %H:%M"))
+    id = Column(Integer, primary_key = True, nullable = False)
     id_user = Column(Integer, ForeignKey('user.id'), nullable = False)
     id_item = Column(Integer, ForeignKey('item.id'), nullable = False)
-    count = Column(Integer, default = 1, nullable = True)
-    status = Column(String, default = "not paid", nullable = True)
+    count = Column(Integer, nullable = False)
     
     user = relationship(User, backref = 'bascket')
     item = relationship(Item, backref = 'bascket')
@@ -162,9 +160,9 @@ class Bascket(Base):
         with session as sess:
             sess.add(
                 Bascket(
-                    user_id,
-                    item_id,
-                    count
+                    id_user = user_id,
+                    id_item = item_id,
+                    count = count
                 )
             )
             sess.commit()
@@ -173,10 +171,10 @@ class Bascket(Base):
         with session as sess:
             inner_join_query = sess.query(Bascket, Item).join(Bascket, Item.id == Bascket.id_item).filter(Bascket.id_user == user_id).all()
             for bascket, item in inner_join_query:
-                return [item.id, item.price, bascket.count, bascket.status]
+                return [item.id, item.price, bascket.count]
 
     def __str__(self):
-        return '%s: %s, %s' % (self.id_user, self.id_item, self.count, self.status)
+        return '%s: %s, %s' % (self.id_user, self.id_item, self.count)
 #избавились от переменной (ссылки) tables за ненадобностью
 
 class Order(Base):
@@ -184,4 +182,5 @@ class Order(Base):
     
     id = Column(Integer, primary_key = True)
     date = Column(String, default = datetime.now().strftime("%d.%m.%Y --> %H:%M"))
+    item_list = Column(String, nullable = False)
     status = Column(String, default = "not paid", nullable = True)
