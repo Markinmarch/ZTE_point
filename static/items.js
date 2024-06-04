@@ -13,7 +13,7 @@ $(document).on("submit", "#itemBuy", function(event){
     $(".bascket").addClass("before-click-buy-button");
 });
 
-// AJAX, который устанавилвает поиск при нажатии на Enter
+// AJAX, который устанавливает поиск при нажатии на Enter
 $("#itemSearch").keypress(function(event) {
     if (event.keyCode == 13) {
         event.preventDefault();
