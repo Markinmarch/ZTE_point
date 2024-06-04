@@ -147,7 +147,7 @@ class Bascket(Base):
     id = Column(Integer, primary_key = True, nullable = False)
     id_user = Column(Integer, ForeignKey('user.id'), nullable = False)
     id_item = Column(Integer, ForeignKey('item.id'), nullable = False)
-    count = Column(Integer, nullable = False)
+    count = Column(Integer, default = 1, nullable = False)
     
     user = relationship(User, backref = 'bascket')
     item = relationship(Item, backref = 'bascket')
