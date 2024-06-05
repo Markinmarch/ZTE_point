@@ -1,6 +1,6 @@
 // AJAX, который отправляет параметры товара
-$(document).on("submit", "#itemBuy", function(event){
-    event.preventDefault();
+// $(document).on("submit", "#itemBuy", function(){
+    // event.preventDefault();
     // $.ajax({
     //     type: "POST",
     //     url: "/items",
@@ -10,8 +10,8 @@ $(document).on("submit", "#itemBuy", function(event){
     //     }
     // });
     // Добавляем стиль кнопке, при добавлении в корзину
-    $(".bascket").addClass("before-click-buy-button");
-});
+//     $(".bascket").addClass("before-click-buy-button");
+// });
 
 // AJAX, который устанавливает поиск при нажатии на Enter
 $("#itemSearch").keypress(function(event) {
@@ -38,3 +38,9 @@ function getSearchItems() {
     }
     window.location.replace("http://localhost:5000/items/search?keywords=" + keywords.value);    
 }
+
+// Отправляемся? Запомним, где вы остановились.
+window.onbeforeunload = () => sessionStorage.setItem('scrollPos', window.scrollY);
+
+// Добро пожаловать обратно! Мы сохранили вашу позицию.
+window.onload = () => window.scrollTo(0, sessionStorage.getItem('scrollPos') || 0);
