@@ -67,7 +67,12 @@
         <tr>
             <td><img src = "../static/images/item_images/{{item.name}}_{{item.index}}/{{item.name}}_thumb.jpg"/></td>
             <td>
-                {% if item.description is none %}
+                {% if item.parametrs is none and item.description is none %}
+                <p>
+                    {{item.name}}
+                    <br>Единица измерения: {{item.unit}}
+                </p>
+                {% elif item.description is none %}
                     <p> 
                         {{item.name}}
                         <br>Единица измерения: {{item.unit}}
@@ -79,11 +84,6 @@
                         <br>Единица измерения: {{item.unit}}
                         <br>Описание: {{item.description}}
                     </p>  
-                {% elif item.parametrs is none and item.description is none %}
-                <p>
-                    {{item.name}}
-                    <br>Единица измерения: {{item.unit}}
-                </p>
                 {% else %}
                 <p>
                     {{item.name}}
