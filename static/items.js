@@ -1,15 +1,15 @@
-// AJAX, который отправляет параметры товара
-// $(document).on("submit", "#itemBuy", function(){
-    // event.preventDefault();
-    // $.ajax({
-    //     type: "POST",
-    //     url: "/items",
-    //     data: {
-    //         id: $("#itemId").val(),
-    //         count: $("#itemCount").val()
-    //     }
-    // });
-    // Добавляем стиль кнопке, при добавлении в корзину
+// // AJAX, который отправляет параметры товара
+// $(document).on("submit", "#itemBuy", function(event){
+//     event.preventDefault();
+//     $.ajax({
+//         type: "POST",
+//         url: "/items",
+//         data: {
+//             id: $("#itemId").val(),
+//             count: $("#itemCount").val()
+//         }
+//     });
+//     // Добавляем стиль кнопке, при добавлении в корзину
 //     $(".bascket").addClass("before-click-buy-button");
 // });
 

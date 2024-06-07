@@ -9,6 +9,8 @@ from DB.models import Item, Order, Bascket
 @login_required
 def items():
     items = Item.get_items()
+    for item in items:
+            print(item)
     if request.method == 'POST':
         item_id = request.form['itemId']
         item_count = request.form['itemCount']
@@ -18,6 +20,7 @@ def items():
             item_id = item_id,
             count = item_count
         )
+        
     return render_template('items.html', items_data = items)
 
 @dp.route('/items/search', methods = ['GET', 'POST'])
