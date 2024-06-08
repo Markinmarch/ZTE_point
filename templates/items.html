@@ -34,22 +34,57 @@
     <div class = "reset-search item-price">
         <a href = "/items"><button id = "resetSearch" type = "submit">Сбросить</button></a>
     </div>
-    {% for item in search_items_data %}
-    <table>
-        <tr>
-            <td><img src = "../static/images/item_images/{{item.name}}_{{item.index}}/{{item.name}}_thumb.jpg"/></td>
-            <td>
+{% for item in search_items_data %}
+<table>
+    <tr>
+        <td><img src = "../static/images/item_images/{{item.name}}_{{item.index}}/{{item.name}}_thumb.jpg"/></td>
+        <td>
+            {% if item.parametrs is none and item.description is none %}
+            <p>
+                {{item.name}}
+                <br>Единица измерения: {{item.unit}}
+            </p>
+            {% elif item.description is none %}
+                <p> 
+                    {{item.name}}
+                    <br>Единица измерения: {{item.unit}}
+                    <br>Параметры: {{item.parametrs}}
+                </p>
+            {% elif item.parametrs is none %}
                 <p>
                     {{item.name}}
                     <br>Единица измерения: {{item.unit}}
                     <br>Описание: {{item.description}}
-                    <br>Параметры: {{item.parametrs}}
-                </p>
+                </p>  
+            {% else %}
+            <p>
+                {{item.name}}
+                <br>Единица измерения: {{item.unit}}
+                <br>Описание: {{item.description}}
+                <br>Параметры: {{item.parametrs}}
+            </p>
+            {% endif %}
+        </td>
+    </tr>
+    <tr class = 'item-price'>
+        <td><p>{{item.price}} руб.</p></td>
+        <form action = "{{url_for('search_item')}}" method = "post" id = "itemBuy" itemIndex = "{{item.index}}">
+            <td>
+                <input type = "number" min="1" max="100" name = "itemCount" id = "itemCount{{item.index}}" value = "1" size = "40">
+                <input type = "hidden" name = "itemId" id = "itemId{{item.index}}" value = {{item.id}}>
+                <button type = "submit" name = "itemBuyButton" id = "itemBuyButton">В корзину</button>
             </td>
-        </tr>
-        <tr class = 'item-price'>
-            <td><p>{{item.price}} руб.</p></td>
-            <form action = "{{url_for('search_item')}}" method = "post" id = "itemBuy">
+        </form>
+    </tr>
+</table> 
+{% endfor %}
+</div>
+{% endif %}
+{% for item in items_data %}
+    <div class = "items-block">
+        <table>
+            <tr>
+                <td><img src = "../static/images/item_images/{{item.name}}_{{item.index}}/{{item.name}}_thumb.jpg"/></td>
                 <td>
                     {% if item.parametrs is none and item.description is none %}
                     <p>
@@ -75,58 +110,20 @@
                         <br>Описание: {{item.description}}
                         <br>Параметры: {{item.parametrs}}
                     </p>
-                    {% endif %}n type = "submit" name = "itemBuyButton" id = "itemBuyButton">В корзину</button>
+                    {% endif %}
                 </td>
-            </form> 
-        </tr>
-    </table> 
-    {% endfor %}
-</div>
-{% endif %}
-{% for item in items_data %}
-<div class = "items-block" id = "item{{item.index}}">
-    <table>
-        <tr>
-            <td><img src = "../static/images/item_images/{{item.name}}_{{item.index}}/{{item.name}}_thumb.jpg"/></td>
-            <td>
-                {% if item.parametrs is none and item.description is none %}
-                <p>
-                    {{item.name}}
-                    <br>Единица измерения: {{item.unit}}
-                </p>
-                {% elif item.description is none %}
-                    <p> 
-                        {{item.name}}
-                        <br>Единица измерения: {{item.unit}}
-                        <br>Параметры: {{item.parametrs}}
-                    </p>
-                {% elif item.parametrs is none %}
-                    <p>
-                        {{item.name}}
-                        <br>Единица измерения: {{item.unit}}
-                        <br>Описание: {{item.description}}
-                    </p>  
-                {% else %}
-                <p>
-                    {{item.name}}
-                    <br>Единица измерения: {{item.unit}}
-                    <br>Описание: {{item.description}}
-                    <br>Параметры: {{item.parametrs}}
-                </p>
-                {% endif %}
-            </td>
-        </tr>
-        <tr class = 'item-price'>
-            <td><p>{{item.price}} руб.</p></td>
-            <form action = "{{url_for('items')}}" method = "post" id = "itemBuy">
-                <td>
-                    <input type = "number" min="1" max="100" name = "itemCount" id = "itemCount" value = "1" size = "40">
-                    <input type = "hidden" name = "itemId" id = "itemId" value = "{{item.id}}">
-                    <button type = "submit" name = "itemBuyButton" id = "itemBuyButton">В корзину</button>
-                </td>
-            </form>
-        </tr>
-    </table>    
-</div>
+            </tr>
+            <tr class = 'item-price'>
+                <td><p>{{item.price}} руб.</p></td>
+                <form action = "{{url_for('items')}}" method = "post" id = "itemBuy" itemIndex = "{{item.index}}">
+                    <td>
+                        <input type = "number" min="1" max="100" name = "itemCount" id = "itemCount{{item.index}}" value = "1" size = "40">
+                        <input type = "hidden" name = "itemId" id = "itemId{{item.index}}" value = {{item.id}}>
+                        <button type = "submit" name = "itemBuyButton" id = "itemBuyButton">В корзину</button>
+                    </td>
+                </form>
+            </tr>
+        </table>    
+    </div>
 {% endfor %}
 {% endblock %}

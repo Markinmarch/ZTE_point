@@ -1,17 +1,18 @@
-// // AJAX, который отправляет параметры товара
-// $(document).on("submit", "#itemBuy", function(event){
-//     event.preventDefault();
-//     $.ajax({
-//         type: "POST",
-//         url: "/items",
-//         data: {
-//             id: $("#itemId").val(),
-//             count: $("#itemCount").val()
-//         }
-//     });
-//     // Добавляем стиль кнопке, при добавлении в корзину
-//     $(".bascket").addClass("before-click-buy-button");
-// });
+// AJAX, который отправляет параметры товара
+$(document).on("submit", "#itemBuy", function(event){
+    event.preventDefault();
+    var itemIndex = $(this).attr("itemIndex")
+    $.ajax({
+        type: "POST",
+        url: "/items",
+        data: {
+            id: $("#itemId" + itemIndex).val(),
+            count: $("#itemCount" + itemIndex).val()
+        },
+    });
+    // Добавляем стиль кнопке, при добавлении в корзину
+    $(".bascket").addClass("before-click-buy-button");
+});
 
 // AJAX, который устанавливает поиск при нажатии на Enter
 $("#itemSearch").keypress(function(event) {
@@ -38,9 +39,3 @@ function getSearchItems() {
     }
     window.location.replace("http://localhost:5000/items/search?keywords=" + keywords.value);    
 }
-
-// Отправляемся? Запомним, где вы остановились.
-window.onbeforeunload = () => sessionStorage.setItem('scrollPos', window.scrollY);
-
-// Добро пожаловать обратно! Мы сохранили вашу позицию.
-window.onload = () => window.scrollTo(0, sessionStorage.getItem('scrollPos') || 0);
