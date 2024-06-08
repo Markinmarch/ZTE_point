@@ -9,11 +9,9 @@ from DB.models import Item, Order, Bascket
 @login_required
 def items():
     items = Item.get_items()
-    for item in items:
-            print(item)
     if request.method == 'POST':
-        item_id = request.form['itemId']
-        item_count = request.form['itemCount']
+        item_id = request.form['id']
+        item_count = request.form['count']
         print(item_id, item_count)
         Bascket.add_items(
             user_id = current_user.get_id(),
@@ -26,8 +24,8 @@ def items():
 @dp.route('/items/search', methods = ['GET', 'POST'])
 def search_item():
     if request.method == 'POST':
-        item_id = request.form['itemId']
-        item_count = request.form['itemCount']
+        item_id = request.form['id']
+        item_count = request.form['count']
         Bascket.add_items(
             user_id = current_user.get_id(),
             item_id = item_id,
