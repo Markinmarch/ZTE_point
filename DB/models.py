@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, Float, or_, and_, join
+from sqlalchemy import Column, ForeignKey, Integer, String, Float, or_, and_
 from sqlalchemy.orm import relationship
 
 from datetime import datetime
@@ -148,6 +148,7 @@ class Bascket(Base):
     id_user = Column(Integer, ForeignKey('user.id'), nullable = False)
     id_item = Column(Integer, ForeignKey('item.id'), nullable = False)
     count = Column(Integer, default = 1, nullable = False)
+    status = Column(String, default = 'no paid', nullable = False)
     
     user = relationship(User, backref = 'bascket')
     item = relationship(Item, backref = 'bascket')
@@ -167,11 +168,14 @@ class Bascket(Base):
             )
             sess.commit()
             
-    def item_list(user_id: int) -> list:
+    def not_paid_item_list(user_id: int) -> list:
         with session as sess:
-            inner_join_query = sess.query(Bascket, Item).join(Bascket, Item.id == Bascket.id_item).filter(Bascket.id_user == user_id).all()
-            for bascket, item in inner_join_query:
-                return [item.id, item.price, bascket.count]
+            inner_join_query = sess.query(Bascket, Item).join(Bascket, Item.id == Bascket.id_item)
+            params_to_paid = inner_join_query.filter(and_(Bascket.id_user == user_id, Bascket.status == 'not paid')).all()
+            full_list = []
+            for bascket, item in params_to_paid:
+                full_list.append([item.id, item.price, bascket.count])
+            return full_list
 
     def __str__(self):
         return '%s: %s, %s' % (self.id_user, self.id_item, self.count)
@@ -180,7 +184,14 @@ class Bascket(Base):
 class Order(Base):
     __tablename__ = 'order'
     
-    id = Column(Integer, primary_key = True)
+    id = Column(Integer, primary_key = True, nullable = False)
     date = Column(String, default = datetime.now().strftime("%d.%m.%Y --> %H:%M"))
-    item_list = Column(String, nullable = False)
-    status = Column(String, default = "not paid", nullable = True)
+    status = Column(String, nullable = False)
+    
+    def item_list(user_id: int) -> list:
+        with session as sess:
+            inner_join_query = sess.query(Bascket, Item).join(Bascket, Item.id == Bascket.id_item).filter(Bascket.id_user == user_id).all()
+            full_list = []
+            for bascket, item in inner_join_query:
+                full_list.append([item.id, item.price, bascket.count])
+            return full_list
