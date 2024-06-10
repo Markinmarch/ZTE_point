@@ -13,5 +13,7 @@
     <a href = "/about" type = "button">о нас</a>
     <a class = "bascket active" type = "button" href = "/bascket"><img src="https://t700.ru/icon/cart.png" width="42" height="42"></a>
 </div>
-
+{% for i in data %}
+<p>{{i}}</p>
+{% endfor %}
 {% endblock %}
