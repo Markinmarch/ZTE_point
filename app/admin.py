@@ -10,7 +10,7 @@ from flask_admin.contrib.sqla import ModelView
 from markupsafe import Markup
 
 from app.app_settings import dp
-from DB.models import User, Item, Order, session
+from DB.models import User, Item, Order, Bascket, session
 
 
 file_path = os.path.abspath(os.path.dirname(__name__))
@@ -82,7 +82,7 @@ class TaskModelViewItems(ModelView):
             )
         }
     
-class TaskModelViewOrders(ModelView):
+class TaskModelViewBascket(ModelView):
     column_list = ['id', 'date', 'id_user', 'id_item', 'count']
     can_set_page_size = True
     page_size = 20
@@ -94,5 +94,5 @@ admin = Admin(dp, name = 'ZTE point', template_mode = 'bootstrap3', index_view =
     
 admin.add_view(TaskModelViewUsers(User, session, name = 'Клиент'))
 admin.add_view(TaskModelViewItems(Item, session, name = 'Товары'))
-admin.add_view(TaskModelViewOrders(Order, session, name = 'Заказы'))
+admin.add_view(TaskModelViewBascket(Bascket, session, name = 'Заказы'))
 ########################################################################
