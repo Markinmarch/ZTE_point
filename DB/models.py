@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, Float, or_, and_
+from sqlalchemy import Column, ForeignKey, Integer, String, Float, or_, and_, Boolean
 from sqlalchemy.orm import relationship
 
 from datetime import datetime
@@ -118,9 +118,13 @@ class Item(Base):
     def __str__(self):
         return '%s: %s, %s, %s, %s, %s, %s' % (self.id, self.name, self.price, self.unit, self.index, self.parametrs, self.description)
     
-    def get_items():
+    def get_items() -> list:
         with session as sess:
             return sess.query(Item).all()
+        
+    def established_items_list(id: int) -> list:
+        with session as sess:
+            return sess.query(Item).filter(Item.id == id)
         
     def search_items(keywords: set) -> list:
         with session as sess:
@@ -148,7 +152,7 @@ class Bascket(Base):
     id_user = Column(Integer, ForeignKey('user.id'), nullable = False)
     id_item = Column(Integer, ForeignKey('item.id'), nullable = False)
     count = Column(Integer, default = 1, nullable = False)
-    status = Column(String, default = 'no paid', nullable = False)
+    paid_status = Column(Boolean, default = False, nullable = False)
     
     user = relationship(User, backref = 'bascket')
     item = relationship(Item, backref = 'bascket')
@@ -171,27 +175,38 @@ class Bascket(Base):
     def not_paid_item_list(user_id: int) -> list:
         with session as sess:
             inner_join_query = sess.query(Bascket, Item).join(Bascket, Item.id == Bascket.id_item)
-            params_to_paid = inner_join_query.filter(and_(Bascket.id_user == user_id, Bascket.status == 'not paid')).all()
+            items_to_paid = inner_join_query.filter(and_(Bascket.id_user == user_id, Bascket.paid_status == False)).all()
             full_list = []
-            for bascket, item in params_to_paid:
-                full_list.append([item.id, item.price, bascket.count])
+            for bascket, item in items_to_paid:
+                full_list.append({'item_id': item.id, 'item_price': item.price, 'count': bascket.count, 'status': bascket.paid_status})
+            print(full_list)
             return full_list
-
+    
+    def payment(user_id: int) -> None:
+        with session as sess:
+            paid_items = sess.query(Bascket).filter(and_(Bascket.id_user == user_id, Bascket.paid_status == False)).all()
+            for paid_item in paid_items:
+                paid_item.paid_status = True
+            sess.commit()
+            
     def __str__(self):
         return '%s: %s, %s' % (self.id_user, self.id_item, self.count)
-#избавились от переменной (ссылки) tables за ненадобностью
 
 class Order(Base):
     __tablename__ = 'order'
     
     id = Column(Integer, primary_key = True, nullable = False)
+    id_user = Column(Integer, ForeignKey('user.id'), nullable = False)
     date = Column(String, default = datetime.now().strftime("%d.%m.%Y --> %H:%M"))
-    status = Column(String, nullable = False)
+    paid_status = Column(Boolean, nullable = False)
+    
+    user = relationship(User, backref = 'order')
     
     def item_list(user_id: int) -> list:
         with session as sess:
-            inner_join_query = sess.query(Bascket, Item).join(Bascket, Item.id == Bascket.id_item).filter(Bascket.id_user == user_id).all()
+            inner_join_query = sess.query(Bascket, Item).join(Bascket, Item.id == Bascket.id_item)
+            params_to_paid = inner_join_query.filter(and_(Bascket.id_user == user_id, Bascket.paid_status == True)).all()
             full_list = []
-            for bascket, item in inner_join_query:
-                full_list.append([item.id, item.price, bascket.count])
-            return full_list
+            for bascket, item in params_to_paid:
+                full_list.append({'item_id': item.id, 'item_price': item.price, 'count': bascket.count, 'status': bascket.paid_status})
+            return full_list.append(Order.id, Order.id_user, Order.paid_status)
