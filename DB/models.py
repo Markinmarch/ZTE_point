@@ -178,8 +178,18 @@ class Bascket(Base):
             items_to_paid = inner_join_query.filter(and_(Bascket.id_user == user_id, Bascket.paid_status == False)).all()
             full_list = []
             for bascket, item in items_to_paid:
-                full_list.append({'item_id': item.id, 'item_price': item.price, 'count': bascket.count, 'status': bascket.paid_status})
-            print(full_list)
+                full_list.append({
+                    'id': item.id,
+                    'name': item.name,
+                    'price': item.price,
+                    'unit': item.unit,
+                    'index': item.index,
+                    'parametrs': item.parametrs,
+                    'description': item.description,
+                    'image': item.image,
+                    'count': bascket.count,
+                    'paid_status': bascket.paid_status
+                })
             return full_list
     
     def payment(user_id: int) -> None:
