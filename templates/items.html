@@ -92,17 +92,17 @@
                         <br>Единица измерения: {{item.unit}}
                     </p>
                     {% elif item.description is none %}
-                        <p> 
-                            {{item.name}}
-                            <br>Единица измерения: {{item.unit}}
-                            <br>Параметры: {{item.parametrs}}
-                        </p>
+                    <p> 
+                        {{item.name}}
+                        <br>Единица измерения: {{item.unit}}
+                        <br>Параметры: {{item.parametrs}}
+                    </p>
                     {% elif item.parametrs is none %}
-                        <p>
-                            {{item.name}}
-                            <br>Единица измерения: {{item.unit}}
-                            <br>Описание: {{item.description}}
-                        </p>  
+                    <p>
+                        {{item.name}}
+                        <br>Единица измерения: {{item.unit}}
+                        <br>Описание: {{item.description}}
+                    </p>  
                     {% else %}
                     <p>
                         {{item.name}}
