@@ -117,7 +117,7 @@
                 <td><p>{{item.price}} руб.</p></td>
                 <form action = "{{url_for('items')}}" class = "item-buy" method = "post" id = "itemBuy" itemIndex = "{{item.index}}">
                     <td>
-                        <button class = "minus" id = "quantity"> - </button><input onkeydown="return false;" class = "item-count" min="1" max="100" name = "itemCount" id = "itemCount{{item.index}}" value = "1"><button class = "plus" id = "quantity"> + </button>
+                        <button class = "minus"> - </button><input onkeydown="return false;" class = "item-count" min="1" max="100" name = "itemCount" id = "itemCount{{item.index}}" value = "1"><button class = "plus"> + </button>
                         <input type = "hidden" name = "itemId" id = "itemId{{item.index}}" value = {{item.id}}>
                         <button class ="in-bascket" type = "submit" name = "itemBuyButton" id = "itemBuyButton">В корзину</button>
                     </td>
