@@ -40,11 +40,19 @@ function getSearchItems() {
     window.location.replace("http://localhost:5000/items/search?keywords=" + keywords.value);    
 }
 
-$('.plus').click(function(){
-    var value =  $('#quantity').val();
-   $('#quantity').val(parseInt(value)+1);
-});
-$('.minus').click(function(){
-    var value =  $('#quantity').val();
-   $('#quantity').val(parseInt(value)-1);
-});
+$('.plus').click(
+    function(event){
+        event.preventDefault();
+        var plusOne =  $('#quantity').val();
+        alert(plusOne)
+        $('#quantity').val(parseInt(plusOne)+1);
+    }
+);
+
+$('.minus').click(
+    function(event){
+        event.preventDefault();
+        var minusOne =  $('#quantity').val();
+        $('#quantity').val(parseInt(minusOne)-1);
+    }
+);
