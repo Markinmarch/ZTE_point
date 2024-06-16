@@ -39,3 +39,12 @@ function getSearchItems() {
     }
     window.location.replace("http://localhost:5000/items/search?keywords=" + keywords.value);    
 }
+
+$('.plus').click(function(){
+    var value =  $('#quantity').val();
+   $('#quantity').val(parseInt(value)+1);
+});
+$('.minus').click(function(){
+    var value =  $('#quantity').val();
+   $('#quantity').val(parseInt(value)-1);
+});
