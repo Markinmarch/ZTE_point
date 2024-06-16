@@ -85,12 +85,13 @@ input:focus::placeholder {
 }
 
 .item-price input {
-    width: 60px;
+    padding-bottom: 3.5px;
+    width: 40px;
     height: 35px;
     text-align: center;
-    border-radius: 15px;
     border: none;
     font-size: 20px;
+    background: #4169E1;
 }
 
 .item-price p {
@@ -98,12 +99,33 @@ input:focus::placeholder {
     text-align: center;
     background-color: #4169E1;
     width: 200px;
-    height: 35px;;
+    height: 35px;
     border-radius: 15px;
     font-size: 20px;
 }
 
-.item-price button {
+.item-price button.minus, button.plus {
+    width: 30px;
+    height: 35px;
+    background: #4169E1;
+    text-align: center;
+    border: none;
+    font-size: inherit;
+}
+
+.item-price button.minus {
+    border-radius: 15px 0 0 15px;
+}
+
+.item-price button.plus {
+    border-radius: 0 15px 15px 0;
+}
+
+.item-price button.minus:hover, button.plus:hover {
+    background: #2196F3;
+}
+
+.item-price button.in-bascket, button.drop-search {
     text-align: center;
     background:  #4169E1;
     width: 200px;
@@ -112,6 +134,7 @@ input:focus::placeholder {
     border-radius: 15px;
     font-size: 20px;
     margin-top: -20px;
+    margin-left: 10px;
     text-transform: uppercase;
     color: #fff;
     box-shadow: 0 3px 3px #040707;
@@ -122,7 +145,7 @@ input:focus::placeholder {
     overflow: hidden;
 }
 
-.item-price button:after {
+.item-price button.in-bascket:after {
     content: "";
     display: block;
     width: 20px;
@@ -163,7 +186,7 @@ button:active,input[type=submit]:active
    box-shadow: 0px 0px 3px 3px #D8F6CE;
 }
 
-.item-price button:hover {
+.item-price button.in-bascket:hover, button.drop-search:hover {
     background: repeating-linear-gradient(
         45deg,
         #606dbc,
@@ -174,7 +197,6 @@ button:active,input[type=submit]:active
     color: black;
     background-size: 100px 100px;
     animation: move-it 3s linear infinite;
-    border-radius: 15px;
     font-weight: bold;
 }
 

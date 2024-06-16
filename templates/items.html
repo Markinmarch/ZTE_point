@@ -32,7 +32,7 @@
 {% if reset_search == True %}
 <div class = "items-block" style = "border: solid grey 3px; border-radius: 10px">
     <div class = "reset-search item-price">
-        <a href = "/items"><button id = "resetSearch" type = "submit">Сбросить</button></a>
+        <a href = "/items"><button class = "drop-search" id = "resetSearch" type = "submit">Сбросить</button></a>
     </div>
 {% for item in search_items_data %}
 <table>
@@ -117,9 +117,9 @@
                 <td><p>{{item.price}} руб.</p></td>
                 <form action = "{{url_for('items')}}" method = "post" id = "itemBuy" itemIndex = "{{item.index}}">
                     <td>
-                        <input type = "number" min="1" max="100" name = "itemCount" id = "itemCount{{item.index}}" value = "1" size = "40">
+                        <button class = "minus" id = "quantity"> - </button><input onkeydown="return false;" type = "none" class = "item-count" min="1" max="100" name = "itemCount" id = "itemCount{{item.index}}" value = "1" size = "40"><button class = "plus" id = "quantity"> + </button>
                         <input type = "hidden" name = "itemId" id = "itemId{{item.index}}" value = {{item.id}}>
-                        <button type = "submit" name = "itemBuyButton" id = "itemBuyButton">В корзину</button>
+                        <button class ="in-bascket" type = "submit" name = "itemBuyButton" id = "itemBuyButton">В корзину</button>
                     </td>
                 </form>
             </tr>
