@@ -15,6 +15,7 @@
     padding: 14px 16px;
     text-decoration: none;
     font-size: 17px;
+    padding-bottom: 15px;
 }
 
 /* Change the color of links on hover */
@@ -66,13 +67,14 @@
     float: right;
     width: 90px;
     padding: inherit;
-    padding-bottom: 1px;
+    padding-bottom: 2px;
 }
 
 .before-click-buy-button {
-  background: gold;
-  box-shadow: 0 -200px 100px -120px crimson inset;
-  animation: background 3s infinite alternate;
+    padding-bottom: 2px;
+    background: gold;
+    box-shadow: 0 -200px 100px -120px crimson inset;
+    animation: background 3s infinite alternate;
 }
 
 @keyframes background {
