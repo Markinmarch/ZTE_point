@@ -43,16 +43,20 @@ function getSearchItems() {
 $(".plus").click(
     function(event){
         event.preventDefault();
-        var plusOne =  $("#itemCount{{item.index}}").val();
-        alert(plusOne)
-        $("#itemCount{{item.index}}").val(parseInt(plusOne)+1);
+        var itemIndex = $(this).attr("itemIndex")
+        var plusOne =  $("#itemCount" + itemIndex).val();
+        $("#itemCount" + itemIndex).val(parseInt(plusOne)+1);
     }
 );
 
 $(".minus").click(
     function(event){
         event.preventDefault();
-        var minusOne =  $("#itemCount{{item.index}}").val();
-        $("#itemCount{{item.index}}").val(parseInt(minusOne)-1);
+        var itemIndex = $(this).attr("itemIndex");
+        var minusOne =  $("#itemCount" + itemIndex).val();
+        if (minusOne == 1) {
+            return false;
+        }
+        $("#itemCount" + itemIndex).val(parseInt(minusOne)-1);
     }
 );
