@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 
 from app.app_settings import dp
 from DB.models import Item, Order, Bascket
+from DB.main_db import session
 
 
 @dp.route('/items', methods = ['GET', 'POST'])
@@ -16,7 +17,7 @@ def items():
         Bascket.add_items(
             user_id = current_user.get_id(),
             item_id = item_id,
-            count = item_count
+            item_count = item_count
         )
         
     return render_template('items.html', items_data = items)
@@ -29,7 +30,7 @@ def search_item():
         Bascket.add_items(
             user_id = current_user.get_id(),
             item_id = item_id,
-            count = item_count
+            item_count = item_count
         )
     keywords = request.args.get('keywords')
     keywords_list = [keyword.lower() for keyword in keywords.split()]

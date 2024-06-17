@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, Float, or_, and_, Boolean
+from sqlalchemy import Column, ForeignKey, Integer, String, Float, or_, and_, Boolean, update
 from sqlalchemy.orm import relationship
 
 from datetime import datetime
@@ -122,9 +122,9 @@ class Item(Base):
         with session as sess:
             return sess.query(Item).all()
         
-    def established_items_list(id: int) -> list:
-        with session as sess:
-            return sess.query(Item).filter(Item.id == id)
+    # def established_items_list(id: int) -> list:
+    #     with session as sess:
+    #         return sess.query(Item).filter(Item.id == id)
         
     def search_items(keywords: set) -> list:
         with session as sess:
@@ -160,16 +160,19 @@ class Bascket(Base):
     def add_items(
         user_id: int,
         item_id: int,
-        count: int
+        item_count: int
     ) -> None:
         with session as sess:
-            sess.add(
-                Bascket(
-                    id_user = user_id,
-                    id_item = item_id,
-                    count = count
+            if sess.query(Bascket).filter(and_(Bascket.id_user == user_id, Bascket.id_item == item_id, Bascket.paid_status == False)).count() == True:
+                update(Bascket).where(and_(Bascket.id_user == user_id, Bascket.id_item == item_id, Bascket.paid_status == False)).values(count = Bascket.count + item_count)
+            else:
+                sess.add(
+                    Bascket(
+                        id_user = user_id,
+                        id_item = item_id,
+                        count = item_count
+                    )
                 )
-            )
             sess.commit()
             
     def not_paid_item_list(user_id: int) -> list:
