@@ -2,6 +2,11 @@
 
 {% block title %}Корзина{% endblock %}
 
+{% block scripts %}
+<script src = "https://code.jquery.com/jquery-3.5.1.js"></script>
+<script type="text/javascript" src = "../static/bascket.js" defer></script>
+{% endblock %}
+
 {% block content %}
 <link rel = "stylesheet" type = "text/css" href = "../static/base.css">
 <link rel = "stylesheet" type = "text/css" href = "../static/items.css">
@@ -50,7 +55,7 @@
             <td><p>{{item.price * item.count}} руб.</p></td>
             <form action = "{{url_for('items')}}" class = "item-buy" method = "post" id = "itemBuy" itemIndex = "{{item.index}}">
                 <td>
-                    <button class = "minus" itemIndex = "{{item.index}}"> - </button><input type = "number" class = "item-count" min="1" max="100" name = "itemCount" id = "itemCount{{item.index}}" value = "1"><button class = "plus" itemIndex = "{{item.index}}"> + </button>
+                    <button class = "minus" itemIndex = "{{item.index}}"> - </button><input type = "number" class = "item-count" min="1" max="100" name = "itemCount" id = "itemCount{{item.index}}" value = "{{item.count}}"><button class = "plus" itemIndex = "{{item.index}}"> + </button>
                     <input type = "hidden" name = "itemId" id = "itemId{{item.index}}" value = {{item.id}}>
                     <button class ="in-bascket" type = "submit" name = "itemBuyButton" id = "itemBuyButton">В корзину</button>
                 </td>
