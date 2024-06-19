@@ -20,6 +20,7 @@ $(".plus").click(
         var itemIndex = $(this).attr("itemIndex")
         var plusOne =  $("#itemCount" + itemIndex).val();
         $("#itemCount" + itemIndex).val(parseInt(plusOne)+1);
+        var itemPrice = $("#itemPrice" + itemIndex).val();
     }
 );
 

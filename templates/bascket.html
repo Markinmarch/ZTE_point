@@ -52,17 +52,17 @@
             </td>
         </tr>
         <tr class = 'item-price'>
-            <td><p>{{item.price * item.count}} руб.</p></td>
+            <td><p id = "itemPrice{{item.index}}" >{{item.price * item.count}} руб.</p></td>
             <form action = "{{url_for('items')}}" class = "item-buy" method = "post" id = "itemBuy" itemIndex = "{{item.index}}">
                 <td>
                     <button class = "minus" itemIndex = "{{item.index}}"> - </button><input type = "number" class = "item-count" min="1" max="100" name = "itemCount" id = "itemCount{{item.index}}" value = "{{item.count}}"><button class = "plus" itemIndex = "{{item.index}}"> + </button>
                     <input type = "hidden" name = "itemId" id = "itemId{{item.index}}" value = {{item.id}}>
-                    <button class ="in-bascket" type = "submit" name = "itemBuyButton" id = "itemBuyButton">В корзину</button>
+                    <button class ="in-bascket" type = "submit" name = "itemBuyButton" id = "itemBuyButton">Оплатить</button>
                 </td>
             </form>
         </tr>
     </table>    
 </div>
 {% endfor %}
-<button type = "submit" name = "itemBuyButton" id = "itemBuyButton">Оплатить</button>
+<button class = "item-price" type = "submit" name = "itemBuyButton" id = "itemBuyButton">Оплатить</button>
 {% endblock %}
