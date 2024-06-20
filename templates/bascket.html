@@ -55,8 +55,9 @@
             <td><p id = "itemPrice{{item.index}}">{{item.price * item.count}} руб.</p></td>
             <form action = "{{url_for('bascket')}}" method = "post" id = "itemBuy" itemIndex = "{{item.index}}">
                 <td>
-                    <button class = "minus" itemIndex = "{{item.index}}" itemPrice = "{{item.price}}"> - </button><input type = "number" min="1" max="100" name = "itemCount" id = "itemCount{{item.index}}" value = "{{item.count}}"><button class = "plus" itemIndex = "{{item.index}}" itemPrice = "{{item.price}}"> + </button>
+                    <input style = "border-radius: 15px" onkeypress = "return false;" type = "number" min="1" max="100" name = "itemCount" id = "itemCount{{item.index}}" value = "{{item.count}}">
                     <input type = "hidden" name = "itemId" id = "itemId{{item.index}}" value = {{item.id}}>
+                    <button class = "drop-search" type = "submit" name = "joinInBascketButton" id = "joinInBascketButton">Изменить</button>
                 </td>
             </form>
         </tr>
