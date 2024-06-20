@@ -1,5 +1,5 @@
 // AJAX, который отправляет параметры товара
-$(document).on("submit", "#itemBuy", function(event){
+$(document).on("submit", "#joinInBascket", function(event){
     event.preventDefault();
     var itemIndex = $(this).attr("itemIndex")
     $.ajax({
@@ -11,7 +11,7 @@ $(document).on("submit", "#itemBuy", function(event){
         },
     });
     // Добавляем стиль кнопке, при добавлении в корзину
-    $(".bascket").addClass("before-click-buy-button");
+    $(".bascket").addClass("before-click-in-bascket-button");
 });
 
 // AJAX, который устанавливает поиск при нажатии на Enter

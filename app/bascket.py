@@ -6,7 +6,7 @@ from DB.models import Item, Bascket
 from DB.main_db import session
 
 
-@dp.route('/bascket')
+@dp.route('/bascket', methods = ['POST', 'GET'])
 @login_required
 def bascket():
     user_bascket = Bascket.not_paid_item_list(user_id = current_user.get_id())
