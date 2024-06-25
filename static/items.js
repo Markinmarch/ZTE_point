@@ -60,3 +60,11 @@ $(".minus").click(
         $("#itemCount" + itemIndex).val(parseInt(minusOne)-1);
     }
 );
+
+// В строку input type = number нельзя прописывать матиематические операторы
+$('input').keypress(function (e) {
+    var txt = String.fromCharCode(e.which);
+    if (!txt.match(/[0-9]/)) {
+        return false;
+    }
+});
