@@ -51,18 +51,23 @@
                 {% endif %}
             </td>
         </tr>
-        <tr class = 'item-price'>
+        <tr class = "item-price">
             <td><p id = "itemPrice{{item.index}}">{{item.price * item.count}} руб.</p></td>
             <form action = "{{url_for('bascket')}}" method = "post" id = "itemBuy" itemIndex = "{{item.index}}">
                 <td>
-                    <input style = "border-radius: 15px" onkeypress = "return false;" type = "number" min="1" max="100" name = "itemCount" id = "itemCount{{item.index}}" value = "{{item.count}}">
+                    <button class = "minus" itemIndex = "{{item.index}}" itemPrice = "{{item.price}}"> - </button><input onkeydown="return false" type = "number" min="1" max="100" name = "itemCount" id = "itemCount{{item.index}}" value = "{{item.count}}"><button class = "plus" itemIndex = "{{item.index}}" itemPrice = "{{item.price}}"> + </button>
                     <input type = "hidden" name = "itemId" id = "itemId{{item.index}}" value = {{item.id}}>
-                    <a href="#openModal"><button class = "drop-search" type = "submit" name = "joinInBascketButton" id = "joinInBascketButton">Изменить</button></a>
+                    <button class = "delete-item" itemIndex = "{{item.index}}"><img src="https://polinka.top/uploads/posts/2023-05/1683777508_polinka-top-p-kartinka-musornaya-korzina-instagram-69.png" width="35" height="35"></button>
                 </td>
             </form>
         </tr>
     </table>    
 </div>
 {% endfor %}
-<button class = "item-price" type = "submit" name = "itemBuyButton" id = "itemBuyButton">Оплатить</button>
+<div class = "item-price-buy-items">
+    <label> Сумма к оплате: </label>
+    <button class = "item-price buy-items" type = "submit" name = "itemBuyButton" id = "itemBuyButton">Оплатить</button>
+</div>
 {% endblock %}
+
+<!-- <img src="https://kartinkof.club/uploads/posts/2023-05/1683368987_kartinkof-club-p-udalit-kartinki-14.png" width="42" height="42"> -->

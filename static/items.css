@@ -113,6 +113,28 @@ input:focus::placeholder {
     font-size: inherit;
 }
 
+.item-price button.delete-item {
+    background: none;
+    border: none;
+    text-align: center;
+    background:  #4169E1;
+    width: 50px;
+    height: 35px;;
+    border: none;
+    border-radius: 15px;
+    /* Важные стили для анимации */
+    position: relative;
+    overflow: hidden;
+}
+
+.delete-item img {
+    margin: auto;
+}
+
+button.delete-item:hover {
+    background-color: red;
+}
+ 
 .item-price button.minus {
     border-radius: 15px 0 0 15px;
 }
@@ -125,7 +147,11 @@ input:focus::placeholder {
     background: #2196F3;
 }
 
-.item-price button.in-bascket, button.drop-search {
+div.item-price-buy-items {
+    text-align: center;
+}
+
+.item-price button.in-bascket, button.drop-search, button.buy-items {
     text-align: center;
     background:  #4169E1;
     width: 200px;
@@ -145,7 +171,7 @@ input:focus::placeholder {
     overflow: hidden;
 }
 
-.item-price button.in-bascket:after {
+.item-price button.in-bascket:after, button.buy-items:after {
     content: "";
     display: block;
     width: 20px;
@@ -186,7 +212,7 @@ button:active,input[type=submit]:active
    box-shadow: 0px 0px 3px 3px #D8F6CE;
 }
 
-.item-price button.in-bascket:hover, button.drop-search:hover {
+.item-price button.in-bascket:hover, button.drop-search:hover, button.buy-items:hover {
     background: repeating-linear-gradient(
         45deg,
         #606dbc,
