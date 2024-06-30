@@ -2,8 +2,7 @@ from flask import request, render_template
 from flask_login import login_required, current_user
 
 from app.app_settings import dp
-from DB.models import Item, Order, Bascket
-from DB.main_db import session
+from DB.models import Item, Bascket
 
 
 @dp.route('/items', methods = ['GET', 'POST'])
