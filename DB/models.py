@@ -196,7 +196,16 @@ class Bascket(Base):
                     'paid_status': bascket.paid_status
                 })
             return full_list
-    
+        
+    def delete_item(
+        user_id: int,
+        item_id: int
+    ) -> None:
+        with session as sess:
+            item_to_delete = sess.query(Bascket).filter(and_(Bascket.id_user == user_id, Bascket.id_item == item_id, Bascket.paid_status == False))
+            sess.delete(item_to_delete)
+            sess.commit()
+            
     def payment(user_id: int) -> None:
         with session as sess:
             paid_items = sess.query(Bascket).filter(and_(Bascket.id_user == user_id, Bascket.paid_status == False)).all()
