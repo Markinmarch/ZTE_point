@@ -202,7 +202,7 @@ class Bascket(Base):
         item_id: int
     ) -> None:
         with session as sess:
-            item_to_delete = sess.query(Bascket).filter(and_(Bascket.id_user == user_id, Bascket.id_item == item_id, Bascket.paid_status == False))
+            item_to_delete = sess.query(Bascket).filter(and_(Bascket.id_user == user_id, Bascket.id_item == item_id, Bascket.paid_status == False)).one()
             sess.delete(item_to_delete)
             sess.commit()
             
