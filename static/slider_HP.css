@@ -6,11 +6,14 @@
     position: relative;
     /* Центрируем по горизонтали: */
     margin: 50px 50px;
+    margin-top: 50px;
     height: 600px;
+    border-radius: 15px;
 }
 
 /* Картинка масштабируется по отношению к родительскому элементу: */
 .slider .item img {
+    margin-top: 50px;
     border-radius: 15px;
     /* Элемент меняет размер так, чтобы заполнить блок и сохранить пропорции: */
     object-fit: cover;

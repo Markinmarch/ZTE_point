@@ -7,6 +7,11 @@ body {
 }
 
 /* Поисковая строка */
+.search-bar {
+    overflow: hidden;
+    margin-top: 50px;
+}
+
 .search-bar table {
     margin-top: 50px;
     left: 25%;
@@ -52,10 +57,11 @@ input:focus::placeholder {
 
 /* Блок с товарами */
 .items-block {
+    overflow: hidden;
     position: relative;
     background-color: 0;
     /* border: solid gray 5px; */
-    margin: 50px;
+    margin: 80px 50px -100px 50px;
     height: 100%;
 }
 
@@ -146,6 +152,8 @@ button.delete-item:hover {
 }
 
 div.item-price-buy-items {
+    position: relative;
+    margin-top: 100px;
     text-align: center;
 }
 
