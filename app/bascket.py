@@ -15,7 +15,11 @@ def bascket():
             item_id = item_id
         )
     user_bascket = Bascket.not_paid_item_list(user_id = current_user.get_id())
-    return render_template('bascket.html', data = user_bascket)
+    if user_bascket == []:
+        bascket_status = False
+    else:
+        bascket_status = True
+    return render_template('bascket.html', data = user_bascket, bascket_status = bascket_status)
 
 # @dp.route('/bascket/payment', methods = ['POST', 'GET'])
 # @login_required
