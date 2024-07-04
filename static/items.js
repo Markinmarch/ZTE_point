@@ -1,4 +1,4 @@
-// AJAX, который отправляет параметры товара
+// AJAX, который отправляет параметры товара с основной страницы
 $(document).on("submit", "#joinInBascket", function(event){
     event.preventDefault();
     var itemIndex = $(this).attr("itemIndex")
@@ -14,6 +14,21 @@ $(document).on("submit", "#joinInBascket", function(event){
     $(".bascket").addClass("before-click-in-bascket-button");
 });
 
+// AJAX, который отправляет параметры товара из поисковой страницы
+$(document).on("submit", "#joinInBascket", function(event){
+    event.preventDefault();
+    var itemIndex = $(this).attr("itemIndex")
+    $.ajax({
+        type: "POST",
+        url: "/items/search",
+        data: {
+            id: $("#itemId" + itemIndex).val(),
+            count: $("#itemCount" + itemIndex).val()
+        },
+    });
+    $(".bascket").addClass("before-click-in-bascket-button");
+});
+
 // AJAX, который устанавливает поиск при нажатии на Enter
 $("#itemSearch").keypress(function(event) {
     if (event.keyCode == 13) {
@@ -22,7 +37,8 @@ $("#itemSearch").keypress(function(event) {
     }
 });
 
-// Блок функций, который выполняют перенаправление на поисковую страницу с товарами
+// Блок функций, который выполняют перенаправление на поисковую страницу
+// по параметрам пользователя
 window.onload = searchItem;
 
 function searchItem() {
@@ -40,6 +56,7 @@ function getSearchItems() {
     window.location.replace("http://localhost:5000/items/search?keywords=" + keywords.value);    
 }
 
+// Добавлений одной единицы товара (кнопка "+")
 $(".plus").click(
     function(event){
         event.preventDefault();
@@ -49,6 +66,7 @@ $(".plus").click(
     }
 );
 
+// Удаление одной единицы товара (кнопка "-")
 $(".minus").click(
     function(event){
         event.preventDefault();

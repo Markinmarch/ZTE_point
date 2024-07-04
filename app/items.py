@@ -12,7 +12,6 @@ def items():
     if request.method == 'POST':
         item_id = request.form['id']
         item_count = request.form['count']
-        print(item_id, item_count)
         Bascket.add_items(
             user_id = current_user.get_id(),
             item_id = item_id,
