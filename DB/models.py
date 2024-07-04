@@ -167,6 +167,7 @@ class Bascket(Base):
             if check_item_in_bascket.count() == True:
                 for count_item_in_bascket in check_item_in_bascket:
                     count_item_in_bascket.count += int(item_count)
+                sess.commit()
             else:
                 sess.add(
                     Bascket(
@@ -175,7 +176,7 @@ class Bascket(Base):
                         count = item_count
                     )
                 )
-            sess.commit()
+                sess.commit()
             
     def not_paid_item_list(user_id: int) -> list:
         with session as sess:
