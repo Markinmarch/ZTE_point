@@ -167,7 +167,6 @@ class Bascket(Base):
             if check_item_in_bascket.count() == True:
                 for count_item_in_bascket in check_item_in_bascket:
                     count_item_in_bascket.count += int(item_count)
-                sess.commit()
             else:
                 sess.add(
                     Bascket(
@@ -176,7 +175,7 @@ class Bascket(Base):
                         count = item_count
                     )
                 )
-                sess.commit()
+            sess.commit()
             
     def not_paid_item_list(user_id: int) -> list:
         with session as sess:
@@ -206,6 +205,9 @@ class Bascket(Base):
             item_to_delete = sess.query(Bascket).filter(and_(Bascket.id_user == user_id, Bascket.id_item == item_id, Bascket.paid_status == False)).one()
             sess.delete(item_to_delete)
             sess.commit()
+            
+    # def amount_of_items(user_id: int) -> float:
+    #     with session as sess
             
     def payment(user_id: int) -> None:
         with session as sess:
