@@ -19,7 +19,7 @@ $(".plus").click(
         var plusOne = parseInt(itemCount) + 1;
         $("#itemCount" + itemIndex).val(plusOne);
         var itemPrice = $(this).attr("itemPrice");
-        $("#itemPrice" + itemIndex).text(parseFloat(plusOne * itemPrice).toFixed(2) + " руб.").val()
+        $("#itemPrice" + itemIndex).text(parseFloat(plusOne * itemPrice).toFixed(2) + " руб.");
     }
 );
 
@@ -27,13 +27,24 @@ $(".minus").click(
     function(event){
         event.preventDefault();
         var itemIndex = $(this).attr("itemIndex");
-        var minusOne =  $("#itemCount" + itemIndex).val();
-        if (minusOne == 1) {
+        var itemCount =  $("#itemCount" + itemIndex).val();
+        if (itemCount == 1) {
             return false;
         }
-        minusOne = parseInt(minusOne) - 1;
+        minusOne = parseInt(itemCount) - 1;
         $("#itemCount" + itemIndex).val(minusOne);
         var itemPrice = $(this).attr("itemPrice");
-        $("#itemPrice" + itemIndex).text(parseFloat(minusOne * itemPrice).toFixed(2) + " руб.").val()
+        $("#itemPrice" + itemIndex).text(parseFloat(minusOne * itemPrice).toFixed(2) + " руб.");
     }
 );
+
+// $("#totalPrice").text(
+//     function(){
+//         var sum = 0;
+//         $(".itemPrice").each(function(){
+//             sum += parseFloat($(this).attr("amount")).toFixed(2)*1;
+//         })
+//         return parseFloat(sum).toFixed(2);
+//     }
+// );
+    

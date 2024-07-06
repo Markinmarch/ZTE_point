@@ -56,7 +56,7 @@
     <table>
         <tr class = "item-price">
             <form action = "{{url_for('bascket')}}" method = "post" id = "itemBuy" itemIndex = "{{item.index}}">
-                <td><p id = "itemPrice{{item.index}}">{{item.price * item.count}} руб.</p></td>
+                <td><p class = "itemPrice" amount = "{{item.price * item.count}}" id = "itemPrice{{item.index}}">{{item.price * item.count}} руб.</p></td>
                 <td><button class = "minus" itemIndex = "{{item.index}}" itemPrice = "{{item.price}}"> - </button><input onkeydown="return false" type = "number" min="1" max="100" name = "itemCount" id = "itemCount{{item.index}}" value = "{{item.count}}"><button class = "plus" itemIndex = "{{item.index}}" itemPrice = "{{item.price}}"> + </button></td>
                 <td><button class = "delete-item" itemIndex = "{{item.index}}"><img src="https://polinka.top/uploads/posts/2023-05/1683777508_polinka-top-p-kartinka-musornaya-korzina-instagram-69.png" width="35" height="32"></button></td>
                 <input type = "hidden" name = "itemId" id = "itemId" value = {{item.id}}>
@@ -66,12 +66,11 @@
 </div>
 {% endfor %}
 <div class = "item-price-buy-items">
-    <h4> Сумма к оплате: </h4>
-    <button class = "item-price buy-items" type = "submit" name = "itemBuyButton" id = "itemBuyButton">Оплатить</button>
+    <!-- <div id = "totalPrice"></div>
+    <h4>Сумма к оплате: </h4> -->
+    <button class = "item-price buy-items" type = "submit" name = "itemBuyButton" id = "itemBuyButton">Оформить заказ</button>
 </div>
 {% else %}
 <h3>Ваша корзина пуста</h3>
 {% endif %}
 {% endblock %}
-
-<!-- <img src="https://kartinkof.club/uploads/posts/2023-05/1683368987_kartinkof-club-p-udalit-kartinki-14.png" width="42" height="42"> -->
