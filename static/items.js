@@ -15,7 +15,7 @@ $(document).on("submit", "#joinInBascket", function(event){
 });
 
 // AJAX, который отправляет параметры товара из поисковой страницы
-$(document).on("submit", "#joinInBascket", function(event){
+$(document).on("submit", "#joinInBascketSearch", function(event){
     event.preventDefault();
     var itemIndex = $(this).attr("itemIndex")
     $.ajax({
