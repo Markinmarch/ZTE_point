@@ -20,7 +20,6 @@ def bascket():
         except NoResultFound:
             pass
     user_bascket = Bascket.not_paid_item_list(user_id = current_user.get_id())
-    print(user_bascket)
     if user_bascket == []:
         bascket_status = False
     else:
