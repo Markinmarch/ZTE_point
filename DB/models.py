@@ -136,7 +136,6 @@ class Item(Base):
                     ))
 
 class Bascket(Base):
-
     '''
     Объект "Bascket" - структура таблицы БД для корзины польвателей.
         Параметры:
@@ -153,6 +152,7 @@ class Bascket(Base):
     id_user = Column(Integer, ForeignKey('user.id'), nullable = False)
     id_item = Column(Integer, ForeignKey('item.id'), nullable = False)
     count = Column(Integer, default = 1, nullable = False)
+    total_amount = Column(Float, nullable = False)
     paid_status = Column(Boolean, default = False, nullable = False)
     
     user = relationship(User, backref = 'bascket')
@@ -177,15 +177,13 @@ class Bascket(Base):
                     )
                 )
             sess.commit()
-    
-    def join_bascket_items(user_id: int):
+            
+    def not_paid_item_list(user_id: int) -> list:
         with session as sess:
             inner_join_query = sess.query(Bascket, Item).join(Bascket, Item.id == Bascket.id_item)
-            return inner_join_query.filter(and_(Bascket.id_user == user_id, Bascket.paid_status == False)).all()
-
-    def not_paid_item_list(self, user_id: int) -> list:
+            items_to_paid = inner_join_query.filter(and_(Bascket.id_user == user_id, Bascket.paid_status == False)).all()
             full_list = []
-            for bascket, item in self.join_bascket_items(user_id):
+            for bascket, item in items_to_paid:
                 full_list.append({
                     'id': item.id,
                     'name': item.name,
@@ -199,11 +197,7 @@ class Bascket(Base):
                     'paid_status': bascket.paid_status
                 })
             return full_list
-    
-    # def amount_of_items(user_id: int) -> float:
         
-
-    
     def delete_item(
         user_id: int,
         item_id: int
@@ -212,7 +206,10 @@ class Bascket(Base):
             item_to_delete = sess.query(Bascket).filter(and_(Bascket.id_user == user_id, Bascket.id_item == item_id, Bascket.paid_status == False)).one()
             sess.delete(item_to_delete)
             sess.commit()
-                        
+            
+    # def amount_of_items(user_id: int) -> float:
+    #     with session as sess
+            
     def payment(user_id: int) -> None:
         with session as sess:
             paid_items = sess.query(Bascket).filter(and_(Bascket.id_user == user_id, Bascket.paid_status == False)).all()
