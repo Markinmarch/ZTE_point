@@ -4,7 +4,7 @@
 
 {% block scripts %}
 <script src = "https://code.jquery.com/jquery-3.5.1.js"></script>
-<script type="text/javascript" src = "../static/bascket.js" defer></script>
+<script type="text/javascript" src = "../static/payment.js" defer></script>
 {% endblock %}
 
 {% block content %}
@@ -18,7 +18,6 @@
     <a href = "/about" type = "button">о нас</a>
     <a class = "bascket active" type = "button" href = "/bascket"><img src="https://t700.ru/icon/cart.png" width="42" height="42"></a>
 </div>
-{% if bascket_status == True %}
 {% for item in data %}
 <div class = "items-block">
     <table>
@@ -68,9 +67,6 @@
 <div class = "item-price-buy-items">
     <!-- <div id = "totalPrice"></div>
     <h4>Сумма к оплате: </h4> -->
-    <a href = "bascket/payment" type = "button"><button class = "item-price buy-items" type = "submit" name = "itemBuyButton" id = "itemBuyButton">Оформить заказ</button></a>
+    <a href = "bascket/payment" type = "button"><button class = "item-price buy-items" type = "submit" name = "itemBuyButton" id = "itemBuyButton">Оплатить</button></a>
 </div>
-{% else %}
-<h3>Ваша корзина пуста</h3>
-{% endif %}
 {% endblock %}
