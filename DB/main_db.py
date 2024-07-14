@@ -4,7 +4,7 @@ from psycopg2 import connect, Error, errors
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
 from sqlalchemy import create_engine
-from sqlalchemy.orm import declarative_base, sessionmaker
+from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
 from config import (
     POSTGRES_USER,
@@ -52,11 +52,12 @@ def create_database(
 
 # ---------------подключение к базе данных PostgreSQL----------------
 DSN = 'postgresql+psycopg2://%s:%s@%s:%s/%s' % (POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_HOST, POSTGRES_PORT, POSTGRES_DATABASE)
-engine = create_engine(DSN)
+engine = create_engine(url = DSN, echo = True)
 Session = sessionmaker(engine)
 session = Session()
 
-Base = declarative_base()
+class Base(DeclarativeBase):
+    pass
 
 database = create_database(
     user = POSTGRES_USER,

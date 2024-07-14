@@ -1,5 +1,5 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, Float, or_, and_, Boolean, update
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, ForeignKey, Integer, String, Float, or_, and_, Boolean, insert
+from sqlalchemy.orm import relationship, mapped_column
 
 from datetime import datetime
 
@@ -7,7 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from flask_login import UserMixin
 
-from DB.main_db import Base, session
+from DB.main_db import Base, session, engine
 
 
 # ----------------модели БД-------------------------
@@ -25,12 +25,12 @@ class User(Base, UserMixin):
     '''
     __tablename__ = 'user'
     
-    id = Column(Integer, nullable = False, primary_key = True)
-    name = Column(String(length = 40), nullable = False)
-    phone = Column(String, nullable = False)
-    email = Column(String, nullable = False, unique = True)
-    password = Column(String, nullable = False)
-    role = Column(String, default = "user", nullable = False)
+    id = mapped_column(Integer, nullable = False, primary_key = True)
+    name = mapped_column(String(length = 40), nullable = False)
+    phone = mapped_column(String, nullable = False)
+    email = mapped_column(String, nullable = False, unique = True)
+    password = mapped_column(String, nullable = False)
+    role = mapped_column(String, default = "user", nullable = False)
     
     def __str__(self):
         return '%s, %s, %s' % (self.id, self.name, self.email)
@@ -59,17 +59,16 @@ class User(Base, UserMixin):
         user_password: str,
         user_role: str
     ) -> None:
-        with session as sess:
-            sess.add(
-                User(
-                    name = user_name,
-                    phone = user_phone,
-                    email = user_email,
-                    password = generate_password_hash(user_password),
-                    role = user_role
-                )
-            )
-            sess.commit()
+        user_insert_data = insert(User).values(
+            name = user_name,
+            phone = user_phone,
+            email = user_email,
+            password = generate_password_hash(user_password),
+            role = user_role
+        )
+        with engine.connect() as conn:
+            conn.execute(user_insert_data)
+            conn.commit()
         
     def get_user(user_id: int) -> object:
         # связано со входом пользователя на сайт, исключительно служебный метод
@@ -152,7 +151,6 @@ class Bascket(Base):
     id_user = Column(Integer, ForeignKey('user.id'), nullable = False)
     id_item = Column(Integer, ForeignKey('item.id'), nullable = False)
     count = Column(Integer, default = 1, nullable = False)
-    total_amount = Column(Float, nullable = False)
     paid_status = Column(Boolean, default = False, nullable = False)
     
     user = relationship(User, backref = 'bascket')
