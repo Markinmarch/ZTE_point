@@ -5,11 +5,9 @@ from sqlalchemy import (
     Integer,
     String,
     Float,
+    Boolean,
     or_,
     and_,
-    Boolean,
-    insert,
-    select
     )
 from sqlalchemy.orm import relationship, mapped_column
 
@@ -37,12 +35,12 @@ class User(Base, UserMixin):
     '''
     __tablename__ = 'user'
     
-    id = mapped_column(Integer, nullable = False, primary_key = True)
-    name = mapped_column(String(length = 40), nullable = False)
-    phone = mapped_column(String, nullable = False)
-    email = mapped_column(String, nullable = False, unique = True)
-    password = mapped_column(String, nullable = False)
-    role = mapped_column(String, nullable = False)
+    id = Column(Integer, nullable = False, primary_key = True)
+    name = Column(String(length = 40), nullable = False)
+    phone = Column(String, nullable = False)
+    email = Column(String, nullable = False, unique = True)
+    password = Column(String, nullable = False)
+    role = Column(String, default = 'user', nullable = False)
     
     def __str__(self):
         return '%s, %s, %s' % (self.id, self.name, self.email)
@@ -63,38 +61,30 @@ class User(Base, UserMixin):
         if self.role == 'admin':
             return True
         return False
-    
-    def default_role():
-        return 'user'
 
     def insert_user(
         user_name: str,
         user_phone: str,
         user_email: str,
         user_password: str,
-        user_role: str | None
+        user_role: str | Any
     ) -> None:
-        insert_user_data = insert(User).values(
-            name = user_name,
-            phone = user_phone,
-            email = user_email,
-            password = generate_password_hash(user_password),
-            role = user_role
-        )
-        with engine.connect() as conn:
-            conn.execute(insert_user_data)
-            conn.commit()
+        with session as sess:
+            sess.add(
+                User(
+                    name = user_name,
+                    phone = user_phone,
+                    email = user_email,
+                    password = generate_password_hash(user_password),
+                    role = user_role
+                )
+            )
+            sess.commit()
         
     def get_user(user_id: int) -> object:
         # связано со входом пользователя на сайт, исключительно служебный метод
-        # get_user_data = select(User).where(User.id == user_id)
-        # with engine.connect() as conn:
-        #     for row in conn.execute(get_user_data):
-        #         print(row)
-        #         return row
         with session as get_user:
             x = get_user.query(User).filter_by(id = user_id).first()
-            print(x)
             return get_user.query(User).filter_by(id = user_id).first()
         
     def check_email(user_email: str) -> bool:
