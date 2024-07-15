@@ -25,7 +25,7 @@ def registration():
         if email == ADMIN_KEY:
             role = 'admin'
         else:
-            role = 'user'
+            role = User.default_role()
         User.insert_user(
             user_name = name,
             user_phone = phone,

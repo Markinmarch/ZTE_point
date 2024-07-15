@@ -1,4 +1,16 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, Float, or_, and_, Boolean, insert
+from typing import Any
+from sqlalchemy import (
+    Column,
+    ForeignKey,
+    Integer,
+    String,
+    Float,
+    or_,
+    and_,
+    Boolean,
+    insert,
+    select
+    )
 from sqlalchemy.orm import relationship, mapped_column
 
 from datetime import datetime
@@ -30,7 +42,7 @@ class User(Base, UserMixin):
     phone = mapped_column(String, nullable = False)
     email = mapped_column(String, nullable = False, unique = True)
     password = mapped_column(String, nullable = False)
-    role = mapped_column(String, default = "user", nullable = False)
+    role = mapped_column(String, nullable = False)
     
     def __str__(self):
         return '%s, %s, %s' % (self.id, self.name, self.email)
@@ -51,15 +63,18 @@ class User(Base, UserMixin):
         if self.role == 'admin':
             return True
         return False
-       
+    
+    def default_role():
+        return 'user'
+
     def insert_user(
         user_name: str,
         user_phone: str,
         user_email: str,
         user_password: str,
-        user_role: str
+        user_role: str | None
     ) -> None:
-        user_insert_data = insert(User).values(
+        insert_user_data = insert(User).values(
             name = user_name,
             phone = user_phone,
             email = user_email,
@@ -67,12 +82,19 @@ class User(Base, UserMixin):
             role = user_role
         )
         with engine.connect() as conn:
-            conn.execute(user_insert_data)
+            conn.execute(insert_user_data)
             conn.commit()
         
     def get_user(user_id: int) -> object:
         # связано со входом пользователя на сайт, исключительно служебный метод
+        # get_user_data = select(User).where(User.id == user_id)
+        # with engine.connect() as conn:
+        #     for row in conn.execute(get_user_data):
+        #         print(row)
+        #         return row
         with session as get_user:
+            x = get_user.query(User).filter_by(id = user_id).first()
+            print(x)
             return get_user.query(User).filter_by(id = user_id).first()
         
     def check_email(user_email: str) -> bool:
