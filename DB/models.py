@@ -1,4 +1,6 @@
 from typing import Any
+from datetime import datetime
+
 from sqlalchemy import (
     Column,
     ForeignKey,
@@ -8,16 +10,15 @@ from sqlalchemy import (
     Boolean,
     or_,
     and_,
+    update
     )
-from sqlalchemy.orm import relationship, mapped_column
-
-from datetime import datetime
+from sqlalchemy.orm import relationship
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from flask_login import UserMixin
 
-from DB.main_db import Base, session, engine
+from DB.main_db import Base, session
 
 
 # ----------------модели БД-------------------------
@@ -188,25 +189,34 @@ class Bascket(Base):
                 )
             sess.commit()
             
-    def not_paid_item_list(user_id: int) -> list:
+    def join_bascket_item(user_id: int) -> list:
         with session as sess:
             inner_join_query = sess.query(Bascket, Item).join(Bascket, Item.id == Bascket.id_item)
-            items_to_paid = inner_join_query.filter(and_(Bascket.id_user == user_id, Bascket.paid_status == False)).all()
-            full_list = []
-            for bascket, item in items_to_paid:
-                full_list.append({
-                    'id': item.id,
-                    'name': item.name,
-                    'price': item.price,
-                    'unit': item.unit,
-                    'index': item.index,
-                    'parametrs': item.parametrs,
-                    'description': item.description,
-                    'image': item.image,
-                    'count': bascket.count,
-                    'paid_status': bascket.paid_status
-                })
-            return full_list
+            return inner_join_query.filter(and_(Bascket.id_user == user_id, Bascket.paid_status == False)).all()       
+         
+    def not_paid_item_list(self, user_id: int) -> list:
+        full_list = []
+        for bascket, item in self.join_bascket_item(user_id):
+            full_list.append({
+                'id': item.id,
+                'name': item.name,
+                'price': item.price,
+                'unit': item.unit,
+                'index': item.index,
+                'parametrs': item.parametrs,
+                'description': item.description,
+                'image': item.image,
+                'count': bascket.count,
+                'paid_status': bascket.paid_status
+            })
+        return full_list
+    
+    def tatal_price(self, user_id: int):
+        total = 0
+        for bascket, item in self.join_bascket_item(user_id):
+            amount_by_quantity = item.price * bascket.count
+            total += amount_by_quantity
+        return "{:.2f}".format(round(total, 2))
         
     def delete_item(
         user_id: int,
@@ -217,8 +227,9 @@ class Bascket(Base):
             sess.delete(item_to_delete)
             sess.commit()
             
-    # def amount_of_items(user_id: int) -> float:
-    #     with session as sess
+    # def update_before_payment(user_id: int):
+    #     with session:
+    #         session.query(Bascket).filter(Bascket.id_user == user_id).update({'count'})
             
     def payment(user_id: int) -> None:
         with session as sess:
