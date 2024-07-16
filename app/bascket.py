@@ -19,7 +19,7 @@ def bascket():
             )
         except NoResultFound:
             pass
-    user_bascket = Bascket.not_paid_item_list(user_id = current_user.get_id())
+    user_bascket = Bascket.not_paid_item_list(Bascket, user_id = current_user.get_id())
     if user_bascket == []:
         bascket_status = False
     else:
@@ -29,6 +29,10 @@ def bascket():
 @dp.route('/bascket/payment', methods = ['POST', 'GET'])
 @login_required
 def payment():
-    user_bascket = Bascket.amount_of_items(Bascket, user_id = current_user.get_id())
-    print(user_bascket)
-    return render_template('bascket.html', data = user_bascket)
+    user_bascket = Bascket.not_paid_item_list(Bascket, user_id = current_user.get_id())
+    if user_bascket == []:
+        bascket_status = False
+    else:
+        bascket_status = True
+    tatal_price = Bascket.tatal_price(Bascket, user_id = current_user.get_id())
+    return render_template('bascket.html', total_price = tatal_price, data = user_bascket, bascket_status = bascket_status)

@@ -5,7 +5,10 @@
 //     $.ajax({
 //         type: "POST",
 //         url: "/bascket",
-//         data: {id: $("#itemId" + itemIndex).val()}
+//         data: {
+//             id: $("#itemId" + itemIndex).val(),
+//             count: $("#itemCount" + itemIndex).val()
+//         },
 //     });
     // Добавляем стиль кнопке, при добавлении в корзину
     // $(".bascket").addClass("before-click-buy-button");
@@ -20,6 +23,13 @@ $(".plus").click(
         $("#itemCount" + itemIndex).val(plusOne);
         var itemPrice = $(this).attr("itemPrice");
         $("#itemPrice" + itemIndex).text(parseFloat(plusOne * itemPrice).toFixed(2) + " руб.");
+        $.ajax({
+            type: "POST",
+            url: "/bascket",
+            data: {
+                id: $("#itemId" + itemIndex).val(),
+                count: $("#itemCount" + itemIndex).val()
+            }});
     }
 );
 
@@ -35,6 +45,13 @@ $(".minus").click(
         $("#itemCount" + itemIndex).val(minusOne);
         var itemPrice = $(this).attr("itemPrice");
         $("#itemPrice" + itemIndex).text(parseFloat(minusOne * itemPrice).toFixed(2) + " руб.");
+        $.ajax({
+            type: "POST",
+            url: "/bascket",
+            data: {
+                id: $("#itemId" + itemIndex).val(),
+                count: $("#itemCount" + itemIndex).val()
+            }});
     }
 );
 
