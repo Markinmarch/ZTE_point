@@ -29,6 +29,10 @@ def bascket():
 @dp.route('/bascket/payment', methods = ['POST', 'GET'])
 @login_required
 def payment():
+    if request.method == 'POST':
+        item_id = request.form['id']
+        item_count = request.form['count']
+        print(item_id, item_count)
     user_bascket = Bascket.not_paid_item_list(Bascket, user_id = current_user.get_id())
     if user_bascket == []:
         bascket_status = False
