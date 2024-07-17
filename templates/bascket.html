@@ -57,7 +57,7 @@
         <tr class = "item-price">
             <form action = "{{url_for('bascket')}}" method = "post" id = "itemBuy" itemIndex = "{{item.index}}">
                 <td><p class = "itemPrice" amount = "{{item.price * item.count}}" id = "itemPrice{{item.index}}">{{item.price * item.count}} руб.</p></td>
-                <td><button class = "minus" itemIndex = "{{item.index}}" itemPrice = "{{item.price}}"> - </button><input onkeydown="return false" type = "number" min="1" max="100" name = "itemCount" id = "itemCount{{item.index}}" value = "{{item.count}}"><button class = "plus" itemIndex = "{{item.index}}" itemPrice = "{{item.price}}"> + </button></td>
+                <td><button class = "minus" itemIndex = "{{item.index}}" itemPrice = "{{item.price}}" itemId = {{item.id}}> - </button><input onkeydown="return false" type = "number" min="1" max="100" name = "itemCount" id = "itemCount{{item.index}}" value = {{item.count}}><button type = "submit" class = "plus" itemIndex = "{{item.index}}" itemId = {{item.id}} itemPrice = "{{item.price}}"> + </button></td>
                 <td><button class = "delete-item" itemIndex = "{{item.index}}"><img src="https://polinka.top/uploads/posts/2023-05/1683777508_polinka-top-p-kartinka-musornaya-korzina-instagram-69.png" width="35" height="32"></button></td>
                 <input type = "hidden" name = "itemId" id = "itemId" value = {{item.id}}>
             </form>
@@ -68,7 +68,7 @@
 <div class = "item-price-buy-items">
     <!-- <div id = "totalPrice"></div>
     <h4>Сумма к оплате: </h4> -->
-    <a href = "bascket/payment" type = "button"><button class = "item-price buy-items" type = "submit" name = "itemBuyButton" id = "itemBuyButton">Оформить заказ</button></a>
+    <a href = "bascket/payment" type = "button"><button class = "item-price buy-items" name = "itemBuyButton" id = "itemBuyButton">Оформить заказ</button></a>
 </div>
 {% else %}
 <h3>Ваша корзина пуста</h3>

@@ -11,6 +11,19 @@ from DB.models import Bascket
 @login_required
 def bascket():
     if request.method == 'POST':
+        item_id = request.form['id']
+        item_count = request.form['count']
+    user_bascket = Bascket.not_paid_item_list(Bascket, user_id = current_user.get_id())
+    if user_bascket == []:
+        bascket_status = False
+    else:
+        bascket_status = True
+    return render_template('bascket.html', data = user_bascket, bascket_status = bascket_status)
+
+@dp.route('/bascket/delete_item', methods = ['POST', 'GET'])
+@login_required
+def delete_item():
+    if request.method == 'POST':
         try:
             item_id = request.form['itemId']
             Bascket.delete_item(
@@ -25,6 +38,7 @@ def bascket():
     else:
         bascket_status = True
     return render_template('bascket.html', data = user_bascket, bascket_status = bascket_status)
+
 
 @dp.route('/bascket/payment', methods = ['POST', 'GET'])
 @login_required
