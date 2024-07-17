@@ -9,8 +9,7 @@ from sqlalchemy import (
     Float,
     Boolean,
     or_,
-    and_,
-    update
+    and_
     )
 from sqlalchemy.orm import relationship
 
@@ -70,8 +69,8 @@ class User(Base, UserMixin):
         user_password: str,
         user_role: str | Any
     ) -> None:
-        with session as sess:
-            sess.add(
+        with session:
+            session.add(
                 User(
                     name = user_name,
                     phone = user_phone,
@@ -80,19 +79,18 @@ class User(Base, UserMixin):
                     role = user_role
                 )
             )
-            sess.commit()
+            session.commit()
         
     def get_user(user_id: int) -> object:
         # связано со входом пользователя на сайт, исключительно служебный метод
-        with session as get_user:
-            x = get_user.query(User).filter_by(id = user_id).first()
-            return get_user.query(User).filter_by(id = user_id).first()
+        with session:
+            return session.query(User).filter_by(id = user_id).first()
         
     def check_email(user_email: str) -> bool:
         # так как наши адреса почты уникальные (unique = True) и не может быть больше одного в БД,
         # мы можем по количеству == 1, определить, что запись имеется.
-        with session as bool_email:
-            if bool_email.query(User).filter_by(email = user_email).count() == True:
+        with session:
+            if session.query(User).filter_by(email = user_email).count() == True:
                 return True
             return False
 
@@ -100,8 +98,8 @@ class User(Base, UserMixin):
         user_email: str,
         user_password: str
     ):
-        with session as sess:
-            user = sess.query(User).filter_by(email = user_email).first()
+        with session:
+            user = session.query(User).filter_by(email = user_email).first()
             if check_password_hash(user.password, user_password) == True:
                 return user
     
@@ -131,17 +129,13 @@ class Item(Base):
         return '%s: %s, %s, %s, %s, %s, %s' % (self.id, self.name, self.price, self.unit, self.index, self.parametrs, self.description)
     
     def get_items() -> list:
-        with session as sess:
-            return sess.query(Item).all()
-        
-    # def established_items_list(id: int) -> list:
-    #     with session as sess:
-    #         return sess.query(Item).filter(Item.id == id)
+        with session:
+            return session.query(Item).all()
         
     def search_items(keywords: set) -> list:
-        with session as sess:
+        with session:
             for words in keywords:
-                return sess.query(Item).filter(or_(
+                return session.query(Item).filter(or_(
                     Item.name.ilike(f'%{words}%'),
                     Item.parametrs.ilike(f'%{words}%'),
                     Item.description.ilike(f'%{words}%')
@@ -174,24 +168,24 @@ class Bascket(Base):
         item_id: int,
         item_count: int
     ) -> None:
-        with session as sess:
-            check_item_in_bascket = sess.query(Bascket).filter(and_(Bascket.id_user == user_id, Bascket.id_item == item_id, Bascket.paid_status == False))
+        with session:
+            check_item_in_bascket = session.query(Bascket).filter(and_(Bascket.id_user == user_id, Bascket.id_item == item_id, Bascket.paid_status == False))
             if check_item_in_bascket.count() == True:
                 for count_item_in_bascket in check_item_in_bascket:
                     count_item_in_bascket.count += item_count
             else:
-                sess.add(
+                session.add(
                     Bascket(
                         id_user = user_id,
                         id_item = item_id,
                         count = item_count
                     )
                 )
-            sess.commit()
+            session.commit()
             
     def join_bascket_item(user_id: int) -> list:
-        with session as sess:
-            inner_join_query = sess.query(Bascket, Item).join(Bascket, Item.id == Bascket.id_item)
+        with session:
+            inner_join_query = session.query(Bascket, Item).join(Bascket, Item.id == Bascket.id_item)
             return inner_join_query.filter(and_(Bascket.id_user == user_id, Bascket.paid_status == False)).all()       
          
     def not_paid_item_list(self, user_id: int) -> list:
@@ -222,21 +216,26 @@ class Bascket(Base):
         user_id: int,
         item_id: int
     ) -> None:
-        with session as sess:
-            item_to_delete = sess.query(Bascket).filter(and_(Bascket.id_user == user_id, Bascket.id_item == item_id, Bascket.paid_status == False)).one()
-            sess.delete(item_to_delete)
-            sess.commit()
+        with session:
+            item_to_delete = session.query(Bascket).filter(and_(Bascket.id_user == user_id, Bascket.id_item == item_id, Bascket.paid_status == False)).one()
+            session.delete(item_to_delete)
+            session.commit()
             
-    # def update_before_payment(user_id: int):
-    #     with session:
-    #         session.query(Bascket).filter(Bascket.id_user == user_id).update({'count'})
+    def update_before_payment(
+        user_id: int,
+        item_id: int,
+        item_count: int
+    ) -> None:
+        with session:
+            session.query(Bascket).filter(and_(Bascket.id_user == user_id, Bascket.id_item == item_id, Bascket.paid_status == False)).update({'count': item_count})
+            session.commit()
             
     def payment(user_id: int) -> None:
-        with session as sess:
-            paid_items = sess.query(Bascket).filter(and_(Bascket.id_user == user_id, Bascket.paid_status == False)).all()
+        with session:
+            paid_items = session.query(Bascket).filter(and_(Bascket.id_user == user_id, Bascket.paid_status == False)).all()
             for paid_item in paid_items:
                 paid_item.paid_status = True
-            sess.commit()
+            session.commit()
             
     def __str__(self):
         return '%s: %s, %s' % (self.id_user, self.id_item, self.count)
@@ -252,8 +251,8 @@ class Order(Base):
     user = relationship(User, backref = 'order')
     
     def item_list(user_id: int) -> list:
-        with session as sess:
-            inner_join_query = sess.query(Bascket, Item).join(Bascket, Item.id == Bascket.id_item)
+        with session:
+            inner_join_query = session.query(Bascket, Item).join(Bascket, Item.id == Bascket.id_item)
             params_to_paid = inner_join_query.filter(and_(Bascket.id_user == user_id, Bascket.paid_status == True)).all()
             full_list = []
             for bascket, item in params_to_paid:
