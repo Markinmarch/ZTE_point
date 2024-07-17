@@ -80,9 +80,9 @@ $(".minus").click(
 );
 
 // В строку input type = number нельзя прописывать матиематические операторы
-$('.item-count').keypress(function (e) {
-    var txt = String.fromCharCode(e.which);
-    if (!txt.match(/[0-9]/)) {
+$('.item-count').keypress(function(event) {
+    var text = String.fromCharCode(event.which);
+    if (!text.match(/[0-9]/)) {
         return false;
     }
 });

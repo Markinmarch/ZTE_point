@@ -178,7 +178,7 @@ class Bascket(Base):
             check_item_in_bascket = sess.query(Bascket).filter(and_(Bascket.id_user == user_id, Bascket.id_item == item_id, Bascket.paid_status == False))
             if check_item_in_bascket.count() == True:
                 for count_item_in_bascket in check_item_in_bascket:
-                    count_item_in_bascket.count += int(item_count)
+                    count_item_in_bascket.count += item_count
             else:
                 sess.add(
                     Bascket(
