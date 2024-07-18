@@ -39,6 +39,19 @@ $("#itemSearch").keypress(function(event) {
 
 // Блок функций, который выполняют перенаправление на поисковую страницу
 // по параметрам пользователя
+
+// $("#getSearchButton").onclick(
+//     function(event){
+//         event.preventDefault();
+//         var keywords = document.getElementById("itemSearchInput");
+//         if (keywords.value == ""){
+//             alert("Введите ключевые слова, пожалуйста!");
+//             return false;
+//         }
+//         location.replace("http://localhost:5000/items/search?keywords=" + keywords.val());
+//     }
+// )
+
 window.onload = searchItem;
 
 function searchItem() {
