@@ -26,27 +26,19 @@ def bascket():
     return render_template('bascket.html', data = user_bascket, bascket_status = bascket_status)
 
 @dp.route('/bascket/delete_item', methods = ['POST', 'GET'])
-@login_required
 def delete_item():
-    if request.method == 'POST':
-        try:
-            item_id = request.form['itemId']
-            Bascket.delete_item(
-                user_id = current_user.get_id(),
-                item_id = item_id
-            )
-        except NoResultFound:
-            pass
-    user_bascket = Bascket.not_paid_item_list(Bascket, user_id = current_user.get_id())
-    if user_bascket == []:
-        bascket_status = False
-    else:
-        bascket_status = True
-    return render_template('bascket.html', data = user_bascket, bascket_status = bascket_status)
+    try:
+        delete_item_id = request.args.get('delete_item_id')
+        Bascket.delete_item(
+            user_id = current_user.get_id(),
+            item_id = delete_item_id
+        )
+    except NoResultFound:
+        pass
+    return redirect('/bascket')
 
 
 @dp.route('/bascket/payment', methods = ['POST', 'GET'])
-@login_required
 def payment():
     if request.method == 'POST':
         item_id = request.form['id']

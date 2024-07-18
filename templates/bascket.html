@@ -58,9 +58,9 @@
             <form action = "{{url_for('bascket')}}" method = "post" id = "itemBuy" itemIndex = "{{item.index}}">
                 <td><p class = "itemPrice" amount = "{{item.price * item.count}}" id = "itemPrice{{item.index}}">{{item.price * item.count}} руб.</p></td>
                 <td><button class = "minus" itemIndex = "{{item.index}}" itemPrice = "{{item.price}}" itemId = {{item.id}}> - </button><input onkeydown="return false" type = "number" min="1" max="100" name = "itemCount" id = "itemCount{{item.index}}" value = {{item.count}}><button type = "submit" class = "plus" itemIndex = "{{item.index}}" itemId = {{item.id}} itemPrice = "{{item.price}}"> + </button></td>
-                <td><button class = "delete-item" itemIndex = "{{item.index}}"><img src="https://polinka.top/uploads/posts/2023-05/1683777508_polinka-top-p-kartinka-musornaya-korzina-instagram-69.png" width="35" height="32"></button></td>
                 <input type = "hidden" name = "itemId" id = "itemId" value = {{item.id}}>
             </form>
+                <td><a href = "bascket/delete_item?delete_item_id={{item.id}}" type = "button"><button id = "deleteItemButton" class = "delete-item" itemIndex = "{{item.index}}"><img src="https://polinka.top/uploads/posts/2023-05/1683777508_polinka-top-p-kartinka-musornaya-korzina-instagram-69.png" width="35" height="32"></button></a></td>
         </tr>
     </table>    
 </div>
