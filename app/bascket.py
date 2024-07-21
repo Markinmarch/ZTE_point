@@ -44,10 +44,5 @@ def payment():
         item_id = request.form['id']
         item_count = request.form['count']
         print(item_id, item_count)
-    user_bascket = Bascket.not_paid_item_list(Bascket, user_id = current_user.get_id())
-    if user_bascket == []:
-        bascket_status = False
-    else:
-        bascket_status = True
     tatal_price = Bascket.tatal_price(Bascket, user_id = current_user.get_id())
     return render_template('bascket.html', total_price = tatal_price, data = user_bascket, bascket_status = bascket_status)
