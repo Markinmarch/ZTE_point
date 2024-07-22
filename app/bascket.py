@@ -41,8 +41,8 @@ def delete_item():
 @dp.route('/bascket/payment', methods = ['POST', 'GET'])
 def payment():
     if request.method == 'POST':
-        item_id = request.form['id']
-        item_count = request.form['count']
-        print(item_id, item_count)
+        user_id = current_user.get_id()
+        Bascket.payment(user_id)
+    user_bascket = Bascket.not_paid_item_list(Bascket, user_id = current_user.get_id())
     tatal_price = Bascket.tatal_price(Bascket, user_id = current_user.get_id())
-    return render_template('bascket.html', total_price = tatal_price, data = user_bascket, bascket_status = bascket_status)
+    return render_template('payment.html', total_price = tatal_price, data = user_bascket)

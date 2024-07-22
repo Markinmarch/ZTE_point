@@ -18,55 +18,31 @@
     <a href = "/about" type = "button">о нас</a>
     <a class = "bascket active" type = "button" href = "/bascket"><img src="https://t700.ru/icon/cart.png" width="42" height="42"></a>
 </div>
-{% for item in data %}
 <div class = "items-block">
-    <table>
+    <table class = "table_blur">
         <tr>
-            <td><img src = "../static/images/item_images/{{item.name}}_{{item.index}}/{{item.name}}_thumb.jpg"/></td>
-            <td>
-                {% if item.parametrs is none and item.description is none %}
-                <p>
-                    {{item.name}}
-                    <br>Единица измерения: {{item.unit}}
-                </p>
-                {% elif item.description is none %}
-                <p> 
-                    {{item.name}}
-                    <br>Единица измерения: {{item.unit}}
-                    <br>Параметры: {{item.parametrs}}
-                </p>
-                {% elif item.parametrs is none %}
-                <p>
-                    {{item.name}}
-                    <br>Единица измерения: {{item.unit}}
-                    <br>Описание: {{item.description}}
-                </p>  
-                {% else %}
-                <p>
-                    {{item.name}}
-                    <br>Единица измерения: {{item.unit}}
-                    <br>Описание: {{item.description}}
-                    <br>Параметры: {{item.parametrs}}
-                </p>
-                {% endif %}
-            </td>
+            <th>Наименование</th>
+            <th>Код</th>
+            <th>Цена</th>
+            <th>Количество</th>
+            <th>Итого</th>
         </tr>
+        {% for item in data %}
+        <tr>
+            <td>{{item.name}}</td>
+            <td>{{item.index}}</td>
+            <td>{{item.price}}</td>
+            <td>{{item.count}}</td>
+            <td>{{item.price*item.count}}</td>
+        </tr>
+        {% endfor %}
     </table>
-    <table>
-        <tr class = "item-price">
-            <form action = "{{url_for('bascket')}}" method = "post" id = "itemBuy" itemIndex = "{{item.index}}">
-                <td><p class = "itemPrice" amount = "{{item.price * item.count}}" id = "itemPrice{{item.index}}">{{item.price * item.count}} руб.</p></td>
-                <td><button class = "minus" itemIndex = "{{item.index}}" itemPrice = "{{item.price}}"> - </button><input onkeydown="return false" type = "number" min="1" max="100" name = "itemCount" id = "itemCount{{item.index}}" value = "{{item.count}}"><button class = "plus" itemIndex = "{{item.index}}" itemPrice = "{{item.price}}"> + </button></td>
-                <td><button class = "delete-item" itemIndex = "{{item.index}}"><img src="https://polinka.top/uploads/posts/2023-05/1683777508_polinka-top-p-kartinka-musornaya-korzina-instagram-69.png" width="35" height="32"></button></td>
-                <input type = "hidden" name = "itemId" id = "itemId" value = {{item.id}}>
-            </form>
-        </tr>
-    </table>    
-</div>
-{% endfor %}
+</div><br>
+
 <div class = "item-price-buy-items">
-    <!-- <div id = "totalPrice"></div>
-    <h4>Сумма к оплате: </h4> -->
-    <a href = "bascket/payment" type = "button"><button class = "item-price buy-items" type = "submit" name = "itemBuyButton" id = "itemBuyButton">Оплатить</button></a>
+    <h2>Сумма к оплате: {{total_price}} руб.</h2>
+    <form action = "{{url_for('payment')}}" method = "post">
+        <a href = "bascket/payment" type = "button"><button class = "item-price buy-items" type = "submit" name = "itemBuyButton" id = "itemBuyButton">Оплатить</button></a>
+    </form>
 </div>
 {% endblock %}
