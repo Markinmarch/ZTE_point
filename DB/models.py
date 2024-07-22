@@ -250,7 +250,7 @@ class Order(Base):
     
     user = relationship(User, backref = 'order')
     
-    def item_list(user_id: int) -> list:
+    def payment_order(user_id: int) -> list:
         with session:
             inner_join_query = session.query(Bascket, Item).join(Bascket, Item.id == Bascket.id_item)
             params_to_paid = inner_join_query.filter(and_(Bascket.id_user == user_id, Bascket.paid_status == True)).all()

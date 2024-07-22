@@ -1,4 +1,4 @@
-from flask import Flask, g
+from flask import Flask
 from flask_login import LoginManager
 
 from config import SECRET_WORD
