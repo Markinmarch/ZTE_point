@@ -12,9 +12,7 @@ from sqlalchemy import (
     and_
     )
 from sqlalchemy.orm import relationship
-
 from werkzeug.security import generate_password_hash, check_password_hash
-
 from flask_login import UserMixin
 
 from DB.main_db import Base, session
@@ -24,14 +22,8 @@ from DB.main_db import Base, session
 class User(Base, UserMixin):
     '''
     Объект "User" - структура таблицы БД для пользователей.
-        Параметры:
-            id(int): идентефикатор пользователя;
-            name(len(str) <= 40): имя пользователя;
-            phone(str): номер телефона пользователя;
-            email(str): адрес электронной почты;
-            password(str): пароль от личного кабинета;
-        Возвращаемое значение:
-            str(id, name, email)
+    Вносит данные новых пользователей, проверяет и получает
+    данные пользователей.
     '''
     __tablename__ = 'user'
     
@@ -43,21 +35,51 @@ class User(Base, UserMixin):
     role = Column(String, default = 'user', nullable = False)
     
     def __str__(self):
+        '''
+        Метод возвращает параметры пользователя.
+            Return values:
+                str(id, name, email);
+        '''
         return '%s, %s, %s' % (self.id, self.name, self.email)
     
     def is_active(self):
+        '''
+        Метод возвращает состояние активности пользователя на сайте.
+            Return values:
+                bool;
+        '''
         return True
     
     def is_authenticated(self):
+        '''
+        Метод возвращает состояние авторизованности пользователя на сайте.
+            Return values:
+                bool;
+        '''
         return True
     
     def is_anonymous(self):
+        '''
+        Метод возвращает состояние анонимности пользователя на сайте.
+            Return values:
+                bool;
+        '''
         return True
     
     def get_id(self):
+        '''
+        Метод возвращает идентификатор пользователя.
+            Return values:
+                id(int);
+        '''
         return self.id
     
     def is_admin(self):
+        '''
+        Метод проверяет роль пользователя.
+            Return values:
+                bool;
+        '''
         if self.role == 'admin':
             return True
         return False
@@ -69,6 +91,16 @@ class User(Base, UserMixin):
         user_password: str,
         user_role: str | Any
     ) -> None:
+        '''
+        Метод вносит в базу данных параметры нового пользователя.
+            Parametrs:
+                id(int): идентефикатор пользователя;
+                name(len(str) <= 40): имя пользователя;
+                phone(str): номер телефона пользователя;
+                email(str): адрес электронной почты;
+                password(str): пароль от личного кабинета;
+                role(str): роль пользователя в системе;
+        '''
         with session:
             session.add(
                 User(
@@ -82,7 +114,13 @@ class User(Base, UserMixin):
             session.commit()
         
     def get_user(user_id: int) -> object:
-        # связано со входом пользователя на сайт, исключительно служебный метод
+        '''
+        Метод (служебный) реализует получение данных пользователя по указаным параметрам.
+            Parametrs:
+                user_id(int): идентефикатор пользователя;
+            Return values:
+                str(id, name, email);
+        '''
         with session:
             return session.query(User).filter_by(id = user_id).first()
         
@@ -126,7 +164,15 @@ class Item(Base):
     image = Column(String, nullable = True)
 
     def __str__(self):
-        return '%s: %s, %s, %s, %s, %s, %s' % (self.id, self.name, self.price, self.unit, self.index, self.parametrs, self.description)
+        return '%s: %s, %s, %s, %s, %s, %s' % (
+            self.id,
+            self.name,
+            self.price,
+            self.unit,
+            self.index,
+            self.parametrs,
+            self.description
+        )
     
     def get_items() -> list:
         with session:
@@ -249,6 +295,11 @@ class Order(Base):
     paid_status = Column(Boolean, nullable = False)
     
     user = relationship(User, backref = 'order')
+    
+    def check_id_user(user_id: int) -> bool:
+        with session:
+            if session.query(Order).filter(Order.id_user == user_id).count() == True:
+                return True
     
     def payment_order(user_id: int) -> list:
         with session:

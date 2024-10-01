@@ -19,6 +19,6 @@ def home():
         data = [{
             'context': '<a class = "login" type = "button" href = "/login">Войти</a>'
         }]
-    # if Order.id_user:
-    #     return None
+    if Order.check_id_user(current_user.get_id()) == True:
+        data.append(None)
     return render_template('home_page.html', data = data)
