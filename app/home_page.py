@@ -2,8 +2,9 @@ from flask import render_template
 from flask_login import current_user
 
 from app.app_settings import dp
+from DB.models import Order
 
-
+''''''
 @dp.route('/')
 def home():
     if current_user.is_authenticated:
@@ -18,4 +19,6 @@ def home():
         data = [{
             'context': '<a class = "login" type = "button" href = "/login">Войти</a>'
         }]
+    # if Order.id_user:
+    #     return None
     return render_template('home_page.html', data = data)
