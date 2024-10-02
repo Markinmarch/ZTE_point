@@ -13,7 +13,8 @@
     <a href = "/contact" type = "button">контакты</a>
     <a href = "/about" type = "button">о нас</a>
     {% for button in data %}
-        {{button.context|safe}}
+        {{ button.status|safe }}
+        {{ button.orders|safe }}
     {% endfor %}
 </div>
 
