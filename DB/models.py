@@ -297,8 +297,10 @@ class Order(Base):
     user = relationship(User, backref = 'order')
     
     def check_id_user(user_id: int) -> bool:
+        print(f'------------------------------------{session.query(Order).filter(Order.id_user == user_id).all()}')
         with session:
             if session.query(Order).filter(Order.id_user == user_id).count() == True:
+                # print(session.query(Order).filter(Order.id_user == user_id))
                 return True
     
     def payment_order(user_id: int) -> list:
