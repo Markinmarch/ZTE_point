@@ -26,19 +26,35 @@ class CustomAdminIndexView(AdminIndexView):
         return redirect('/')
 
 class TaskModelViewUsers(ModelView):
+    column_list = [
+        'id',
+        'name',
+        'email',
+        'phone'
+    ]
     column_labels = {
+        'id': 'ID клиента',
         'name': 'Имя',
         'email': 'Почта',
         'phone': 'Номер телефона'
     }
     can_set_page_size = True
     page_size = 20
-    column_list = ['name', 'email', 'phone']
     can_create = False
     can_edit = False
     can_delete = False
     
 class TaskModelViewItems(ModelView):
+    column_list = [
+        'id',
+        'name',
+        'price',
+        'unit',
+        'index',
+        'parametrs',
+        'description',
+        'image'
+    ]
     column_labels = {
         'id': 'ID',
         'name': 'Наименование',
@@ -49,7 +65,6 @@ class TaskModelViewItems(ModelView):
         'description': 'Краткое описание',
         'image': 'Изображение',
     }
-    column_list = ['id', 'name', 'price', 'unit', 'index', 'parametrs', 'description', 'image']
     can_set_page_size = True
     page_size = 20
     column_display_all_relations = True
@@ -83,7 +98,20 @@ class TaskModelViewItems(ModelView):
         }
     
 class TaskModelViewBascket(ModelView):
-    column_list = ['id', 'date', 'id_user', 'id_item', 'count']
+    column_list = [
+        'id',
+        'date',
+        'id_user',
+        'id_item',
+        'count'
+    ]
+    column_labels = {
+        'id': 'ID',
+        'date': 'Дата',
+        'id_user': 'ID клиента',
+        'id_item': 'ID товара',
+        'count': 'Количество'
+    }
     can_set_page_size = True
     page_size = 20
     column_display_all_relations = True
@@ -94,5 +122,5 @@ admin = Admin(dp, name = 'ZTE point', template_mode = 'bootstrap3', index_view =
     
 admin.add_view(TaskModelViewUsers(User, session, name = 'Клиент'))
 admin.add_view(TaskModelViewItems(Item, session, name = 'Товары'))
-admin.add_view(TaskModelViewBascket(Bascket, session, name = 'Заказы'))
+admin.add_view(TaskModelViewBascket(Bascket, session, name = 'Корзина'))
 ########################################################################
