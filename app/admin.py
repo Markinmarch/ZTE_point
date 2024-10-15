@@ -6,6 +6,7 @@ from flask_login import current_user
 from flask_admin.form import ImageUploadField
 from flask_admin import AdminIndexView, Admin
 from flask_admin.contrib.sqla import ModelView
+from flask_admin.menu import MenuLink
 
 from markupsafe import Markup
 
@@ -118,9 +119,15 @@ class TaskModelViewBascket(ModelView):
     column_hide_backrefs = False
     column_display_pk = True
     
+class MainPageLink(MenuLink):
+    def get_url(self):
+        return url_for('home')
+
+
 admin = Admin(dp, name = 'ZTE point', template_mode = 'bootstrap3', index_view = CustomAdminIndexView())
     
 admin.add_view(TaskModelViewUsers(User, session, name = 'Клиент'))
 admin.add_view(TaskModelViewItems(Item, session, name = 'Товары'))
 admin.add_view(TaskModelViewBascket(Bascket, session, name = 'Корзина'))
+admin.add_link(MainPageLink(name = 'На главную'))
 ########################################################################
