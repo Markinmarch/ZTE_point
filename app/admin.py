@@ -119,6 +119,27 @@ class TaskModelViewBascket(ModelView):
     column_hide_backrefs = False
     column_display_pk = True
     
+class TaskModelViewOrders(ModelView):
+    column_list = [
+        'id',
+        'id_user',
+        'date',
+        'link_to_list_items'
+    ]
+    
+    column_labels = {
+        'id': 'ID',
+        'date': 'Дата',
+        'id_user': 'ID клиента',
+        'link_to_list_items': 'Ссылка на список товаров клиента'
+    }
+    
+    can_set_page_size = True
+    page_size = 20
+    column_display_all_relations = True
+    column_hide_backrefs = False
+    column_display_pk = True
+    
 class MainPageLink(MenuLink):
     def get_url(self):
         return url_for('home')
@@ -129,5 +150,6 @@ admin = Admin(dp, name = 'ZTE point', template_mode = 'bootstrap3', index_view =
 admin.add_view(TaskModelViewUsers(User, session, name = 'Клиент'))
 admin.add_view(TaskModelViewItems(Item, session, name = 'Товары'))
 admin.add_view(TaskModelViewBascket(Bascket, session, name = 'Корзина'))
+admin.add_view(TaskModelViewOrders(Order, session, name = 'Заказы'))
 admin.add_link(MainPageLink(name = 'На главную'))
 ########################################################################
