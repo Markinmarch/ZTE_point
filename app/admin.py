@@ -6,6 +6,7 @@ from flask_login import current_user
 from flask_admin.form import ImageUploadField
 from flask_admin import AdminIndexView, Admin
 from flask_admin.contrib.sqla import ModelView
+from flask_admin.contrib.sqla.filters import BaseSQLAFilter
 from flask_admin.menu import MenuLink
 
 from markupsafe import Markup
@@ -13,6 +14,12 @@ from markupsafe import Markup
 from app.app_settings import dp
 from DB.models import User, Item, Order, Bascket, session
 
+class MyCustomFilter(BaseSQLAFilter):
+    def apply(self, query, value):
+        return query.filter(self.column == value)
+
+    def operation(self):
+        return 'equals'
 
 file_path = os.path.abspath(os.path.dirname(__name__))
 
@@ -89,12 +96,12 @@ class TaskModelViewItems(ModelView):
             # Абсолютный путь к каталогу, в котором будут храниться файлы
             base_path = os.path.join(file_path, 'static/images/item_images/'),
             # Относительный путь из каталога. Будет добавляться к имени загружаемого файла.
-            url_relative_path='images/item_images/',
-            namegen=name_gen_image,
+            url_relative_path = 'images/item_images/',
+            namegen = name_gen_image,
             # Список разрешенных расширений. Если не указано, то будут разрешены форматы gif, jpg, jpeg, png и tiff.
             allowed_extensions=['jpg'],
-            max_size=(1200, 780, True),
-            thumbnail_size=(200, 200, True)
+            max_size = (1200, 780, True),
+            thumbnail_size = (200, 200, True)
             )
         }
     
@@ -104,14 +111,16 @@ class TaskModelViewBascket(ModelView):
         'date',
         'id_user',
         'id_item',
-        'count'
+        'count',
+        'paid_status'
     ]
     column_labels = {
         'id': 'ID',
         'date': 'Дата',
         'id_user': 'ID клиента',
         'id_item': 'ID товара',
-        'count': 'Количество'
+        'count': 'Количество',
+        'paid_status': 'Статус'
     }
     can_set_page_size = True
     page_size = 20
@@ -126,14 +135,15 @@ class TaskModelViewOrders(ModelView):
         'date',
         'link_to_list_items'
     ]
-    
     column_labels = {
         'id': 'ID',
         'date': 'Дата',
         'id_user': 'ID клиента',
         'link_to_list_items': 'Ссылка на список товаров клиента'
     }
-    
+    column_filters = [
+        MyCustomFilter(column = Order.id_user, name = 'ID клиента')
+    ]
     can_set_page_size = True
     page_size = 20
     column_display_all_relations = True
