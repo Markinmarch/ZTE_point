@@ -191,8 +191,8 @@ class Bascket(Base):
     '''
     Объект "Bascket" - структура таблицы БД для корзины польвателей.
         Параметры:
-            # id(int): идентификатор заказа;
-            # date(str): дата заказа;
+            id(int): идентификатор заказа;
+            date(str): дата заказа;
             id_item(int): идентификатор товара;
             id_user(int): идентификатор пользователя;
         Возвращаемое значение:
@@ -281,6 +281,7 @@ class Bascket(Base):
             paid_items = session.query(Bascket).filter(and_(Bascket.id_user == user_id, Bascket.paid_status == False)).all()
             for paid_item in paid_items:
                 paid_item.paid_status = True
+            session.add(Order(id_user = user_id))
             session.commit()
             
     def __str__(self):
@@ -292,7 +293,6 @@ class Order(Base):
     id = Column(Integer, primary_key = True, nullable = False)
     id_user = Column(Integer, ForeignKey('user.id'), nullable = False)
     date = Column(String, default = datetime.now().strftime("%d.%m.%Y --> %H:%M"))
-    paid_status = Column(Boolean, nullable = False)
     
     user = relationship(User, backref = 'order')
     
