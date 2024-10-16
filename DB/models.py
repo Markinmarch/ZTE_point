@@ -310,4 +310,4 @@ class Order(Base):
             full_list = []
             for bascket, item in params_to_paid:
                 full_list.append({'item_id': item.id, 'item_price': item.price, 'count': bascket.count, 'status': bascket.paid_status})
-            return full_list.append(Order.id, Order.id_user, Order.paid_status)
+            return full_list.append(Order.id, Order.id_user)
