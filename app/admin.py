@@ -144,6 +144,7 @@ class TaskModelViewOrders(ModelView):
     column_filters = [
         MyCustomFilter(column = Order.id_user, name = 'ID клиента')
     ]
+    
     can_set_page_size = True
     page_size = 20
     column_display_all_relations = True

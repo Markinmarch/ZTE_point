@@ -9,9 +9,10 @@ from sqlalchemy import (
     Float,
     Boolean,
     or_,
-    and_
+    and_,
+    cast
     )
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, column_property
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
@@ -293,6 +294,8 @@ class Order(Base):
     id = Column(Integer, primary_key = True, nullable = False)
     id_user = Column(Integer, ForeignKey('user.id'), nullable = False)
     date = Column(String, default = datetime.now().strftime("%d.%m.%Y --> %H:%M"))
+    string_id_user = cast(id_user, String)
+    link_to_list_items = column_property('https://localhost:5000/admin/order/' + string_id_user)
     
     user = relationship(User, backref = 'order')
     
@@ -305,9 +308,9 @@ class Order(Base):
     
     def payment_order(user_id: int) -> list:
         with session:
-            inner_join_query = session.query(Bascket, Item).join(Bascket, Item.id == Bascket.id_item)
+            inner_join_query = session.query(Bascket, Item, Order).join(Bascket, Item.id == Bascket.id_item)
             params_to_paid = inner_join_query.filter(and_(Bascket.id_user == user_id, Bascket.paid_status == True)).all()
             full_list = []
-            for bascket, item in params_to_paid:
-                full_list.append({'item_id': item.id, 'item_price': item.price, 'count': bascket.count, 'status': bascket.paid_status})
-            return full_list.append(Order.id, Order.id_user)
+            for bascket, item, order in params_to_paid:
+                full_list.append({'order_id': order.id, 'user_id': bascket.id_user,'item_id': item.id, 'item_price': item.price, 'count': bascket.count, 'status': bascket.paid_status})
+            return full_list
