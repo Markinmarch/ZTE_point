@@ -207,6 +207,15 @@ class Bascket(Base):
     count = Column(Integer, default = 1, nullable = False)
     paid_status = Column(Boolean, default = False, nullable = False)
     
+    def __str__(self):
+        return '%s: %s, %s, %s, %s' % (
+            self.id,
+            self.id_user,
+            self.id_item,
+            self.count,
+            self.paid_status
+        )
+    
     user = relationship(User, backref = 'bascket')
     item = relationship(Item, backref = 'bascket')
     
@@ -295,9 +304,18 @@ class Order(Base):
     id_user = Column(Integer, ForeignKey('user.id'), nullable = False)
     date = Column(String, default = datetime.now().strftime("%d.%m.%Y --> %H:%M"))
     string_id_user = cast(id_user, String)
-    link_to_list_items = column_property('https://localhost:5000/admin/order/' + string_id_user)
+    link_to_list_items = column_property('http://localhost:5000/admin/order/' + string_id_user)
     
     user = relationship(User, backref = 'order')
+    
+    def __str__(self):
+        return '%s: %s, %s, %s, %s' % (
+            self.id,
+            self.id_user,
+            self.date,
+            self.string_id_user,
+            self.link_to_list_items
+        )
     
     def check_id_user(user_id: int) -> bool:
         print(f'------------------------------------{session.query(Order).filter(Order.id_user == user_id).all()}')
