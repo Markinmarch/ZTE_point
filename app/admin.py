@@ -145,6 +145,14 @@ class TaskModelViewOrders(ModelView):
         MyCustomFilter(column = Order.id_user, name = 'ID клиента')
     ]
     
+    @staticmethod
+    def _order_formatters(view, context, model, name):
+        return Markup("<a href ='%s'>%s</a>" % (model.link_to_list_items, 'Ссылка'))
+    
+    column_formatters = {
+        'link_to_list_items': _order_formatters
+    }
+    
     can_set_page_size = True
     page_size = 20
     column_display_all_relations = True
