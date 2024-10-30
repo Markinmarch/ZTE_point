@@ -1,11 +1,24 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{% block title %}{% endblock %}</title>
-    {% block scripts %}{% endblock %}
+    {% block head %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>{% block title %}{% endblock %}</title>
+        {% block scripts %}{% endblock %}
+        <link rel = "stylesheet" type = "text/css" href = "../static/base.css">
+        <div class="bg">
+            <a id = "nav_href_home" href = "/" type = "button">главная</a>
+            <a id = "nav_href_items" href = "/items" type = "button">товары</a>
+            <a id = "nav_href_contact" href = "/contact" type = "button">контакты</a>
+            <a id = "nav_href_about" href = "/about" type = "button">о нас</a>
+            {% for button in nav_data %}
+                {{ button.status|safe }}
+                {{ button.orders|safe }}
+            {% endfor %}
+        {% endblock %}
+    </div>
 </head>
 <body>
     {% block content %}{% endblock %}
