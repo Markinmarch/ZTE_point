@@ -4,25 +4,29 @@ from flask_login import current_user
 from app.app_settings import dp
 from DB.models import Order
 
-''''''
+
+def check_status() -> list[dict[str, str]] | None:
+    if current_user.is_authenticated:
+        nav_data = [{
+            'status': '<a class = "login" type = "button" href = "/logout">Выйти</a><a class = "bascket" type = "button" href = "/bascket"><img src="https://t700.ru/icon/cart.png" width="44" height="44,5""></a>'
+        }]
+        if Order.check_id_user(current_user.get_id()) == True:
+            nav_data.append({
+                'orders': f'<a class = "bascket" type = "button" href = "/order/{current_user.get_id()}"><img src="https://www.seekpng.com/png/full/542-5420406_the-shipped-icon-is-a-plain-black-and.png" width="52" height="33" vspace="5"></a>'
+                })
+        if current_user.is_admin() == True:
+            nav_data = [{
+                'status': '<a class = "login" type = "button" href = "/logout">Выйти</a><a class = "login" type = "button" href = "/admin">Админка</a>'
+            }]
+            return nav_data
+        return nav_data
+
 @dp.route('/')
 def home():
-    print(f'++++++++++++++++++++++++++++++++++++++++={current_user.get_id()}')
-    if current_user.is_authenticated:
-        data = [{
-            'status': '<a class = "login" type = "button" href = "/logout">Выйти</a><a class = "bascket" type = "button" href = "/bascket"><img src="https://t700.ru/icon/cart.png" width="42" height="42"></a>'
-        }]
-        if current_user.is_admin() == True:
-            data = [{
-                'status': '<a class = "login" type = "button" href = "/logout">Выйти</a><a class = "bascket" type = "button" href = "/bascket"><img src="https://t700.ru/icon/cart.png" width="42" height="42"></a><a class = "login" type = "button" href = "/admin">Админка</a>'
-            }]
-            if Order.check_id_user(current_user.get_id()) == True:
-                data.append({
-                    'orders': '<a class = "bascket" type = "button" href = "/bascket"><img src="https://t700.ru/icon/cart.png" width="42" height="42"></a>'
-                })
-    else:
-        data = [{
+    if check_status() is None:
+        nav_data = [{
             'status': '<a class = "login" type = "button" href = "/login">Войти</a>'
         }]
-
-    return render_template('home_page.html', data = data)
+    else: 
+        nav_data = check_status()
+    return render_template('home_page.html', nav_data = nav_data)

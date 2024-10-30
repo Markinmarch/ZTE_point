@@ -4,12 +4,15 @@ from flask_login import login_required, current_user
 from app.app_settings import dp
 from DB.models import Item, Bascket
 
+from .home_page import check_status
 
 @dp.route('/items', methods = ['GET', 'POST'])
 @login_required
 def items():
     items = Item.get_items()
     if request.method == 'POST':
+        if current_user.is_admin() == True:
+            pass
         item_id = request.form['id']
         item_count = request.form['count']
         Bascket.add_items(
@@ -17,12 +20,13 @@ def items():
             item_id = item_id,
             item_count = item_count
         )
-        
-    return render_template('items.html', items_data = items)
+    return render_template('items.html', items_data = items, nav_data = check_status())
 
 @dp.route('/items/search', methods = ['GET', 'POST'])
 def search_item():
     if request.method == 'POST':
+        if current_user.is_admin() == True:
+            pass
         item_id = request.form['id']
         item_count = request.form['count']
         Bascket.add_items(
