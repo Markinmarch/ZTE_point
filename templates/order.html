@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Заказ пользователя{% endblock %}
+
+{% block scripts %}
+<script src = "https://code.jquery.com/jquery-3.5.1.js"></script>
+{% endblock %}
+
+{% block content %}
+<link rel = "stylesheet" type = "text/css" href = "../static/base.css">
+<link rel = "stylesheet" type = "text/css" href = "../static/items.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="bg">
+    <a type = "button" href = "/">главная</a>
+    <a href = "/items" type = "button">товары</a>
+    <a href = "/contact" type = "button">контакты</a>
+    <a href = "/about" type = "button">о нас</a>
+    <a class = "bascket active" type = "button" href = "/bascket"><img src="https://t700.ru/icon/cart.png" width="42" height="42"></a>
+</div>
+<div class = "items-block">
+    <table class = "table_blur">
+        <tr>
+            <th>Наименование</th>
+            <th>Код</th>
+            <th>Цена</th>
+            <th>Количество</th>
+            <th>Итого</th>
+        </tr>
+        {% for item in data %}
+        <tr>
+            <td>{{item.name}}</td>
+            <td>{{item.index}}</td>
+            <td>{{item.price}}</td>
+            <td>{{item.count}}</td>
+            <td>{{item.price*item.count}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div><br>
+
+<div class = "item-price-buy-items">
+    <h2>Всего оплачено: {{total_price}} руб.</h2>
+</div>
+{% endblock %}
