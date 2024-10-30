@@ -43,6 +43,7 @@ def payment():
     if request.method == 'POST':
         user_id = current_user.get_id()
         Bascket.payment(user_id)
+        return render_template('bascket.html', bascket_status = False)
     user_bascket = Bascket.not_paid_item_list(Bascket, user_id = current_user.get_id())
-    tatal_price = Bascket.tatal_price(Bascket, user_id = current_user.get_id())
-    return render_template('payment.html', total_price = tatal_price, data = user_bascket)
+    total_price = Bascket.total_price(Bascket, user_id = current_user.get_id())
+    return render_template('payment.html', total_price = total_price, data = user_bascket)
