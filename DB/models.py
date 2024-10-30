@@ -12,12 +12,13 @@ from sqlalchemy import (
     and_,
     cast
     )
+from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.orm import relationship, column_property
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
 from DB.main_db import Base, session
-
+from config import MAIN_URL
 
 # ----------------модели БД-------------------------
 class User(Base, UserMixin):
@@ -242,7 +243,7 @@ class Bascket(Base):
     def join_bascket_item(user_id: int) -> list:
         with session:
             inner_join_query = session.query(Bascket, Item).join(Bascket, Item.id == Bascket.id_item)
-            return inner_join_query.filter(and_(Bascket.id_user == user_id, Bascket.paid_status == False)).all()       
+            return inner_join_query.filter(and_(Bascket.id_user == user_id, Bascket.paid_status == False)).all()    
          
     def not_paid_item_list(self, user_id: int) -> list:
         full_list = []
@@ -261,7 +262,7 @@ class Bascket(Base):
             })
         return full_list
     
-    def tatal_price(self, user_id: int):
+    def total_price(self, user_id: int):
         total = 0
         for bascket, item in self.join_bascket_item(user_id):
             amount_by_quantity = item.price * bascket.count
@@ -289,9 +290,11 @@ class Bascket(Base):
     def payment(user_id: int) -> None:
         with session:
             paid_items = session.query(Bascket).filter(and_(Bascket.id_user == user_id, Bascket.paid_status == False)).all()
+            ids_list = []
             for paid_item in paid_items:
                 paid_item.paid_status = True
-            session.add(Order(id_user = user_id))
+                ids_list.append(paid_item.id)
+            session.add(Order(id_user = user_id, ids_item_list = ids_list))
             session.commit()
             
     def __str__(self):
@@ -302,9 +305,10 @@ class Order(Base):
     
     id = Column(Integer, primary_key = True, nullable = False)
     id_user = Column(Integer, ForeignKey('user.id'), nullable = False)
+    ids_item_list = Column(ARRAY(Integer), nullable=True)
     date = Column(String, default = datetime.now().strftime("%d.%m.%Y --> %H:%M"))
     string_id_user = cast(id_user, String)
-    link_to_list_items = column_property('http://localhost:5000/admin/order/' + string_id_user)
+    link_to_list_items = column_property(f'http://{MAIN_URL}/order/' + string_id_user)
     
     user = relationship(User, backref = 'order')
     
@@ -318,10 +322,8 @@ class Order(Base):
         )
     
     def check_id_user(user_id: int) -> bool:
-        print(f'------------------------------------{session.query(Order).filter(Order.id_user == user_id).all()}')
         with session:
             if session.query(Order).filter(Order.id_user == user_id).count() == True:
-                # print(session.query(Order).filter(Order.id_user == user_id))
                 return True
     
     def payment_order(user_id: int) -> list:
@@ -330,5 +332,14 @@ class Order(Base):
             params_to_paid = inner_join_query.filter(and_(Bascket.id_user == user_id, Bascket.paid_status == True)).all()
             full_list = []
             for bascket, item, order in params_to_paid:
-                full_list.append({'order_id': order.id, 'user_id': bascket.id_user,'item_id': item.id, 'item_price': item.price, 'count': bascket.count, 'status': bascket.paid_status})
-            return full_list
+                full_list.append(
+                    {
+                        'order_id': order.id,
+                        'user_id': bascket.id_user,
+                        'item_id': item.id,
+                        'price': item.price,
+                        'count': bascket.count,
+                        'status': bascket.paid_status
+                        }
+                    )
+            return full_list 
