@@ -23,7 +23,7 @@ from config import MAIN_URL
 # ----------------модели БД-------------------------
 class User(Base, UserMixin):
     '''
-    Объект "User" - структура таблицы БД для пользователей.
+    Объект ``User`` - структура таблицы БД для пользователей.
     Вносит данные новых пользователей, проверяет и получает
     данные пользователей.
     '''
@@ -102,6 +102,8 @@ class User(Base, UserMixin):
                 email(str): адрес электронной почты;
                 password(str): пароль от личного кабинета;
                 role(str): роль пользователя в системе;
+            Return values:
+                None;
         '''
         with session:
             session.add(
@@ -127,8 +129,15 @@ class User(Base, UserMixin):
             return session.query(User).filter_by(id = user_id).first()
         
     def check_email(user_email: str) -> bool:
-        # так как наши адреса почты уникальные (unique = True) и не может быть больше одного в БД,
-        # мы можем по количеству == 1, определить, что запись имеется.
+        '''
+        Метод (служебный), определяет уникальность адреса регистрирующегося пользователя.
+            Parametrs:
+                user_email(str): адрес пользователя;
+            Return values:
+                bool;
+          `# так как наши адреса почты уникальные (unique = True) и не может быть больше одного в БД,`
+          `# мы можем по количеству == 1, определить, что запись имеется.`
+        '''
         with session:
             if session.query(User).filter_by(email = user_email).count() == True:
                 return True
@@ -137,7 +146,16 @@ class User(Base, UserMixin):
     def check_user(
         user_email: str,
         user_password: str
-    ):
+    ) -> object|None:
+        '''
+        Метод (служебный) по параметрам адреса и пароля пользователя предоставляет данные
+        для дальнейшей работы.
+            Parametrs:
+                user_email(str): адрес пользователя;
+                user_password(str): пароль пользователя;
+            Return values:
+                object|None;
+        '''
         with session:
             user = session.query(User).filter_by(email = user_email).first()
             if check_password_hash(user.password, user_password) == True:
@@ -145,14 +163,18 @@ class User(Base, UserMixin):
     
 class Item(Base):
     '''
-    Объект "Item" - структура таблицы БД для товара, деталей.
-        Параметры:
-            id(int): иентификатор товара;
-            name(len(str) <= 100): название товара;
-            price(float): цена за еденицу товар;
-            index(int): товарный индекс;
-        Возвращаемое значение:
-            str(id: name, price, index)
+    Объект ``Item`` - структура таблицы БД для товара, деталей.
+        Parametrs:
+            :param id: ``(int)`` иентификатор товара;
+            :param name: ``(len(str) <= 100)`` название товара;
+            :param price: ``(float)`` цена за еденицу товар;
+            :param unit: ``(str)`` единица измерения;
+            :param index: ``(int)`` товарный индекс;
+            :param parametrs: ``(len(str) <= 240)`` параметры товара;
+            :param description: ``(len(str) <= 240)`` описание товара;
+            :param image: ``(str)`` внутренняя ссылка на изображение товара;
+        Return values:
+            str(id: name, price, unit, index, parametrs, description)
     '''
     __tablename__ = 'item'
 
@@ -166,7 +188,7 @@ class Item(Base):
     image = Column(String, nullable = True)
 
     def __str__(self):
-        return '%s: %s, %s, %s, %s, %s, %s' % (
+        return '%s: %s, %s, %s, %s, %s, %s, %s' % (
             self.id,
             self.name,
             self.price,
@@ -242,12 +264,11 @@ class Bascket(Base):
             
     def join_bascket_item(user_id: int) -> list:
         with session:
-            inner_join_query = session.query(Bascket, Item).join(Bascket, Item.id == Bascket.id_item)
-            return inner_join_query.filter(and_(Bascket.id_user == user_id, Bascket.paid_status == False)).all()    
+            return session.query(Bascket, Item).join(Bascket, Item.id == Bascket.id_item)
          
-    def not_paid_item_list(self, user_id: int) -> list:
+    def not_paid_item_list(user_id: int) -> list:
         full_list = []
-        for bascket, item in self.join_bascket_item(user_id):
+        for bascket, item in Bascket.join_bascket_item(user_id).filter(and_(Bascket.id_user == user_id, Bascket.paid_status == False)).all():
             full_list.append({
                 'id': item.id,
                 'name': item.name,
@@ -262,9 +283,10 @@ class Bascket(Base):
             })
         return full_list
     
-    def total_price(self, user_id: int):
+    def total_price(self, user_id: int) -> float:
         total = 0
-        for bascket, item in self.join_bascket_item(user_id):
+        not_paid_total = self.join_bascket_item(user_id).filter(and_(Bascket.id_user == user_id, Bascket.paid_status == False)).all()
+        for bascket, item in not_paid_total:
             amount_by_quantity = item.price * bascket.count
             total += amount_by_quantity
         return "{:.2f}".format(round(total, 2))
@@ -323,23 +345,38 @@ class Order(Base):
     
     def check_id_user(user_id: int) -> bool:
         with session:
-            if session.query(Order).filter(Order.id_user == user_id).count() == True:
+            if session.query(Order).filter(Order.id_user == user_id).count() >= True:
                 return True
+        
+    def paid(user_id: int) -> float:
+        total = 0
+        paid_total = Bascket.join_bascket_item(user_id).filter(and_(Bascket.id_user == user_id, Bascket.paid_status == True)).all()
+        for bascket, item in paid_total:
+            amount_by_quantity = item.price * bascket.count
+            total += amount_by_quantity
+        return "{:.2f}".format(round(total, 2))
+        
     
-    def payment_order(user_id: int) -> list:
+    def payment_orders(user_id: int) -> dict:
         with session:
             inner_join_query = session.query(Bascket, Item, Order).join(Bascket, Item.id == Bascket.id_item)
-            params_to_paid = inner_join_query.filter(and_(Bascket.id_user == user_id, Bascket.paid_status == True)).all()
-            full_list = []
-            for bascket, item, order in params_to_paid:
-                full_list.append(
-                    {
-                        'order_id': order.id,
-                        'user_id': bascket.id_user,
-                        'item_id': item.id,
-                        'price': item.price,
-                        'count': bascket.count,
-                        'status': bascket.paid_status
+            order_data = dict()
+            order = session.query(Order).filter(Order.id_user == user_id)
+            for order_pararms in order:
+                order_list = list()
+                order_id = order_pararms.id
+                bascket_ids = order_pararms.ids_item_list
+                for bascket_id in bascket_ids:
+                    paid_item = inner_join_query.filter(Bascket.id == bascket_id).all()
+                    for bascket, item, order in paid_item:
+                        items_params = {
+                            'bascket_id': bascket.id,
+                            'item_id': item.id,
+                            'name': item.name,
+                            'index': item.index,
+                            'price': item.price,
+                            'count': bascket.count
                         }
-                    )
-            return full_list 
+                    order_list.append(items_params)
+                order_data.update({order_id: order_list})
+            return order_data

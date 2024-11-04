@@ -6,17 +6,18 @@ from markupsafe import escape
 
 from app.app_settings import dp
 from DB.models import Order, Bascket
+from .home_page import check_status
 
 
-@dp.route('/order/<int:id>', methods = ['POST', 'GET'])
+@dp.route('/orders/<int:id>', methods = ['POST', 'GET'])
 @login_required
 def get_order_to_admin(id: int):
     # if request.method == ['GET']:
     #     pass
     user_id = escape(id)
-    order_data = Order.payment_order(user_id)
-    total_price = Bascket.total_price(Bascket, user_id = user_id)
-    return render_template('order.html', data = order_data, total_price = total_price)
+    order_data = Order.payment_orders(user_id)
+    total_price = Order.paid(user_id)
+    return render_template('order.html', data = order_data, total_price = total_price, nav_data = check_status())
     
 # @dp.route('/bascket', methods = ['POST', 'GET'])
 # @login_required
