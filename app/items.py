@@ -38,4 +38,4 @@ def search_item():
     keywords_list = [keyword.lower() for keyword in keywords.split()]
     set_keywords = set(keywords_list)
     search_item = Item.search_items(keywords = set_keywords)
-    return render_template('items.html', search_items_data = search_item, reset_search = True)
+    return render_template('items.html', search_items_data = search_item, nav_data = check_status(), reset_search = True)
