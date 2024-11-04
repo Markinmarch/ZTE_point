@@ -44,7 +44,7 @@ def payment():
     if request.method == 'POST':
         user_id = current_user.get_id()
         Bascket.payment(user_id)
-        return render_template('bascket.html', bascket_status = False)
+        return render_template('bascket.html', bascket_status = False, nav_data = check_status())
     user_bascket = Bascket.not_paid_item_list(user_id = current_user.get_id())
     total_price = Bascket.total_price(Bascket, user_id = current_user.get_id())
     return render_template('payment.html', total_price = total_price, data = user_bascket, nav_data = check_status())
