@@ -10,14 +10,10 @@
 {% block content %}
 <link rel = "stylesheet" type = "text/css" href = "../static/base.css">
 <link rel = "stylesheet" type = "text/css" href = "../static/items.css">
+<script>
+    document.getElementById("nav_href_bascket").classList.add("active")
+</script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<div class="bg">
-    <a type = "button" href = "/">главная</a>
-    <a href = "/items" type = "button">товары</a>
-    <a href = "/contact" type = "button">контакты</a>
-    <a href = "/about" type = "button">о нас</a>
-    <a class = "bascket active" type = "button" href = "/bascket"><img src="https://t700.ru/icon/cart.png" width="44" height="44,5"></a>
-</div>
 {% if bascket_status == True %}
 {% for item in data %}
 <div class = "items-block">
