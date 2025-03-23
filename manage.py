@@ -23,5 +23,5 @@ if __name__ == "__main__":
     from DB.main_db import database, create_table
     from app import app_settings
     database
-    create_table
+    create_table()
     app_settings.dp.run(debug=True)
