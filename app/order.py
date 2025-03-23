@@ -19,6 +19,14 @@ def get_order_to_admin(id: int):
     total_price = Order.paid(user_id)
     return render_template('order.html', data = order_data, total_price = total_price, nav_data = check_status())
     
+# @dp.route('_admin/orders/<int:id>', methods = ['POST', 'GET'])
+# def get_order_to_admin(self, id: int):
+#     # if request.method == ['GET']:
+#     #     pass
+#     order_id = escape(id)
+#     order_data_by_id = Order.get_order_by_id(order_id)
+#     return self.render('/check_order.html', data = order_data_by_id)
+# =======================================
 # @dp.route('/bascket', methods = ['POST', 'GET'])
 # @login_required
 # def bascket():

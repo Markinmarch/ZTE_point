@@ -330,7 +330,7 @@ class Order(Base):
     ids_item_list = Column(ARRAY(Integer), nullable=True)
     date = Column(String, default = datetime.now().strftime("%d.%m.%Y --> %H:%M"))
     string_id_user = cast(id_user, String)
-    link_to_list_items = column_property(f'http://{MAIN_URL}/order/' + string_id_user)
+    link_to_list_items = column_property(f'http://{MAIN_URL}/admin/order/' + string_id_user)
     
     user = relationship(User, backref = 'order')
     
@@ -356,7 +356,30 @@ class Order(Base):
             total += amount_by_quantity
         return "{:.2f}".format(round(total, 2))
         
-    
+    def get_order_by_id(id: int)-> dict:
+        with session:
+            inner_join_query = session.query(Bascket, Item, Order).join(Bascket, Item.id == Bascket.id_item)
+            order_data = dict()
+            order = session.query(Order).filter(Order.id == id)
+            for order_pararms in order:
+                order_list = list()
+                order_id = order_pararms.id
+                bascket_ids = order_pararms.ids_item_list
+                for bascket_id in bascket_ids:
+                    paid_item = inner_join_query.filter(Bascket.id == bascket_id).all()
+                    for bascket, item, order in paid_item:
+                        items_params = {
+                            'bascket_id': bascket.id,
+                            'item_id': item.id,
+                            'name': item.name,
+                            'index': item.index,
+                            'price': item.price,
+                            'count': bascket.count
+                        }
+                    order_list.append(items_params)
+                order_data.update({order_id: order_list})
+            return order_data
+            
     def payment_orders(user_id: int) -> dict:
         with session:
             inner_join_query = session.query(Bascket, Item, Order).join(Bascket, Item.id == Bascket.id_item)

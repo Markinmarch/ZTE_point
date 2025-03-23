@@ -4,12 +4,12 @@ from flask import redirect, url_for
 from flask_login import current_user
 
 from flask_admin.form import ImageUploadField
-from flask_admin import AdminIndexView, Admin
+from flask_admin import AdminIndexView, Admin, BaseView, expose
 from flask_admin.contrib.sqla import ModelView
 from flask_admin.contrib.sqla.filters import BaseSQLAFilter
 from flask_admin.menu import MenuLink
 
-from markupsafe import Markup
+from markupsafe import Markup, escape
 
 from app.app_settings import dp
 from DB.models import User, Item, Order, Bascket, session
@@ -63,6 +63,9 @@ class TaskModelViewItems(ModelView):
         'description',
         'image'
     ]
+    
+    column_filters = ['name']
+    
     column_labels = {
         'id': 'ID',
         'name': 'Наименование',
@@ -86,8 +89,6 @@ class TaskModelViewItems(ModelView):
         url = url_for('static', filename=os.path.join('images/item_images/', model.image))
         if model.image.split('.')[-1] in ['jpg', 'jpeg', 'png', 'svg', 'gif']:
             return Markup(f'<img src={url} width="100">')
-        
-    column_formatters = {'image': _list_thumbnail}
     
     form_extra_fields = {
         # ImageUploadField Выполняет проверку изображений, создание эскизов, обновление и удаление изображений.
@@ -141,9 +142,8 @@ class TaskModelViewOrders(ModelView):
         'id_user': 'ID клиента',
         'link_to_list_items': 'Ссылка на список товаров клиента'
     }
-    column_filters = [
-        MyCustomFilter(column = Order.id_user, name = 'ID клиента')
-    ]
+    
+    column_filters = ['id_user']
     
     @staticmethod
     def _order_formatters(view, context, model, name):
@@ -163,6 +163,13 @@ class MainPageLink(MenuLink):
     def get_url(self):
         return url_for('home')
 
+class OrderView(ModelView):
+    @expose('admin/order/<int:id>', methods=('GET', 'POST'))
+    def check_order(self, id: int):
+        order_id = escape(id)
+        order_data_by_id = Order.get_order_by_id(order_id)
+        print(f'==============================={order_data_by_id}')
+        return self.render('/check_order.html')
 
 admin = Admin(dp, name = 'ZTE point', template_mode = 'bootstrap3', index_view = CustomAdminIndexView())
     
@@ -171,4 +178,6 @@ admin.add_view(TaskModelViewItems(Item, session, name = 'Товары'))
 admin.add_view(TaskModelViewBascket(Bascket, session, name = 'Корзина'))
 admin.add_view(TaskModelViewOrders(Order, session, name = 'Заказы'))
 admin.add_link(MainPageLink(name = 'На главную'))
+# admin.add_view(OrderView(name = 'User orders', endpoint='order/[id]'))
+
 ########################################################################
